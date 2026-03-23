@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.10.14)  20 MAR 2026 14:07
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.10.14)  21 MAR 2026 22:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/bisz/Documents/visual_solver/acl-style-files/acl_latex.tex
-(/Users/bisz/Documents/visual_solver/acl-style-files/acl_latex.tex
+**/Users/bisz/Documents/visual_solver/EduIllustrate/acl_latex.tex
+(/Users/bisz/Documents/visual_solver/EduIllustrate/acl_latex.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -323,35 +323,59 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count302
 \@lastruleclass=\count303
 \@thisrulewidth=\dimen183
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/sttools/stfloats.sty
+Package: stfloats 2017/03/27 v3.3 Improve float mechanism and baselineskip settings
+\@dblbotnum=\count304
+\c@dblbotnumber=\count305
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/sttools/cuted.sty
+Package: cuted 2021/10/04 v2.0 Mixing onecolumn and twocolumn modes
+\At@ViperColsBreak=\toks27
+\preCutedStrip=\toks28
+\postCutedStrip=\toks29
+\cuted@@tempbox@a=\box55
+\cuted@@tempbox@c=\box56
+\cuted@@tempbox@var=\box57
+\hold@viper=\box58
+\@viper=\box59
+\cuted@@varbox@a=\box60
+\cuted@@varbox@c=\box61
+\cuted@@tempdim@spread=\dimen184
+\cuted@@tempdim@a=\dimen185
+\cuted@@tempdim@b=\dimen186
+\ht@hold@viper=\dimen187
+\ht@viper=\dimen188
+\var@@pagediscards@ht=\dimen189
+\stripsep=\skip58
+\viper@penalty=\count306
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2024-05-08 L3 backend support: XeTeX
-\g__graphics_track_int=\count304
-\l__pdf_internal_box=\box55
-\g__pdf_backend_annotation_int=\count305
-\g__pdf_backend_link_int=\count306
+\g__graphics_track_int=\count307
+\l__pdf_internal_box=\box62
+\g__pdf_backend_annotation_int=\count308
+\g__pdf_backend_link_int=\count309
 ) (./acl_latex.aux)
 \openout1 = `acl_latex.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 111.
-LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -390,18 +414,18 @@ LaTeX Font Info:    ... okay on input line 111.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 111.
+Package hyperref Info: Link coloring ON on input line 114.
 (./acl_latex.out) (./acl_latex.out)
 \@outlinefile=\write3
 \openout3 = `acl_latex.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 111.
-Package microtype Info: Applying patch `item' on input line 111.
-Package microtype Info: Applying patch `toc' on input line 111.
-Package microtype Info: Applying patch `eqnum' on input line 111.
-Package microtype Info: Applying patch `footnote' on input line 111.
-Package microtype Info: Applying patch `verbatim' on input line 111.
-LaTeX Info: Redefining \microtypesetup on input line 111.
+LaTeX Info: Redefining \microtypecontext on input line 114.
+Package microtype Info: Applying patch `item' on input line 114.
+Package microtype Info: Applying patch `toc' on input line 114.
+Package microtype Info: Applying patch `eqnum' on input line 114.
+Package microtype Info: Applying patch `footnote' on input line 114.
+Package microtype Info: Applying patch `verbatim' on input line 114.
+LaTeX Info: Redefining \microtypesetup on input line 114.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: No adjustment of tracking.
@@ -414,42 +438,58 @@ Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbat
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 112.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 115.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 112.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 115.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 112.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 115.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-Underfull \hbox (badness 1668) in paragraph at lines 114--115
+File: fig/teaser.png Graphic file (type bmp)
+<fig/teaser.png>
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 120.
+See the caption package documentation for explanation.
+
+CUTED [- LAST -]
+Extra skip:0.0pt
+Left:0.0pt/0.0pt
+Right:0.0pt/0.0pt
+Split: 0.0pt
+Output:0.0pt
+Pageshrink: 0.0pt
+Pagestretch: 0.0pt
+@colht:555.00024pt
+CUTED [output]: 0.0pt
+CUTED [leftcolumn badness]: 0
+CUTED [rightcolumn badness]: 0
+
+Underfull \hbox (badness 1668) in paragraph at lines 125--126
 []\T1/ptm/m/n/10 Generating high-quality il-lus-trated ex-pla-na-
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 114--115
+Underfull \hbox (badness 1178) in paragraph at lines 125--126
 \T1/ptm/m/n/10 step-by-step reasoning---a com-bi-na-tion that
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 114--115
+Underfull \hbox (badness 2790) in paragraph at lines 125--126
 \T1/ptm/b/n/10 lus-trate\T1/ptm/m/n/10 , an au-to-mated four-stage agen-tic
  []
 
 
-
-
-Underfull \hbox (badness 2134) in paragraph at lines 122--123
-[]\T1/ptm/m/n/10.95 Recent ad-vances in large lan-guage mod-els
- []
 
 
 
@@ -458,238 +498,239 @@ Underfull \hbox (badness 2134) in paragraph at lines 122--123
 
 
 ]
-
-
-Underfull \hbox (badness 2103) in paragraph at lines 152--153
-[][][]\T1/ptm/m/n/10.95 Chen et al.[][] ([][]2025[][]) pro-pose a code-centric
+Underfull \hbox (badness 2134) in paragraph at lines 133--134
+[]\T1/ptm/m/n/10.95 Recent ad-vances in large lan-guage mod-els
  []
 
 
-Underfull \hbox (badness 1442) in paragraph at lines 152--153
-\T1/ptm/m/n/10.95 Critic) and the TeachQuiz met-ric that quan-ti-
+Underfull \hbox (badness 1107) in paragraph at lines 145--146
+[]\T1/ptm/m/n/10.95 Comparative study of five fron-tier LLMs
  []
 
 
-Underfull \hbox (badness 1430) in paragraph at lines 152--153
-\T1/ptm/m/n/10.95 fies knowl-edge re-cov-ery by un-learned Vision-
+
+
+Underfull \hbox (badness 1077) in paragraph at lines 156--157
+\T1/ptm/m/n/10.95 with cur-ricu-lum stan-dards. De-spite these ad-
+ []
+
+
+Underfull \hbox (badness 1735) in paragraph at lines 160--161
+\T1/ptm/m/n/10.95 con-tent through ex-e-cutable code. [][]Ku et al.[][]
+ []
+
+
+Underfull \hbox (badness 2384) in paragraph at lines 160--161
+\T1/ptm/m/n/10.95 e-cutable Python code. Both sys-tems tar-get
+ []
+
+
+Underfull \hbox (badness 1997) in paragraph at lines 160--161
+\T1/ptm/m/n/10.95 Our work dif-fers by fo-cus-ing on \T1/ptm/b/n/10.95 static di-a-
+ []
+
+
+Underfull \hbox (badness 1057) in paragraph at lines 164--165
+\T1/ptm/m/n/10.95 con-struct sci-en-tific di-a-grams into ed-itable mx-
  []
 
 
 
 [2]
-Underfull \hbox (badness 1132) in paragraph at lines 154--155
-\T1/ptm/m/n/10.95 ex-pla-na-tions, where textbook-style il-lus-tra-tions
+Underfull \hbox (badness 3209) in paragraph at lines 166--167
+[]\T1/ptm/m/n/10.95 Our work in-tro-duces \T1/ptm/b/n/10.95 domain-specific con-
  []
 
 
-Underfull \hbox (badness 1057) in paragraph at lines 158--159
-\T1/ptm/m/n/10.95 con-struct sci-en-tific di-a-grams into ed-itable mx-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \hbox (badness 1024) in paragraph at lines 172--173
+Underfull \hbox (badness 1024) in paragraph at lines 176--177
 \T1/ptm/m/n/10.95 in-for-ma-tion is pro-cessed through sep-a-rate ver-
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-
-[3]
 File: fig/fig1.png Graphic file (type bmp)
 <fig/fig1.png>
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 195.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 197.
+(/usr/local/texlive/2025/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.95pt on input line 195.
+(Font)              scaled to size 10.95pt on input line 197.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 1902) in paragraph at lines 195--196
+Underfull \hbox (badness 1902) in paragraph at lines 197--198
 []\T1/ptm/b/n/10.95 Stage 1: Struc-tured Out-line Gen-er-a-tion.
  []
 
 
-Underfull \hbox (badness 1735) in paragraph at lines 195--196
-\T1/ptm/m/n/10.95 by re-quir-ing ex-plicit spec-i-fi-ca-tion of learn-ing
+Underfull \hbox (badness 3302) in paragraph at lines 197--198
+\T1/ptm/m/n/10.95 The first stage trans-forms raw K-12 STEM
  []
 
 
-Underfull \hbox (badness 1442) in paragraph at lines 197--198
-\T1/ptm/m/n/10.95 straints, es-tab-lish-ing vi-sual con-ven-tions (color
+Underfull \hbox (badness 2726) in paragraph at lines 197--198
+\T1/ptm/m/n/10.95 prob-lems into struc-tured out-lines in-ter-leav-ing
+ []
+
+
+Underfull \hbox (badness 3271) in paragraph at lines 197--198
+\T1/ptm/m/n/10.95 tex-tual ex-pla-na-tion blocks with vi-sual scene
+ []
+
+
+Underfull \hbox (badness 1642) in paragraph at lines 197--198
+\T1/ptm/m/n/10.95 spec-i-fi-ca-tions. The model out-puts an XML-
+ []
+
+
+Underfull \hbox (badness 4328) in paragraph at lines 197--198
+\T1/ptm/m/n/10.95 tain-ing al-ter-nat-ing \T1/zi4/m/n/10.95 <TEXT_k> \T1/ptm/m/n/10.95 and \T1/zi4/m/n/10.95 <SCENE_k>
  []
 
 
 
-
-Underfull \hbox (badness 1990) in paragraph at lines 199--200
-\T1/ptm/m/n/10.95 PNG im-ages, em-ploy-ing a hy-brid sequential-
- []
-
-
-
-[4]
-Underfull \hbox (badness 2538) in paragraph at lines 205--206
+[3]
+Underfull \hbox (badness 2538) in paragraph at lines 207--208
 \T1/ptm/b/n/10.95 Dataset Con-struc-tion. \T1/ptm/m/n/10.95 We con-struct a cu-
  []
 
 
-Underfull \hbox (badness 2142) in paragraph at lines 205--206
+Underfull \hbox (badness 2142) in paragraph at lines 207--208
 \T1/ptm/m/n/10.95 rated bench-mark de-rived from the K12-Vista
  []
 
 
-Underfull \hbox (badness 1762) in paragraph at lines 205--206
+Underfull \hbox (badness 1762) in paragraph at lines 207--208
 \T1/ptm/m/n/10.95 i-tory of Chi-nese K-12 STEM prob-lems with
  []
 
 
 
 
-Underfull \hbox (badness 2707) in paragraph at lines 207--208
+Underfull \hbox (badness 2707) in paragraph at lines 209--210
 \T1/ptm/m/n/10.95 three grade lev-els (el-e-men-tary, mid-dle, high
  []
 
+File: fig/knowledge_categories.png Graphic file (type bmp)
+<fig/knowledge_categories.png>
 
-Overfull \hbox (16.94055pt too wide) in paragraph at lines 212--223
+Overfull \hbox (16.94055pt too wide) in paragraph at lines 221--232
  [][] 
+ []
+
+
+Underfull \hbox (badness 1158) in paragraph at lines 238--239
+\T1/ptm/m/n/10.95 strate-gies; Ty-po-graphic Clarity---proper math-e-
+ []
+
+
+
+[4]
+Underfull \hbox (badness 1082) in paragraph at lines 240--241
+\T1/ptm/m/n/10.95 Consistency---whether mul-ti-ple di-a-grams main-
+ []
+
+
+Underfull \hbox (badness 1616) in paragraph at lines 240--241
+\T1/ptm/m/n/10.95 Text--Diagram Coordination---how well tex-tual
+ []
+
+
+Underfull \hbox (badness 1888) in paragraph at lines 242--243
+\T1/ptm/m/n/10.95 the rel-e-vant ren-dered di-a-grams along-side sur-
+ []
+
+
+
+
+Underfull \hbox (badness 1184) in paragraph at lines 244--245
+[]\T1/ptm/b/n/10.95 Human Eval-u-a-tion Pro-to-col. \T1/ptm/m/n/10.95 To val-i-date
  []
 
 
 
 [5]
-Underfull \hbox (badness 4132) in paragraph at lines 229--230
-\T1/ptm/m/n/10.95 blocks): \T1/ptm/b/n/10.95 D1 \T1/ptm/m/n/10.95 Cor-rect-ness & Completeness---
+Underfull \hbox (badness 1281) in paragraph at lines 279--280
+\T1/ptm/m/n/10.95 less of di-a-gram qual-ity. Crit-i-cal weak-nesses
  []
 
 
-Underfull \hbox (badness 1184) in paragraph at lines 235--236
-[]\T1/ptm/b/n/10.95 Human Eval-u-a-tion Pro-to-col. \T1/ptm/m/n/10.95 To val-i-date
- []
 
 
-Underfull \vbox (badness 3323) has occurred while \output is active []
-
-
-
-
-Underfull \hbox (badness 2478) in paragraph at lines 252--253
-\T1/ptm/m/n/10.95 eight di-men-sions. Gem-ini 3.0 Pro Pre-view
- []
-
-
-Underfull \hbox (badness 1043) in paragraph at lines 272--273
-\T1/ptm/m/n/10.95 text gen-er-a-tion. D7 (Text-Diagram Co-or-di-na-
- []
-
-
-Underfull \hbox (badness 1038) in paragraph at lines 272--273
-\T1/ptm/m/n/10.95 Align-ment), where scores range from 1.80 to
- []
-
-
-Underfull \hbox (badness 1337) in paragraph at lines 272--273
-\T1/ptm/m/n/10.95 fre-quent se-man-tic misalignment---geometrically
+Underfull \hbox (badness 1527) in paragraph at lines 304--305
+[][]\T1/ptm/m/n/10.95 2025[][]), which orig-i-nally adopts an all-parallel
  []
 
 
 
 [6]
-Overfull \hbox (13.02301pt too wide) in paragraph at lines 279--290
- [][] 
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1430) in paragraph at lines 294--295
-\T1/ptm/m/n/10.95 lev-els (Gem-ini: 4.27-4.42, Kimi: 3.97-4.13),
- []
-
-
-
-
-Overfull \hbox (6.95895pt too wide) in paragraph at lines 299--310
- [][] 
- []
-
-
-Overfull \hbox (43.91924pt too wide) in paragraph at lines 321--330
- [][] 
- []
-
-
-
-[7]
 
 File: fig/fig_cost_quality.png Graphic file (type bmp)
 <fig/fig_cost_quality.png>
 
-Underfull \hbox (badness 1314) in paragraph at lines 391--392
-\T1/ptm/m/n/10.95 We in-tro-duced EduIl-lus-trate, the first com-pre-
+
+[7]
+Underfull \hbox (badness 2221) in paragraph at lines 383--384
+\T1/ptm/m/n/10.95 pro-duce pro-cess an-i-ma-tions by re-mov-ing the
  []
 
 
-Underfull \hbox (badness 1142) in paragraph at lines 391--392
-\T1/ptm/m/n/10.95 hen-sive sys-tem and bench-mark for gen-er-at-ing
- []
-
-
-
-[8]
-Underfull \hbox (badness 1005) in paragraph at lines 399--400
-\T1/ptm/m/n/10.95 ing of tem-po-ral pro-cesses. This re-quires de-
- []
-
-
-Underfull \hbox (badness 2158) in paragraph at lines 401--402
+Underfull \hbox (badness 2158) in paragraph at lines 385--386
 []\T1/ptm/b/n/10.95 LLM-as-Judge Vi-sual As-sess-ment Lim-i-ta-
  []
 
 
 
-
-Underfull \hbox (badness 1048) in paragraph at lines 405--406
-\T1/ptm/m/n/10.95 rather than learn-ing outcomes---classroom ef-fi-
- []
-
 (./acl_latex.bbl
-
-[9]
 Underfull \hbox (badness 3746) in paragraph at lines 25--28
 []\T1/ptm/m/n/10 Firuz Ka-malov, David San-tan-dreu Ca-longe, and
  []
 
 
+
+[8]
 Underfull \hbox (badness 5133) in paragraph at lines 40--43
 []\T1/ptm/m/n/10 Hyun Lee, Joon Park, and Se-ung Kim. 2025.
  []
 
 
-
-
-Underfull \hbox (badness 2922) in paragraph at lines 75--78
-[]\T1/ptm/m/n/10 Pierre Reux, Marc Dubois, and So-phie Lau-rent.
- []
-
-
-Underfull \hbox (badness 1226) in paragraph at lines 85--88
+Underfull \hbox (badness 1226) in paragraph at lines 70--73
 \T1/ptm/m/n/10 2025.  Gen-Men-tor: Goal-oriented per-son-al-ized
  []
 
 )
-Underfull \hbox (badness 2671) in paragraph at lines 459--460
+Underfull \hbox (badness 1215) in paragraph at lines 409--410
+\T1/ptm/m/n/10.95 Benchmark con-struc-tion fol-lowed a two-phase
+ []
+
+
+
+File: fig/question_reviewer.png Graphic file (type bmp)
+<fig/question_reviewer.png>
+
+Underfull \hbox (badness 2671) in paragraph at lines 456--457
 \T1/ptm/m/n/9 an-gle an-gle sum and ro-ta-tion; Cir-cum-scribed cir-cle and cir-cum-cen-ter;
  []
 
+
+Underfull \hbox (badness 1845) in paragraph at lines 474--475
+[]\T1/ptm/m/n/10.95 Table [][]8[][] re-ports over-all scores as-signed by
+ []
+
+
+Overfull \hbox (7.37029pt too wide) in paragraph at lines 479--490
+ [][] 
+ []
+
+
+
+[9]
 File: fig/doc1_scene1.png Graphic file (type bmp)
 <fig/doc1_scene1.png>
 File: fig/doc1_scene2.png Graphic file (type bmp)
@@ -702,9 +743,6 @@ File: fig/doc2_scene2.png Graphic file (type bmp)
 <fig/doc2_scene2.png>
 File: fig/doc2_scene3.png Graphic file (type bmp)
 <fig/doc2_scene3.png>
-
-
-[10]
 File: fig/doc_problem_4_gemini-3-pro-preview_scene1.png Graphic file (type bmp)
 <fig/doc_problem_4_gemini-3-pro-preview_scene1.png>
 File: fig/doc_problem_4_gemini-3-pro-preview_scene2.png Graphic file (type bmp)
@@ -715,16 +753,16 @@ File: fig/doc_problem_4_gemini-3-pro-preview_scene3.png Graphic file (type bmp)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 528.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 550.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 528.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 550.
 File: fig/doc_problem_46_gemini-3-pro-preview_scene1.png Graphic file (type bmp)
 <fig/doc_problem_46_gemini-3-pro-preview_scene1.png>
 LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 531.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 553.
 File: fig/doc_problem_46_gemini-3-pro-preview_scene2.png Graphic file (type bmp)
 <fig/doc_problem_46_gemini-3-pro-preview_scene2.png>
 File: fig/doc_problem_46_gemini-3-pro-preview_scene3.png Graphic file (type bmp)
@@ -750,6 +788,8 @@ File: fig/doc_problem_70_gemini-3-pro-preview_scene3.png Graphic file (type bmp)
 <fig/doc_problem_70_gemini-3-pro-preview_scene3.png>
 
 LaTeX Warning: `h' float specifier changed to `ht'.
+
+
 
 File: fig/doc_problem_97_gemini-3-pro-preview_scene1.png Graphic file (type bmp)
 <fig/doc_problem_97_gemini-3-pro-preview_scene1.png>
@@ -791,7 +831,7 @@ File: fig/doc_problem_85_gpt-5_scene3.png Graphic file (type bmp)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 1635) in paragraph at lines 711--712
+Underfull \hbox (badness 1635) in paragraph at lines 733--734
 \T1/ptm/m/n/10.95 i-tude/Longitude Read-ing) --- Flawed Di-a-gram
  []
 
@@ -809,37 +849,37 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-
-Underfull \hbox (badness 1014) in paragraph at lines 743--744
-\T1/ptm/m/n/10.95 mis-aligned la-bels, or ped-a-gog-i-cally in-ef-fec-tive
+[10]
+Underfull \hbox (badness 1325) in paragraph at lines 765--766
+\T1/ptm/m/n/10.95 each of the 7 di-men-sions, we pre-sented two
  []
 
 
-Underfull \vbox (badness 4416) has occurred while \output is active []
 
 
 
-[11]
+[11] [12] [13] [14] [15] [16] [17] [18] [19]
 
 
 
-[12
+[20
 
-] [13] [14] [15] [16] [17] [18] [19] (./acl_latex.aux)
+
+] (./acl_latex.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `acl_latex.out' has not changed.
-(rerunfilecheck)             Checksum: 8560F7DF44EEFD70D3BF742CCADDE9ED;3564.
+(rerunfilecheck)             Checksum: D95733376F688FF7FE0FB9DB5DD005D3;3823.
  ) 
 Here is how much of TeX's memory you used:
- 14749 strings out of 473832
- 246022 string characters out of 5729480
- 709211 words of memory out of 5000000
- 37579 multiletter control sequences out of 15000+600000
+ 14891 strings out of 473832
+ 248965 string characters out of 5729480
+ 713479 words of memory out of 5000000
+ 37711 multiletter control sequences out of 15000+600000
  595525 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,11n,93p,2343b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,11n,93p,1828b,504s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on acl_latex.xdv (19 pages, 201464 bytes).
+Output written on acl_latex.xdv (20 pages, 179148 bytes).

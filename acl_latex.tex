@@ -35,6 +35,9 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{natbib}
+\usepackage{stfloats}
+\usepackage{caption}
+\usepackage{cuted}
 % If the title and author information does not fit in the area allocated, uncomment the following
 %
 %\setlength\titlebox{<dim>}
@@ -110,8 +113,16 @@
 
 \begin{document}
 \maketitle
+
+\begin{strip}
+\centering
+\includegraphics[width=\linewidth]{fig/teaser.png}
+\captionof{figure}{EduIllustrate takes a K-12 STEM problem as input and produces a structured explanation interleaved with geometrically accurate diagrams rendered via Manim. \textit{Left}: the input problem (Grade 9 Mathematics). \textit{Right}: two generated scenes illustrating the inscribed angle theorem and the resulting right triangle used to compute $AB = 3$.}
+\label{fig:teaser}
+\end{strip}
+
 \begin{abstract}
-Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{118 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.07 at \$0.15/problem). Workflow ablation confirms our sequential anchoring improves visual consistency (D6) by 12\% over a fully parallel baseline at 17.5\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
+Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{118 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.07 at \$0.15/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 12\% over a fully parallel baseline at 17.5\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
 \end{abstract}
 
 
@@ -119,11 +130,9 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
 
 High-quality illustrated explanations are fundamental to K-12 STEM pedagogy. Research in educational psychology demonstrates that combining textual reasoning with visual diagrams significantly enhances conceptual understanding, particularly for abstract scientific concepts and mathematical problem-solving~\citep{mayer2001multimedia}. However, producing such multimodal educational content at scale remains labor-intensive, requiring both deep domain expertise and technical proficiency in diagram creation tools.
 
-Recent advances in large language models (LLMs) have enabled remarkable progress in generating educational content. \citet{liu2025cogent} demonstrated curriculum-aligned content generation for grade-appropriate science passages, while \citet{wang2025genmentor} introduced goal-oriented personalized learning frameworks powered by multi-agent LLM systems. Programmatic content generation has also advanced: \citet{ku2025theoremexplain} generate long-form theorem explanation videos (over 5 minutes) using Manim animations for university-level mathematics, achieving 93.8\% success rates with videos up to 10 minutes long, while \citet{chen2025code2video} create educational videos via executable Python code for programming tutorials, introducing the TeachQuiz metric for knowledge recovery assessment.
+Recent advances in large language models (LLMs) have enabled curriculum-aligned content generation~\citep{liu2025cogent}, personalized learning frameworks~\citep{wang2025genmentor}, and programmatic educational video generation via Manim animations~\citep{ku2025theoremexplain,chen2025code2video}.
 
-Yet a critical gap remains for \textbf{K-12 STEM education}: existing video generation approaches target university-level theorems or programming content with long-form animated explanations, while K-12 problem explanations require \textbf{static, geometrically accurate diagrams} seamlessly integrated with step-by-step reasoning across diverse subjects (mathematics, physics, chemistry, biology, geography). Unlike long-form videos designed for theorem proofs, K-12 pedagogy emphasizes textbook-style static illustrations that learners can process at their own pace, aligned with grade-appropriate curriculum standards. Moreover, no unified benchmark exists to jointly evaluate textual reasoning quality and visual diagram quality across K-12 STEM disciplines with their subject-specific conventions.
-
-This gap is particularly pronounced because K-12 STEM diagrams carry precise semantic meaning: geometry proofs require exact angle measurements and spatial relationships; physics problems demand force vectors with correct directions and magnitudes; chemistry explanations need molecular structures following discipline-specific conventions. Generating such diagrams programmatically introduces challenges in geometric accuracy, visual consistency across multiple diagrams, semantic alignment between text and visuals, and developing evaluation frameworks capturing both perceptual quality and pedagogical effectiveness.
+Yet a critical gap remains for \textbf{K-12 STEM education}: existing approaches target university-level theorems with long-form animations, while K-12 problem explanations require \textbf{static, geometrically accurate diagrams}---carrying precise semantic meaning across subjects (exact angle measurements in geometry, force vectors in physics, molecular structures in chemistry)---seamlessly integrated with step-by-step reasoning. No unified benchmark exists to jointly evaluate textual and visual quality across K-12 STEM disciplines.
 
 We address these challenges with \textbf{EduIllustrate}, an automated four-stage pipeline generating illustrated K-12 STEM explanations with programmatically rendered diagrams via Manim. Our system decomposes generation into: (1) structured outline with interleaved text and scene specifications, (2) per-scene implementation planning with explicit spatial constraints, (3) parallel Manim code generation and rendering, and (4) final Markdown assembly. To systematically evaluate multimodal educational content, we construct a benchmark of \textbf{118 K-12 STEM problems} spanning three grade levels and five subjects, proposing an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory.
 
@@ -133,53 +142,46 @@ We address these challenges with \textbf{EduIllustrate}, an automated four-stage
 \item An automated four-stage pipeline for generating diagram-rich K-12 STEM explanations with explicit geometric accuracy and visual consistency constraints
 \item A curated benchmark of 118 problems across 3 grade levels and 5 subjects for standardized multimodal evaluation
 \item An 8-dimension evaluation rubric with automated and human protocols grounded in educational psychology
-\item Comparative study of four frontier LLMs identifying model-specific strengths and failure modes
+\item Comparative study of five frontier LLMs identifying model-specific strengths and failure modes
 \item Validation of LLM-as-judge reliability for multimodal content through correlation analysis with human expert ratings
 \end{enumerate}
 
 \section{Related Work}
+  
 
 \subsection{LLMs in Education}
 
 LLM applications in education span intelligent tutoring, automated assessment, and adaptive content generation. \citet{kamalov2025agentic} reviewed agentic workflows in education, highlighting advancements in automated tutoring while noting constraints in adaptability that multi-agent frameworks address. \citet{wang2025genmentor} introduced GenMentor, an LLM-powered multi-agent framework for goal-oriented learning, demonstrating effective skill gap identification and personalized learning path scheduling.
 
-For K-12-specific applications, \citet{liu2025cogent} proposed COGENT, a curriculum-oriented framework generating grade-appropriate content aligned with curriculum standards, controlling reading levels through vocabulary and sentence complexity. \citet{memari2025elementary} synthesized 258 studies in elementary STEM education, finding 45\% focused on intelligent tutoring systems but revealing limited cross-disciplinary integration. Despite these advances, existing work predominantly focuses on text-only explanations or assessment, leaving multimodal content generation for K-12 STEM underexplored.
+For K-12-specific applications, \citet{liu2025cogent} proposed COGENT, a curriculum-oriented framework generating grade-appropriate content aligned with curriculum standards. Despite these advances, existing work predominantly focuses on text-only explanations or assessment, leaving multimodal content generation for K-12 STEM underexplored.
 
 \subsection{Programmatic Educational Content Generation}
 
-Recent work has explored generating educational content through executable code. \citet{ku2025theoremexplain} introduce an agentic approach for generating long-form theorem explanation videos (over 5 minutes) using Manim animations. The system employs a planner agent for video structuring and a coding agent for Python script generation, targeting university-level mathematics and physics theorems. TheoremExplainBench provides 240 theorems across four STEM disciplines with five automated evaluation metrics assessing factual correctness (accuracy and depth, visual relevance, logical flow) and perceptual quality (element layout, visual consistency). The o3-mini model achieved 93.8\% success rate with overall score of 0.77, though human studies revealed visual layout issues remained the primary challenge.
-
-\citet{chen2025code2video} propose a code-centric agent framework for generating professional educational videos via executable Python code, introducing three collaborative agents (Planner, Coder, Critic) and the TeachQuiz metric that quantifies knowledge recovery by unlearned Vision-Language Models after watching generated videos. The framework achieved 40\% improvement over direct code generation, demonstrating scalability and controllability through programmatic manipulation of renderable environments.
-
-Both systems demonstrate LLMs' capability for programmatic educational content generation but target \textbf{video-based explanations} for advanced topics. Our work differs by focusing on \textbf{static diagram generation} for K-12 problem-solving explanations, where textbook-style illustrations enable self-paced learning. We address grade-appropriate pedagogy across five subjects with subject-specific diagram conventions (right-angle markers in geometry, vector arrows in physics, VSEPR molecular geometry in chemistry).
+Recent work has explored generating educational content through executable code. \citet{ku2025theoremexplain} introduce an agentic approach for generating long-form theorem explanation videos using Manim animations, targeting university-level mathematics and physics. \citet{chen2025code2video} propose a code-centric agent framework for generating professional educational videos via executable Python code. Both systems target \textbf{video-based explanations} for advanced topics. Our work differs by focusing on \textbf{static diagram generation} for K-12 problem-solving explanations, where textbook-style illustrations enable self-paced learning across five subjects with subject-specific diagram conventions.
 
 \subsection{Programmatic Diagram Generation}
 
 Programmatic diagram generation leverages tools like TikZ, Manim, and Matplotlib. \citet{kumar2025diagramir} introduced DiagramIR, an automatic evaluation pipeline for educational math diagrams using intermediate representations of LaTeX TikZ code, demonstrating higher agreement with human raters than LLM-as-judge baselines. \citet{cui2025draw} proposed Draw with Thought, a training-free framework guiding multimodal LLMs to reconstruct scientific diagrams into editable mxGraph XML code through Chain-of-Thought reasoning.
 
-\citet{ni2025viscoder} introduced VisCoder, a fine-tuning approach using the VisCode-200K dataset containing validated plotting code paired with natural language instructions. \citet{reux2025vtikz} evaluate LLMs' ability to customize code while preserving visual coherence, revealing state-of-the-art models struggle to modify code aligned with visual intent.
-
-Our work builds on these foundations by introducing \textbf{domain-specific constraints for educational diagrams}: safe margins, minimum element spacing, white backgrounds, relative positioning, and discipline-specific conventions. We address \textbf{visual consistency across multiple diagrams} through conditional generation where subsequent scenes reference Scene 1's code as a visual anchor, enforcing cross-diagram coherence without requiring global multi-scene optimization.
+Our work introduces \textbf{domain-specific constraints for educational diagrams}: safe margins, minimum element spacing, and discipline-specific conventions, while addressing \textbf{visual consistency across multiple diagrams} through conditional generation where subsequent scenes reference Scene 1's code as a visual anchor.
 
 \subsection{LLM-as-Judge Evaluation}
 
 LLMs as evaluators provide practical alternatives to costly human evaluation. Recent analyses show LLM-as-judge achieves 80\% human agreement at 500$\times$ lower cost~\citep{evidentlyai2025judge}, though systematic biases including position bias and self-preference remain. \citet{lee2025lemaj} revealed in the legal domain that reference-free evaluation protocols correlate better with human expert judgments. \citet{park2025agacci} demonstrated AGACCI framework improves accuracy through distributing specialized evaluation roles across collaborative agents.
 
-Existing LLM-as-judge frameworks focus primarily on text quality evaluation with limited visual quality assessment. Our work extends methodology to multimodal educational content by: (1) decomposing evaluation into text-only and vision-enabled dimensions, (2) implementing geometric mean aggregation across multiple diagrams, and (3) validating automated metrics against 20 human expert raters through Spearman correlation and Krippendorff's alpha.
+Existing LLM-as-judge frameworks focus on text quality with limited visual assessment. Our work extends this methodology to multimodal educational content, decomposing evaluation into text-only and vision-enabled dimensions and validating automated metrics against 20 human expert raters.
 
 \subsection{Multi-Modal Learning Theory}
 
 Our evaluation framework is grounded in multimedia learning theories. \textbf{Cognitive Load Theory}~\citep{sweller1988cognitive} posits working memory has limited capacity---effective diagrams reduce intrinsic load by externalizing spatial relationships. \textbf{Dual Coding Theory}~\citep{paivio1971imagery} proposes information is processed through separate verbal and visual channels, with learning enhanced when both engage. \textbf{Multimedia Learning Principles}~\citep{mayer2001multimedia} provide design guidelines including spatial contiguity, temporal contiguity, and coherence.
 
-\citet{ji2025eduvis} demonstrated that coordinating specialized agents for instructional planning, reasoning decomposition, and visualization design substantially improves educational alignment in pedagogical visualization tasks. These frameworks inform our 8-dimension rubric: D1-D2 ensure cognitive accuracy; D4 and D8 align with coherence principles; D3 and D7 operationalize dual coding and spatial contiguity; D5-D6 reduce extraneous load through predictable visual patterns.
+\citet{ji2025eduvis} demonstrated that coordinating specialized agents for instructional planning, reasoning decomposition, and visualization design substantially improves educational alignment in pedagogical visualization tasks. These frameworks inform our 8-dimension rubric: Correctness \& Completeness and Logical Coherence ensure cognitive accuracy; Pedagogical Effectiveness and Typographic Clarity align with coherence principles; Diagram--Problem Alignment and Text--Diagram Coordination operationalize dual coding and spatial contiguity; Element Layout Quality and Visual Consistency reduce extraneous load through predictable visual patterns.
 
 \section{Method}
 
 \subsection{Task Definition}
 
-\textbf{Agent Input.} The agent receives a K-12 STEM problem statement in plain text, accompanied by a problem diagram image when the original problem includes visual information (e.g., a geometry figure to analyze, a physics setup to reason about).
-
-\textbf{Agent Output.} The agent outputs a structured Markdown document containing: (1) step-by-step textual explanations with pedagogical scaffolding, and (2) programmatically rendered static PNG diagrams via Manim that are geometrically accurate, visually consistent, and semantically aligned with the textual reasoning.
+The agent receives a K-12 STEM problem statement (with an optional problem diagram image) and outputs a structured Markdown document containing step-by-step textual explanations with pedagogical scaffolding interleaved with programmatically rendered static PNG diagrams via Manim.
 
 \subsection{EduIllustrate Agent}
 
@@ -192,19 +194,26 @@ We develop \textbf{EduIllustrate Agent}, a four-stage pipeline that decomposes i
   \label{fig:pipeline}
 \end{figure*}
 
-\textbf{Stage 1: Structured Outline Generation.} The first stage transforms raw K-12 STEM problems into structured outlines interleaving textual explanation blocks with visual scene specifications. The model receives the problem statement and optional problem diagram, then outputs an XML-based format with \texttt{<SCENE\_OUTLINE>} tags containing alternating \texttt{<TEXT\_k>} and \texttt{<SCENE\_k>} blocks. Each \texttt{<TEXT\_k>} block contains pedagogical explanation---the first states the problem and solution approach, subsequent blocks provide step-by-step reasoning referencing preceding diagrams, and the final block presents the answer with verification. Each \texttt{<SCENE\_k>} block specifies the scene's learning objective, geometric/domain-specific visual elements, text annotations, color coding, and spatial layout strategy. The model first determines \textbf{diagram necessity}: not all STEM problems benefit from visualization (e.g., purely algebraic manipulations), so \texttt{<SCENE\_k>} blocks are generated only when visual representations genuinely aid conceptual understanding. This structured format enforces pedagogical planning by requiring explicit specification of learning goals and visual strategies before code generation, while enabling modular processing for parallel scene generation and error recovery.
+\textbf{Stage 1: Structured Outline Generation.} The first stage transforms raw K-12 STEM problems into structured outlines interleaving textual explanation blocks with visual scene specifications. The model outputs an XML-based format with \texttt{<SCENE\_OUTLINE>} tags containing alternating \texttt{<TEXT\_k>} and \texttt{<SCENE\_k>} blocks. Each \texttt{<TEXT\_k>} block contains pedagogical explanation; each \texttt{<SCENE\_k>} block specifies geometric/domain-specific visual elements, text annotations, color coding, and spatial layout. \texttt{<SCENE\_k>} blocks are generated only when visual representations genuinely aid conceptual understanding. This structured format enables modular processing for parallel scene generation and error recovery.
 
-\textbf{Stage 2: Scene Implementation Planning.} The second stage applies exclusively to Scene 1, converting high-level \texttt{<SCENE\_1>} specifications into detailed implementation plans before code generation. This stage addresses translating abstract visual intentions into precise geometric constraints, establishing visual conventions (color scheme, label formatting, line weights, spatial layout) that all subsequent scenes inherit. The implementation plan describes intended visual appearance in natural language, enumerates construction steps with explicit spatial constraints (safe area bounds, minimum element spacing, relative positioning), and specifies discipline-specific rendering conventions (right-angle markers in geometry, vector arrows in physics, VSEPR molecular geometry in chemistry). Making these constraints explicit for Scene 1 reduces ambiguity in the critical anchor scene and provides concrete style reference for parallel generation of remaining scenes.
+\textbf{Stage 2: Scene Implementation Planning.} The second stage applies exclusively to Scene 1; Scenes 2--$N$ skip this stage entirely and proceed directly to code generation. It converts high-level \texttt{<SCENE\_1>} specifications into detailed implementation plans before code generation. The plan describes intended visual appearance in natural language, enumerates construction steps with explicit spatial constraints (safe area bounds, minimum element spacing, relative positioning), and specifies discipline-specific rendering conventions (right-angle markers in geometry, vector arrows in physics, VSEPR molecular geometry in chemistry), establishing visual conventions that all subsequent scenes inherit.
 
-\textbf{Stage 3: Code Generation and Rendering.} The third stage translates implementation plans into executable Manim code and renders static PNG images, employing a hybrid sequential-parallel strategy balancing visual consistency with computational efficiency. Scene 1 undergoes fully sequential generation---implementation plan followed by code generation---establishing the visual ``anchor'' defining color scheme, labeling conventions, line weights, and font sizes that subsequent scenes maintain. After Scene 1 completes successfully, remaining scenes generate in parallel to reduce latency. Each scene's code generation prompt receives: (1) the scene outline from Stage 1, and (2) Scene 1's complete Manim code as reference for visual style, with explicit instructions to maintain visual consistency by reusing color assignments, label formatting, and layout principles. This conditional generation strategy addresses key limitations of prior single-diagram generation work: while individual diagrams may be geometrically correct, inconsistent visual conventions across multiple diagrams create extraneous cognitive load. By conditioning subsequent scenes on Scene 1's code, we enforce cross-diagram coherence without requiring global multi-scene optimization. Each generated code snippet represents a Manim \texttt{Scene} subclass with a \texttt{construct()} method defining visual elements. We invoke Manim Community Edition with \texttt{-s} flag for static rendering and \texttt{-qh} for high-quality 1080p output. Error handling includes: (1) syntax error detection via Python's \texttt{ast} module before rendering, (2) timeout termination for infinite loops (5-second limit), and (3) rendering failure detection by checking output file existence. Failed scenes trigger single retry with error-augmented prompt; persistent failures result in scene omission with placeholder notice. Static PNG output rather than animations aligns with traditional textbook pedagogy, allowing learners to process visual information at their own pace, as Cognitive Load Theory research suggests animated visualizations can increase extraneous load when learners must simultaneously process temporal changes and spatial relationships~\citep{ji2025eduvis}.
+\textbf{Stage 3: Code Generation and Rendering.} The third stage translates implementation plans into executable Manim code and renders static PNG images. Scene 1 undergoes fully sequential generation, establishing the visual ``anchor'' defining color scheme, labeling conventions, line weights, and font sizes. After Scene 1 completes, remaining scenes generate in parallel, each conditioned on Scene 1's complete Manim code to maintain visual consistency across diagrams.
 
-\textbf{Stage 4: Document Assembly.} The final stage assembles complete illustrated explanations into structured Markdown documents interleaving text and diagrams in presentation order. This assembly is deterministic, requiring no LLM involvement. The process extracts \texttt{<TEXT\_k>} blocks from Stage 1 outline in sequential order and interleaves them with rendered scene images using Markdown image syntax, following strict alternating pattern where each text block is followed by its corresponding diagram (when applicable). Each scene image includes alt-text describing visual elements for accessibility. The document includes metadata headers specifying problem source, grade level, subject, and knowledge points. This modular architecture provides: (1) debugging transparency---each stage's output can be inspected independently to diagnose failures, (2) selective regeneration---individual scenes can be regenerated without reprocessing the entire explanation, and (3) format flexibility---the same Stage 1-3 outputs can be assembled into alternative formats (LaTeX, HTML, EPUB) by modifying only Stage 4.
+\textbf{Stage 4: Document Assembly.} The final stage assembles \texttt{<TEXT\_k>} blocks and rendered scene images into a structured Markdown document in alternating order, requiring no LLM involvement.
 
 \subsection{EduIllustrate Benchmark}
 
 \textbf{Dataset Construction.} We construct a curated benchmark derived from the K12-Vista dataset~\citep{zhang2025k12vista}, a large-scale repository of Chinese K-12 STEM problems with gold-standard solutions and fine-grained knowledge point annotations. We extract 118 problems following three curation criteria: \textbf{(1) Diagram-Appropriate Problems}---problems where visual representations convey spatial, topological, or relational information essential to problem-solving, rather than merely restating text~\citep{ji2025eduvis}; \textbf{(2) Clear Gold Solutions}---verified step-by-step solutions with intermediate reasoning steps, enabling objective correctness evaluation; \textbf{(3) Diverse Knowledge Points}---sampling to maximize diversity at the 3rd level of K12-Vista's 4-level knowledge point taxonomy, ensuring varied conceptual coverage. The full knowledge point breakdown is provided in Appendix~\ref{sec:benchmark-details}.
 
-The benchmark comprises 118 problems across three grade levels (elementary, middle, high school) and five STEM subjects, as shown in Table~\ref{tab:dataset}. All 118 problems include original diagrams in the problem statement, requiring models to interpret visual input and generate explanatory diagrams that reference or extend the given figure. Problems require 2--6 solution steps (mean = 3.8, SD = 1.2), and collectively span 102 distinct knowledge points at the 3rd taxonomy level.
+The benchmark comprises 118 problems across three grade levels (elementary, middle, high school) and five STEM subjects, as shown in Table~\ref{tab:dataset}. All 118 problems include original diagrams in the problem statement, requiring models to interpret visual input and generate explanatory diagrams that reference or extend the given figure. Problems require 2--6 solution steps (mean = 3.8, SD = 1.2), and collectively span 102 distinct knowledge points at the 3rd taxonomy level. Figure~\ref{fig:knowledge-categories} shows the knowledge point categories by subject.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig/knowledge_categories.png}
+  \caption{Knowledge point categories by subject. Values in parentheses indicate the number of unique knowledge points mapped in each category.}
+  \label{fig:knowledge-categories}
+\end{figure*}
 
 \begin{table}[t]
 \centering
@@ -226,13 +235,13 @@ High       & 20 & 20  & 5   & 5   & 5   & 55 \\
 
 \textbf{Evaluation Framework.} We propose an \textbf{8-dimension rubric} grounded in multimedia learning theory~\citep{sweller1988cognitive,paivio1971imagery,mayer2001multimedia}, covering three aspects of multimodal educational content. Each dimension is scored on a 0--5 Likert scale.
 
-\textit{Text quality} (evaluated on extracted \texttt{<TEXT\_k>} blocks): \textbf{D1} Correctness \& Completeness---whether the explanation reaches the correct answer through valid reasoning with all intermediate steps; \textbf{D2} Logical Coherence---whether reasoning flows naturally from premises to conclusions; \textbf{D4} Pedagogical Effectiveness---whether explanations use grade-appropriate language and effective instructional strategies; \textbf{D8} Typographic Clarity---proper mathematical notation, consistent formatting, and absence of artifacts.
+\textit{Text quality} (evaluated on extracted \texttt{<TEXT\_k>} blocks): Correctness \& Completeness---whether the explanation reaches the correct answer through valid reasoning with all intermediate steps; Logical Coherence---whether reasoning flows naturally from premises to conclusions; Pedagogical Effectiveness---whether explanations use grade-appropriate language and effective instructional strategies; Typographic Clarity---proper mathematical notation, consistent formatting, and absence of artifacts.
 
-\textit{Visual quality} (evaluated on rendered diagrams): \textbf{D3} Diagram--Problem Alignment---whether diagrams faithfully represent the problem's geometric or physical setup; \textbf{D5} Element Layout Quality---whether elements avoid overlap, maintain readable spacing, and follow discipline conventions; \textbf{D6} Visual Consistency---whether multiple diagrams maintain coherent color schemes, labeling, and style; \textbf{D7} Text--Diagram Coordination---how well textual references integrate with the corresponding diagrams.
+\textit{Visual quality} (evaluated on rendered diagrams): Diagram--Problem Alignment---whether diagrams faithfully represent the problem's geometric or physical setup; Element Layout Quality---whether elements avoid overlap, maintain readable spacing, and follow discipline conventions; Visual Consistency---whether multiple diagrams maintain coherent color schemes, labeling, and style; Text--Diagram Coordination---how well textual references integrate with the corresponding diagrams.
 
-\textbf{Automated Evaluation Protocol.} We employ Gemini 3.0 Pro Preview (temperature=0) as the judge model, selected for its strong multimodal reasoning and 2M-token context window. Evaluation input varies by dimension type: text-only dimensions (D1, D2, D4, D8) receive the problem statement, extracted text, and rubric criteria (plus the gold solution for D1); multimodal dimensions (D3, D7) additionally receive the relevant rendered diagrams alongside surrounding text. For D5, each diagram is scored independently and aggregated via geometric mean $D5 = \left(\prod_{i=1}^N s_i\right)^{1/N}$, ensuring a single poor diagram substantially penalizes the overall score. For D6, Scene 1 serves as the visual anchor; each subsequent diagram is compared against it, with $D6 = \left(\prod_{i=2}^N s_{6,i}\right)^{1/(N-1)}$ (single-diagram explanations default to $D6 = 5$).
+\textbf{Automated Evaluation Protocol.} We employ Gemini 3.0 Pro Preview (temperature=0) as the judge model, selected for its strong multimodal reasoning and 2M-token context window. Evaluation input varies by dimension type: text-only dimensions (Correctness \& Completeness, Logical Coherence, Pedagogical Effectiveness, Typographic Clarity) receive the problem statement, extracted text, and rubric criteria (plus the gold solution for Correctness \& Completeness); multimodal dimensions (Diagram--Problem Alignment, Text--Diagram Coordination) additionally receive the relevant rendered diagrams alongside surrounding text. For Element Layout Quality, each diagram is scored independently and aggregated via geometric mean $ELQ = \left(\prod_{i=1}^N s_i\right)^{1/N}$, ensuring a single poor diagram substantially penalizes the overall score. For Visual Consistency, Scene 1 serves as the visual anchor; each subsequent diagram is compared against it, with $VC = \left(\prod_{i=2}^N s_{6,i}\right)^{1/(N-1)}$.
 
-\textbf{Human Evaluation Protocol.} To validate LLM-as-judge reliability, we conduct human evaluation on 30 stratified random sampled explanations, scored by 20 expert raters across 7 dimensions (D1 excluded) on a 3-level scale \{0, 0.5, 1\}, producing 4,200 judgments. We compute Krippendorff's $\alpha$ for inter-rater agreement and Spearman's $\rho$ for human-AI correlation. Full annotation procedures are described in Appendix~\ref{sec:annotation}.
+\textbf{Human Evaluation Protocol.} To validate LLM-as-judge reliability, we conduct human evaluation on 30 stratified random sampled explanations, scored by 20 expert raters across 7 dimensions (Correctness \& Completeness excluded) on a 3-level scale \{0, 0.5, 1\}, producing 4,200 judgments. To enable direct comparison with the automated 0--5 Likert scores, LLM scores are normalized to [0, 1] by dividing by 5 before computing Spearman's $\rho$. We compute Krippendorff's $\alpha$ for inter-rater agreement and Spearman's $\rho$ for human-AI correlation. Full annotation procedures are described in Appendix~\ref{sec:annotation}.
 
 
 
@@ -243,20 +252,18 @@ We evaluate five frontier LLMs on the EduIllustrate benchmark, analyzing perform
 
 \subsection{Experimental Setup}
 
-\textbf{Models Evaluated.} We test five state-of-the-art LLMs with strong multimodal and code generation capabilities: (1) Gemini 3.0 Pro Preview (Google DeepMind, 2025) with 2M-token context, (2) GPT-5 (OpenAI, 2025) with improved vision-language integration, (3) Claude Sonnet 4.5 (Anthropic, 2025) with extended context and strong coding performance, (4) Kimi-K2.5 (Moonshot AI, 2025) Chinese-optimized with 200K context, and (5) Qwen 3.5-35B (Alibaba Cloud, 2025) open-weight 35B parameter model. All models use identical prompts with temperature=0. Each processes all 118 benchmark problems. We record success rate, per-dimension scores, token consumption, and latency.
-
-\textbf{Evaluation Protocol.} All generated explanations are evaluated using the automated protocol described in Section 3.3 with Gemini 3.0 Pro Preview as judge model. The 30-explanation human evaluation sample includes outputs from all 5 models (6 per model, stratified by subject and grade level). A generation fails if Stage 1 produces invalid XML, Stage 3 exceeds retry limits for all scenes, or final assembly contains $<50\%$ planned scenes.
+\textbf{Models Evaluated.} We test five state-of-the-art LLMs: (1) Gemini 3.0 Pro Preview (Google DeepMind), (2) GPT-5 (OpenAI), (3) Claude Sonnet 4.5 (Anthropic), (4) Kimi-K2.5 (Moonshot AI), and (5) Qwen 3.5-35B (Alibaba Cloud). All models use identical prompts with temperature=0.7 on all 118 benchmark problems.
 
 \subsection{Main Results}
 
-Table~\ref{tab:main-results} presents overall performance across all eight dimensions. Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), substantially outperforming all other models. Kimi-K2.5 ranks second (4.07), while Claude Sonnet 4.5, GPT-5, and Qwen 3.5-35B cluster at 2.98-3.12. The 32\% performance gap between best and worst models demonstrates that architectural choices significantly impact multimodal educational content quality.
+Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), substantially outperforming all other models. Kimi-K2.5 ranks second (4.07), while Claude Sonnet 4.5, GPT-5, and Qwen 3.5-35B cluster at 2.98-3.12. The 32\% performance gap between best and worst models demonstrates that architectural choices significantly impact multimodal educational content quality.
 
 \begin{table*}[t]
 \centering
 \small
 \begin{tabular}{lccccccccc}
 \hline
-\textbf{Model} & \textbf{D1} & \textbf{D2} & \textbf{D3} & \textbf{D4} & \textbf{D5} & \textbf{D6} & \textbf{D7} & \textbf{D8} & \textbf{Overall} \\
+\textbf{Model} & \textbf{C\&C} & \textbf{LC} & \textbf{DPA} & \textbf{PE} & \textbf{ELQ} & \textbf{VC} & \textbf{TDC} & \textbf{TC} & \textbf{Overall} \\
 \hline
 Gemini 3.0 Pro Preview & 4.45 & 4.67 & 4.44 & 3.91 & 4.95 & 4.23 & 4.42 & 4.67 & \textbf{4.40} \\
 Kimi-K2.5 & 4.50 & 4.70 & 3.51 & 3.78 & 4.85 & 3.35 & 4.48 & 4.20 & \textbf{4.07} \\
@@ -265,62 +272,43 @@ GPT-5 & 3.57 & 4.03 & 2.44 & 2.54 & 3.27 & 3.00 & 4.57 & 3.51 & \textbf{3.11} \\
 Qwen 3.5-35B & 4.29 & 4.58 & 1.80 & 3.50 & 4.30 & 2.50 & 4.13 & 2.46 & \textbf{2.98} \\
 \hline
 \end{tabular}
-\caption{Model performance across 8 evaluation dimensions (0-5 scale, 118 problems). D1: Correctness, D2: Logical Coherence, D3: Diagram-Problem Alignment, D4: Pedagogical Effectiveness, D5: Element Layout Quality, D6: Visual Consistency, D7: Text-Diagram Coordination, D8: Typographic Clarity. Overall score computed as geometric mean.}
+\caption{Model performance across 8 evaluation dimensions (0--5 scale, 118 problems). C\&C: Correctness \& Completeness, LC: Logical Coherence, DPA: Diagram--Problem Alignment, PE: Pedagogical Effectiveness, ELQ: Element Layout Quality, VC: Visual Consistency, TDC: Text--Diagram Coordination, TC: Typographic Clarity. Overall score computed as geometric mean.}
 \label{tab:main-results}
 \end{table*}
 
-All models excel at D2 (Logical Coherence) and D8 (Typographic Clarity) (scores $\geq$ 3.17), reflecting LLMs' strength in coherent, well-formatted text generation. D7 (Text-Diagram Coordination) achieves high scores even for weaker models (Claude: 4.33, GPT-5: 4.57), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in D3 (Diagram-Problem Alignment), where scores range from 1.80 to 4.44. Qwen's catastrophic score of 1.80 reflects frequent semantic misalignment---geometrically valid diagrams that do not match problem specifications. D4 (Pedagogical Effectiveness) is universally weakest (2.54-3.91), indicating all models struggle with grade-appropriate language and scaffolding strategies. Qwen encountered 11 complete failures (9.3\% failure rate), primarily on high school physics and chemistry problems, while GPT-5 had 2 failures (1.7\%). All other models completed all 118 problems.
+All models excel at Logical Coherence and Typographic Clarity (scores $\geq$ 3.17), reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 4.33, GPT-5: 4.57), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 1.80 to 4.44. Qwen's catastrophic score of 1.80 reflects frequent semantic misalignment---geometrically valid diagrams that do not match problem specifications. Pedagogical Effectiveness is universally weakest (2.54-3.91), indicating all models struggle with grade-appropriate language and scaffolding strategies. Qwen encountered 11 complete failures (9.3\% failure rate), primarily on high school physics and chemistry problems, while GPT-5 had 2 failures (1.7\%). All other models completed all 118 problems.
 
-Table~\ref{tab:subject-results} shows subject-level performance. Mathematics and physics consistently achieve highest scores across all models, while geography scores lowest (2.25-4.07). Geography's lower performance stems from complex spatial constraints requiring precise coordinate grid labels, 3D Earth-Sun configurations, and solar ray angle visualizations. Chemistry performs surprisingly well (3.18-4.48), benefiting from Manim's built-in molecular structure libraries that simplify VSEPR geometry and crystal lattice rendering.
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \small
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccccc|ccc}
 \hline
-\textbf{Model} & \textbf{Math} & \textbf{Phys} & \textbf{Chem} & \textbf{Bio} & \textbf{Geo} \\
+\textbf{Model} & \textbf{Math} & \textbf{Phys} & \textbf{Chem} & \textbf{Bio} & \textbf{Geo} & & \textbf{Elem.} & \textbf{Middle} & \textbf{High} \\
 \hline
-Gemini 3.0 & 4.42 & 4.44 & 4.48 & 4.43 & 4.07 \\
-Kimi-K2.5 & 4.17 & 4.02 & 4.13 & 4.17 & 3.71 \\
-Claude Sonnet 4.5 & 3.17 & 3.15 & 3.37 & 3.06 & 2.65 \\
-GPT-5 & 3.16 & 3.05 & 3.81 & 3.03 & 2.55 \\
-Qwen 3.5-35B & 3.19 & 2.83 & 3.18 & 3.05 & 2.25 \\
-\hline
-\end{tabular}
-\caption{Model performance by subject (overall score, 0--5). Gemini 3.0 = Gemini 3.0 Pro Preview.}
-\label{tab:subject-results}
-\end{table}
-
-Table~\ref{tab:grade-results} presents grade-level breakdown. Gemini and Kimi maintain consistency across grade levels (Gemini: 4.27-4.42, Kimi: 3.97-4.13), while other models degrade substantially on high school problems. GPT-5's sharp drop from elementary (3.85) to high school (3.00) correlates with increasing diagram complexity---high school problems require vector calculus visualizations, conic section constructions, and electromagnetic field representations that challenge spatial reasoning capabilities. Qwen's 9.3\% failure rate concentrates entirely on high school problems, supporting this interpretation.
-
-\begin{table}[t]
-\centering
-\small
-\begin{tabular}{lccc}
-\hline
-\textbf{Model} & \textbf{Elementary} & \textbf{Middle} & \textbf{High} \\
-\hline
-Gemini 3.0 Pro Preview & 4.27 & 4.41 & 4.42 \\
-Kimi-K2.5 & 3.97 & 4.03 & 4.13 \\
-Claude Sonnet 4.5 & 3.32 & 3.04 & 3.17 \\
-GPT-5 & 3.85 & 3.09 & 3.00 \\
-Qwen 3.5-35B & 3.64 & 2.93 & 2.90 \\
+Gemini 3.0 Pro Preview & 4.42 & 4.44 & 4.48 & 4.43 & 4.07 & & 4.27 & 4.41 & 4.42 \\
+Kimi-K2.5              & 4.17 & 4.02 & 4.13 & 4.17 & 3.71 & & 3.97 & 4.03 & 4.13 \\
+Claude Sonnet 4.5      & 3.17 & 3.15 & 3.37 & 3.06 & 2.65 & & 3.32 & 3.04 & 3.17 \\
+GPT-5                  & 3.16 & 3.05 & 3.81 & 3.03 & 2.55 & & 3.85 & 3.09 & 3.00 \\
+Qwen 3.5-35B           & 3.19 & 2.83 & 3.18 & 3.05 & 2.25 & & 3.64 & 2.93 & 2.90 \\
 \hline
 \end{tabular}
-\caption{Model performance by grade level (overall score, 0-5 scale).}
-\label{tab:grade-results}
-\end{table}
+\caption{Model performance by subject (left) and grade level (right), overall score on 0--5 scale. Due to small sample sizes (Chem: n=8, Bio: n=10, Geo: n=10), cross-subject comparisons for these disciplines should be treated as exploratory and do not support causal inference.}
+\label{tab:subject-grade-results}
+\end{table*}
+
+Table~\ref{tab:subject-grade-results} shows subject- and grade-level performance. Mathematics and physics consistently achieve highest scores, while geography scores lowest (2.25--4.07). Gemini and Kimi maintain consistency across grade levels (Gemini: 4.27--4.42, Kimi: 3.97--4.13), while other models degrade substantially on high school problems. GPT-5's sharp drop from elementary (3.85) to high school (3.00) and Qwen's 9.3\% failure rate concentrated on high school problems both correlate with increasing diagram complexity at higher grade levels.
 
 \subsection{Workflow Ablation Study}
 
-We compare our sequential Scene 1 + parallel Scenes 2-N workflow against an alternative all-parallel workflow inspired by~\citet{ku2025theoremexplain}. The all-parallel workflow generates implementation plans for all scenes simultaneously, then generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 32\% higher input token consumption (100.3K vs. 75.8K), 17.5\% higher cost (\$1.14 vs. \$0.97), 48\% longer latency (7.32 vs. 4.94 minutes), and 12\% worse visual consistency (D6: 3.89 vs. 4.42), while providing only marginal overall quality improvement (4.29 vs. 4.40). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation---Scene 1 uses solid blue lines for given quantities, Scene 2 switches to dashed red for the same elements. This validates our sequential anchoring strategy.
+EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 32\% higher input token consumption (100.3K vs. 75.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---17.5\% higher cost (\$1.14 vs. \$0.97), 48\% longer latency (7.32 vs. 4.94 minutes)---attributable to the additional model calls required for per-scene planning---, and 12\% worse Visual Consistency (3.89 vs. 4.42), while achieving lower overall quality (4.29 vs. 4.40). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is provided in Appendix~\ref{sec:case-study} (Figure~\ref{fig:case-study}). This validates our sequential anchoring strategy.
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \small
 \begin{tabular}{lccccc}
 \hline
-\textbf{Workflow} & \textbf{Tokens} & \textbf{Cost} & \textbf{Latency} & \textbf{D6} & \textbf{Overall} \\
+\textbf{Workflow} & \textbf{Tokens} & \textbf{Cost} & \textbf{Latency} & \textbf{VC} & \textbf{Overall} \\
  & \textbf{(In/Out)} & \textbf{(\$)} & \textbf{(min)} & & \\
 \hline
 Ours & 75.8K / 68.1K & 0.97 & 4.94 & 4.42 & \textbf{4.40} \\
@@ -329,13 +317,13 @@ All-Parallel & 100.3K / 78.5K & 1.14 & 7.32 & 3.89 & \textbf{4.29} \\
 \end{tabular}
 \caption{Workflow comparison using Gemini 3.0 Pro Preview on 118 problems. Our workflow achieves superior visual consistency at lower cost and latency.}
 \label{tab:workflow}
-\end{table}
+\end{table*}
 
 \subsection{Human-AI Agreement Analysis}
 
-Table~\ref{tab:human-ai} presents inter-rater reliability (Krippendorff's $\alpha$) and human-AI agreement (Spearman's $\rho$) for 30 explanations evaluated across 7 dimensions by 20 expert raters. D2 (Logical Coherence) and D3 (Diagram-Problem Alignment) achieve strong human consensus ($\alpha \geq 0.80$) and strong human-AI agreement ($\rho \geq 0.80$), validating LLM-as-judge for these dimensions. D2's high reliability reflects that logical gaps are objectively identifiable; D3's strong performance is notable given it requires visual reasoning. D4 (Pedagogical Effectiveness) and D7 (Text-Diagram Coordination) show moderate reliability ($\alpha \approx 0.64-0.68$, $\rho \approx 0.66-0.70$), acceptable for comparative studies but requiring human validation for high-stakes decisions. D6 (Visual Consistency) and D5 (Element Layout Quality) exhibit weak reliability ($\alpha \approx 0.30$, $\rho \approx 0.40$), indicating these constructs require rubric refinement through exemplar diagrams for score calibration or decomposition into objective sub-criteria.
+Table~\ref{tab:human-ai} presents inter-rater reliability (Krippendorff's $\alpha$) and human-AI agreement (Spearman's $\rho$) for 30 explanations evaluated across 7 dimensions by 20 expert raters. Logical Coherence and Diagram--Problem Alignment achieve strong human consensus ($\alpha \geq 0.80$) and strong human-AI agreement ($\rho \geq 0.80$), validating LLM-as-judge for these dimensions. Logical Coherence's high reliability reflects that logical gaps are objectively identifiable; Diagram--Problem Alignment's strong performance is notable given it requires visual reasoning. Typographic Clarity achieves strong-to-moderate agreement ($\rho = 0.77$, $\alpha = 0.67$), as formatting artifacts are largely objective but occasionally ambiguous at borderline cases. Pedagogical Effectiveness and Text--Diagram Coordination show moderate reliability ($\alpha \approx 0.64-0.68$, $\rho \approx 0.66-0.70$), acceptable for comparative studies but requiring human validation for high-stakes decisions. Visual Consistency and Element Layout Quality exhibit weak reliability ($\alpha \approx 0.30$, $\rho \approx 0.40$). Beyond ill-defined rubric constructs, a key contributing factor is that the LLM judge model is insensitive to low-level visual artifacts---such as overlapping elements, misaligned labels, or rendering glitches---that human raters readily detect when inspecting rendered diagrams.
 
-\begin{table}[t]
+\begin{table}[h]
 \centering
 \small
 \begin{tabular}{lccl}
@@ -343,22 +331,22 @@ Table~\ref{tab:human-ai} presents inter-rater reliability (Krippendorff's $\alph
 \textbf{Dim.} & \textbf{Spearman} & \textbf{Krippendorff} & \textbf{Reliability} \\
  & \textbf{$\rho$} & \textbf{$\alpha$} & \\
 \hline
-D2 & 0.89 & 0.84 & Strong \\
-D3 & 0.83 & 0.80 & Strong \\
-D8 & 0.77 & 0.67 & Strong-Mod. \\
-D4 & 0.70 & 0.68 & Moderate \\
-D7 & 0.66 & 0.64 & Moderate \\
-D6 & 0.47 & 0.30 & Weak \\
-D5 & 0.39 & 0.32 & Weak \\
+LC & 0.89 & 0.84 & Strong \\
+DPA & 0.83 & 0.80 & Strong \\
+TC & 0.77 & 0.67 & Strong-Mod. \\
+PE & 0.70 & 0.68 & Moderate \\
+TDC & 0.66 & 0.64 & Moderate \\
+VC & 0.47 & 0.30 & Weak \\
+ELQ & 0.39 & 0.32 & Weak \\
 \hline
 \end{tabular}
-\caption{Human-AI agreement and inter-rater reliability (30 explanations, 20 raters). D1 excluded (objective gold answer verification).}
+\caption{Human-AI agreement and inter-rater reliability (30 explanations, 20 raters). Correctness \& Completeness excluded (objective gold answer verification).}
 \label{tab:human-ai}
 \end{table}
 
 \subsection{Cost Analysis}
 
-Table~\ref{tab:cost} presents comprehensive cost and latency metrics. Qwen is cheapest (\$0.06/problem), 16$\times$ cheaper than Claude (\$1.54) but with 32\% lower quality (2.98 vs. 4.40 overall score). Gemini offers optimal cost-quality balance: \$0.97 per problem for 4.40 score (\$0.22/point). Kimi provides strong alternative for budget-constrained deployments: \$0.15 with 4.07 score (\$0.037/point), representing only 7.5\% quality degradation relative to Gemini at 10$\times$ lower cost. Generating explanations for a typical K-12 curriculum ($\sim$5,000 problems) would cost: Qwen (\$300), Kimi (\$750), GPT-5 (\$2,550), Gemini (\$4,850), Claude (\$7,700), far below typical textbook development budgets (\$50K-\$200K).
+Table~\ref{tab:cost} presents cost and latency metrics. As shown in Figure~\ref{fig:cost-quality}, Kimi offers the best cost-efficiency at \$0.15/problem (4.07 score), representing only 7.5\% quality degradation relative to Gemini (\$0.97, 4.40 score) at 10$\times$ lower cost. Qwen is cheapest (\$0.06) but sacrifices 32\% quality.
 
 \begin{table*}[t]
 \centering
@@ -368,7 +356,7 @@ Table~\ref{tab:cost} presents comprehensive cost and latency metrics. Qwen is ch
 \textbf{Model} & \textbf{Avg Input} & \textbf{Avg Output} & \textbf{Input} & \textbf{Output} & \textbf{Avg Cost} & \textbf{Latency} \\
  & \textbf{Tokens} & \textbf{Tokens} & \textbf{(\$/M)} & \textbf{(\$/M)} & \textbf{(\$)} & \textbf{(min)} \\
 \hline
-Claude Sonnet 4.5 & 243,439 & 54,035 & 3.00 & 15.00 & 1.54 & 6.92 \\
+Claude Sonnet 4.5 & 90,439 & 79,035 & 3.00 & 15.00 & 1.46 & 6.92 \\
 Gemini 3.0 Pro Preview & 75,802 & 68,093 & 2.00 & 12.00 & 0.97 & 4.94 \\
 GPT-5 & 66,420 & 42,677 & 1.25 & 10.00 & 0.51 & 7.67 \\
 Kimi-K2.5 & 58,689 & 54,893 & 0.45 & 2.20 & 0.15 & 6.34 \\
@@ -388,21 +376,17 @@ Qwen 3.5-35B & 61,883 & 37,737 & 0.16 & 1.30 & 0.06 & 5.34 \\
 
 \section{Conclusion}
 
-We introduced EduIllustrate, the first comprehensive system and benchmark for generating and evaluating diagram-rich K-12 STEM problem explanations. Our four-stage pipeline decomposes multimodal content creation into structured outline generation, scene implementation planning, code generation with sequential Scene 1 anchoring, and document assembly, enabling frontier LLMs to produce geometrically accurate diagrams integrated with step-by-step textual reasoning. The benchmark comprises 118 problems spanning three grade levels and five subjects, evaluated through an 8-dimension rubric grounded in multimedia learning theory assessing both text quality and visual quality.
-
-Evaluation of five state-of-the-art LLMs reveals that Gemini 3.0 Pro Preview achieves highest overall quality (4.40/5.0), while Kimi-K2.5 offers strong cost-effectiveness (4.07 score at \$0.15/problem, 10$\times$ cheaper than Gemini). Workflow ablation validates our sequential Scene 1 anchoring strategy, demonstrating 12\% improvement in visual consistency over fully parallel generation at 17.5\% lower cost. Human evaluation with 20 expert raters establishes strong human-AI agreement on objective dimensions (logical coherence: $\rho = 0.89$, diagram-problem alignment: $\rho = 0.83$), validating LLM-as-judge for scalable automated evaluation, while revealing limitations on subjective visual assessment (layout quality: $\rho = 0.39$, visual consistency: $\rho = 0.47$). Cost analysis shows generating explanations for complete K-12 curricula ranges from \$300-\$7,700 depending on model choice, far below typical textbook development costs (\$50K-\$200K), positioning automated content generation as economically viable for institutional deployment.
-
-However, pedagogical effectiveness remains the weakest dimension across all models (2.54-3.91), indicating current LLMs produce \textit{correct} explanations more easily than \textit{pedagogically effective} explanations. This gap underscores the need for human expert review before classroom deployment and suggests LLMs augment rather than replace human educators. Future work should extend to video generation with temporal evaluation metrics, conduct classroom efficacy studies with learning outcome measures, expand to multilingual benchmarks covering diverse educational systems, and develop specialized pedagogical effectiveness models fine-tuned on expert-annotated explanations.
+We presented EduIllustrate, a four-stage agentic pipeline with sequential Scene 1 anchoring, a 118-problem benchmark, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 12\% over fully parallel generation at 17.5\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
 
 \section*{Limitations}
 
-\textbf{Static Diagrams Only.} The pipeline generates static PNG images rather than animations. While static diagrams align with textbook pedagogy and Cognitive Load Theory research~\citep{ji2025eduvis} suggests animations can increase extraneous load for complex topics, extending to short educational videos (5-15 seconds) would enhance understanding of temporal processes. This requires developing temporal evaluation metrics beyond our 8-dimension rubric and validating effectiveness through eye-tracking studies.
+\textbf{Static Diagrams Only.} The pipeline currently generates static PNG images, though the agent framework can be straightforwardly adapted to produce process animations by removing the \texttt{-s} flag in Manim rendering and adjusting the prompts. The primary limitation is the absence of a systematic evaluation protocol for animated outputs---our 8-dimension rubric does not cover temporal coherence or animation pacing, which we leave for future work.
 
-\textbf{LLM-as-Judge Visual Assessment Limitations.} Weak human-AI agreement on visual dimensions (D5 Element Layout: $\rho = 0.39$, D6 Visual Consistency: $\rho = 0.47$) indicates current vision-language models struggle to assess layout quality and stylistic consistency reliably. Low inter-rater agreement among humans ($\alpha \approx 0.30$) suggests these constructs are ill-defined, requiring rubric refinement through exemplar diagrams for each score level or decomposition into objective binary checks (e.g., element overlap detection, color scheme extraction and comparison). Future work should explore specialized visual quality assessment models fine-tuned on human-annotated diagram datasets.
+\textbf{LLM-as-Judge Visual Assessment Limitations.} Weak human-AI agreement on visual dimensions (Element Layout Quality: $\rho = 0.39$, Visual Consistency: $\rho = 0.47$) indicates current vision-language models struggle to assess layout quality and stylistic consistency reliably. Low inter-rater agreement among humans ($\alpha \approx 0.30$) suggests these constructs are ill-defined, requiring rubric refinement through exemplar diagrams for each score level or decomposition into objective binary checks (e.g., element overlap detection, color scheme extraction and comparison). Future work should explore specialized visual quality assessment models fine-tuned on human-annotated diagram datasets.
 
-\textbf{Dataset Scope Constraints.} All 118 problems derive from Chinese K-12 curricula, limiting cross-cultural generalizability. Chemistry (8 problems) and biology (10 problems) constitute only 15\% of the benchmark due to dataset availability constraints. Expanding to 30-40 problems per subject and including problems from US Common Core, UK National Curriculum, and other educational systems would strengthen conclusions. Additionally, evaluation uses Gemini 3.0 Pro Preview (optimized for English) as judge model---replication with Chinese-specific judge models could reveal language-dependent evaluation bias.
+\textbf{Technical Implementation Constraints.} The pipeline is tightly coupled to Manim, limiting generalizability to other frameworks (TikZ, matplotlib, SVG). Extending to target-agnostic intermediate representations as proposed by~\citet{kumar2025diagramir} would improve flexibility.
 
-\textbf{Technical Implementation Constraints.} The pipeline is tightly coupled to Manim, limiting generalizability to other frameworks (TikZ, matplotlib, SVG). Extending to target-agnostic intermediate representations as proposed by~\citet{kumar2025diagramir} would improve flexibility. The 8-dimension rubric evaluates multiple pedagogical facets through single scores (e.g., D4 conflates language complexity, scaffolding strategy, and misconception anticipation), requiring decomposition for finer-grained analysis. Finally, pedagogical effectiveness evaluation relies on expert judgment rather than learning outcomes---classroom efficacy studies with pre/post-test designs would provide ground truth for educational impact.
+\textbf{Pedagogical Effectiveness.} Pedagogical Effectiveness is the weakest dimension across all models (scores 2.54--3.91), reflecting a fundamental limitation: the current pipeline delivers static, one-shot explanations with no adaptation to the individual learner. The system has no mechanism for grade-appropriate scaffolding, Socratic questioning, or student-specific personalization. Future work will pursue two directions to address this. First, incorporating instructional scaffolding to enable multi-turn interaction with students---guiding them through problems via Socratic dialogue rather than delivering static explanations. Second, integrating student profiles (personality traits, cognitive styles, interests) to personalize both the explanation strategy and diagram design for individual learners.
 
 \section*{Acknowledgments}
 
@@ -417,8 +401,21 @@ We thank the 20 expert raters (15 STEM graduate students and 5 education doctora
 
 \appendix
 
-\section{Benchmark Problem Details}
+\section{Benchmark Construction Details}
 \label{sec:benchmark-details}
+
+\subsection*{Dataset Curation Process}
+
+Benchmark construction followed a two-phase procedure. In the first phase, Kimi-K2.5 automatically screened all candidate problems from K12-Vista~\citep{zhang2025k12vista} for \textbf{Diagram Appropriateness}: for each problem, the model was prompted to judge whether a visual representation would convey spatial, topological, or relational information essential to problem-solving (rather than merely restating the text), and to output a binary decision with a brief justification. In the second phase, two human annotators independently reviewed every problem against all three curation criteria---\textbf{(1) Diagram-Appropriate Problems}, \textbf{(2) Clear Gold Solutions}, and \textbf{(3) Diverse Knowledge Points}---and resolved disagreements through discussion, using a dedicated review interface (Figure~\ref{fig:question-reviewer}). Problems were retained only when both annotators confirmed all three criteria were satisfied. This two-phase design combines the scalability of LLM screening with the reliability of human expert judgment.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig/question_reviewer.png}
+  \caption{Screenshot of the problem review interface used during human annotation. Annotators evaluated each candidate problem against the three curation criteria and recorded their decisions with justifications.}
+  \label{fig:question-reviewer}
+\end{figure*}
+
+\subsection*{Knowledge Point Coverage}
 
 Table~\ref{tab:benchmark-full} lists the complete knowledge point coverage of the 118 benchmark problems, organized by grade level and subject.
 
@@ -469,18 +466,43 @@ Elementary & Mathematics (10)
 \label{tab:benchmark-full}
 \end{table*}
 
+\section{Judge Model Self-Preference Analysis}
+\label{sec:judge-bias}
+
+A potential concern with using Gemini 3.0 Pro Preview as the judge model is self-preference bias: the judge may systematically inflate scores for outputs it generated. To investigate this, we sampled 50 problems (the same problems across all models) and re-evaluated all outputs using GPT-5 as an alternative judge, then compared the two scoring distributions.
+
+Table~\ref{tab:judge-bias} reports overall scores assigned by each judge. Two observations address the self-preference concern. First, both judges agree on the \textbf{ranking} of all five models---Gemini $>$ Kimi $>$ Claude $\approx$ GPT-5 $>$ Qwen---suggesting the relative conclusions of our main results are robust to judge choice. Second, GPT-5 assigns \textit{higher} absolute scores to Gemini (4.76 vs.\ 4.40) and to most other models, indicating that if any self-preference exists in Gemini-as-judge, it does not inflate Gemini's relative standing. The score gap between Gemini and the next-best model (Kimi) is 0.33 under Gemini-as-judge and 0.57 under GPT-5-as-judge, further confirming that Gemini's top position is not an artifact of self-scoring. We therefore conclude that the main findings are not materially affected by judge model self-preference.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcc}
+\hline
+\textbf{Model (Generator)} & \textbf{Gemini Judge} & \textbf{GPT-5 Judge} \\
+\hline
+Gemini 3.0 Pro Preview & 4.40 & 4.76 \\
+Kimi-K2.5              & 4.07 & 4.20 \\
+Claude Sonnet 4.5       & 3.12 & 3.43 \\
+GPT-5                   & 3.11 & 3.21 \\
+Qwen 3.5-35B            & 2.98 & 2.67 \\
+\hline
+\end{tabular}
+\caption{Overall scores (0--5) assigned by Gemini 3.0 Pro Preview and GPT-5 as judge models, evaluated on the same 50 problems per generator model. Model ranking is consistent across both judges.}
+\label{tab:judge-bias}
+\end{table}
+
 \section{Visual Consistency Case Study}
 \label{sec:case-study}
 
-To illustrate the impact of our sequential Scene 1 anchoring strategy on visual consistency (D6), we present a side-by-side comparison of two explanations generated for the same high school mathematics problem (four-pyramid $P$-$ABCD$, finding $NC:NP$ given $MN \parallel$ plane $PAD$). Both explanations are generated by Gemini 3.0 Pro Preview: the top row uses our workflow (sequential Scene 1 planning + parallel Scenes 2--N conditioned on Scene 1's code), while the bottom row uses the all-parallel baseline (all scenes planned and generated independently).
+To illustrate the impact of our sequential Scene 1 anchoring strategy on Visual Consistency, we present a side-by-side comparison of two explanations generated for the same high school mathematics problem (four-pyramid $P$-$ABCD$, finding $NC:NP$ given $MN \parallel$ plane $PAD$). Both explanations are generated by Gemini 3.0 Pro Preview: the top row uses our workflow (sequential Scene 1 planning + parallel Scenes 2--N conditioned on Scene 1's code), while the bottom row uses the all-parallel baseline (all scenes planned and generated independently).
 
 \begin{figure*}[t]
   \centering
-  \textbf{Ours (Sequential Anchoring) --- D6 = 4.42}\\[4pt]
+  \textbf{Ours (Sequential Anchoring) --- Visual Consistency = 4.42}\\[4pt]
   \includegraphics[width=0.32\textwidth]{fig/doc1_scene1.png}\hfill
   \includegraphics[width=0.32\textwidth]{fig/doc1_scene2.png}\hfill
   \includegraphics[width=0.32\textwidth]{fig/doc1_scene3.png}\\[10pt]
-  \textbf{All-Parallel Baseline --- D6 = 3.89}\\[4pt]
+  \textbf{All-Parallel Baseline --- Visual Consistency = 3.89}\\[4pt]
   \includegraphics[width=0.32\textwidth]{fig/doc2_scene1.png}\hfill
   \includegraphics[width=0.32\textwidth]{fig/doc2_scene2.png}\hfill
   \includegraphics[width=0.32\textwidth]{fig/doc2_scene3.png}
@@ -656,9 +678,9 @@ A. 11 \quad B. 6.5 \quad C. 7 \quad D. 7.5\\[4pt]
 \includegraphics[width=\linewidth]{fig/doc_problem_40_gpt-5_scene2.png}\\[2pt]
 \scriptsize\textit{Scene 2: Net options annotated with opposite-face verification.}\\[6pt]
 \textbf{Final Answer: C} \hspace{4pt} \textcolor{red}{$\times$ \textbf{Gold answer: A}}\\[4pt]
-\textbf{Failure mode (D1):} The reasoning process applies the opposite-face pairing rule correctly in principle, but misidentifies the symbol placement in option A vs.\ C during the mapping step, leading to an incorrect final answer.
+\textbf{Failure mode (Correctness \& Completeness):} The reasoning process applies the opposite-face pairing rule correctly in principle, but misidentifies the symbol placement in option A vs.\ C during the mapping step, leading to an incorrect final answer.
 \end{minipage}
-\caption*{\textbf{Low-quality example 7 (D1 failure).} The model's final answer (C) contradicts the gold standard answer (A). Despite a structured approach, an error in reading the net topology causes the incorrect conclusion.}
+\caption*{\textbf{Low-quality example 7 (Correctness \& Completeness failure).} The model's final answer (C) contradicts the gold standard answer (A). Despite a structured approach, an error in reading the net topology causes the incorrect conclusion.}
 \end{figure*}
 
 \noindent Example 8: Middle School Math (Isosceles Triangle) --- Diagram Inconsistent with Problem
@@ -680,9 +702,9 @@ Options: A. $\frac{\sqrt{5}-1}{2}$ \quad B. $\frac{\sqrt{5}-1}{4}$ \quad C. $\fr
 \scriptsize\textit{Scene 2: \textcolor{red}{The highlighted triangle still shows inconsistent proportions. The isosceles constraint ($AB=AC$) is visually absent, making the diagram misleading.}}\\[4pt]
 \textbf{Step 3:} $\cos 36^\circ = \frac{\sqrt{5}+1}{4}$\\[4pt]
 \textbf{Final Answer: C} \hspace{4pt} \textcolor{green!60!black}{$\checkmark$} (textually correct)\\[4pt]
-\textbf{Failure mode (D3):} Although the textual reasoning is correct, the rendered diagrams do not reflect the isosceles structure of the triangle---a fundamental geometric constraint of the problem. A student relying on the diagrams would form incorrect spatial intuitions.
+\textbf{Failure mode (Diagram--Problem Alignment):} Although the textual reasoning is correct, the rendered diagrams do not reflect the isosceles structure of the triangle---a fundamental geometric constraint of the problem. A student relying on the diagrams would form incorrect spatial intuitions.
 \end{minipage}
-\caption*{\textbf{Low-quality example 8 (D3 failure).} Diagrams fail to represent the isosceles triangle ($AB=AC$) and the $72^\circ$ base angles. Despite correct textual reasoning, the visual representations are geometrically inconsistent with the problem statement, undermining pedagogical effectiveness.}
+\caption*{\textbf{Low-quality example 8 (Diagram--Problem Alignment failure).} Diagrams fail to represent the isosceles triangle ($AB=AC$) and the $72^\circ$ base angles. Despite correct textual reasoning, the visual representations are geometrically inconsistent with the problem statement, undermining pedagogical effectiveness.}
 \end{figure*}
 
 \noindent Example 9: High School Physics (Gas Laws, Two Cylinders)--- Flawed Diagram
@@ -703,9 +725,9 @@ Options: A. $\frac{\sqrt{5}-1}{2}$ \quad B. $\frac{\sqrt{5}-1}{4}$ \quad C. $\fr
 \scriptsize\textit{Scene 2: \textcolor{red}{After piston $b$ reaches the top, the diagram still carries the incorrect label from Scene 1, propagating the error into Stage II.}}\\[4pt]
 \includegraphics[width=\linewidth]{fig/doc_problem_85_gpt-5_scene3.png}\\[2pt]
 \scriptsize\textit{Scene 3: Stage II diagram showing piston $a$ risen by $H/16$; layout partially corrected but inconsistent with Scene 1.}\\[4pt]
-\textbf{Failure mode (D5/D3):} The mislabeled height $H$ (should be $3H/4$) in Scene 1 violates the problem's geometric constraints. A student using the diagram to set up equations would obtain wrong initial volumes and incorrect answers.
+\textbf{Failure mode (Element Layout Quality / Diagram--Problem Alignment):} The mislabeled height $H$ (should be $3H/4$) in Scene 1 violates the problem's geometric constraints. A student using the diagram to set up equations would obtain wrong initial volumes and incorrect answers.
 \end{minipage}
-\caption*{\textbf{Low-quality example 5 (D3/D5 failure).} A critical geometric parameter ($3H/4$, the nitrogen column height in cylinder A) is mislabeled as $H$ in Scene 1 and Scene 2. The textual solution is correct, but the diagram directly contradicts the problem setup.}
+\caption*{\textbf{Low-quality example 9 (Diagram--Problem Alignment / Element Layout Quality failure).} A critical geometric parameter ($3H/4$, the nitrogen column height in cylinder A) is mislabeled as $H$ in Scene 1 and Scene 2. The textual solution is correct, but the diagram directly contradicts the problem setup.}
 \end{figure*}
 
 \noindent Example 10: Middle School Geography (Latitude/Longitude Reading) --- Flawed Diagram Reading and Reasoning
@@ -725,9 +747,9 @@ Options: A. $\frac{\sqrt{5}-1}{2}$ \quad B. $\frac{\sqrt{5}-1}{4}$ \quad C. $\fr
 \includegraphics[width=\linewidth]{fig/doc_problem_114_gpt-5_scene2.png}\\[2pt]
 \scriptsize\textit{Scene 2: Hemisphere analysis diagram. \textcolor{red}{The longitude reference lines drawn are inconsistent with the original diagram's markings, reflecting the model's failure to correctly read the given coordinate information.}}\\[4pt]
 \textbf{Final Answer: B} \hspace{4pt} \textcolor{green!60!black}{$\checkmark$} (coincidentally correct)\\[4pt]
-\textbf{Failure mode (D2/D3):} Correct final answer reached through systematically flawed reasoning---wrong latitude identification for A, and incorrect claim about missing longitude markers. This is a ``right answer, wrong method'' failure that would mislead students.
+\textbf{Failure mode (Logical Coherence / Diagram--Problem Alignment):} Correct final answer reached through systematically flawed reasoning---wrong latitude identification for A, and incorrect claim about missing longitude markers. This is a ``right answer, wrong method'' failure that would mislead students.
 \end{minipage}
-\caption*{\textbf{Low-quality example 6 (D2/D3 failure).} The model arrives at the correct answer (B) through two critical reasoning errors: misidentifying point A's latitude zone, and falsely claiming the diagram lacks longitude references. Such reasoning, if adopted by students, instills incorrect map-reading habits.}
+\caption*{\textbf{Low-quality example 10 (Logical Coherence / Diagram--Problem Alignment failure).} The model arrives at the correct answer (B) through two critical reasoning errors: misidentifying point A's latitude zone, and falsely claiming the diagram lacks longitude references. Such reasoning, if adopted by students, instills incorrect map-reading habits.}
 \end{figure*}
 
 \section{Human Annotation Process}
@@ -738,9 +760,9 @@ Options: A. $\frac{\sqrt{5}-1}{2}$ \quad B. $\frac{\sqrt{5}-1}{4}$ \quad C. $\fr
   \caption{Screenshot of the human annotation website used for expert evaluation. Raters scored 7 dimensions on a 3-level scale after reviewing the problem, gold solution, and generated explanation with diagrams.}
   \label{fig:annotation}
 \end{figure*}
-Human evaluation was conducted through a dedicated annotation website. Raters were presented with a K-12 STEM problem, its gold-standard solution, and the generated illustrated explanation (including rendered diagrams). For each explanation, raters scored 7 dimensions (D2--D8) on a coarse 3-level ordinal scale \{0, 0.5, 1\}, where 0 indicates poor quality, 0.5 indicates acceptable quality, and 1 indicates high quality. D1 (Correctness and Completeness) was excluded from human evaluation because solution correctness can be determined objectively by comparing against the gold-standard answer, making subjective human judgment unnecessary and potentially inconsistent. Each page displayed one explanation at a time, with the rubric description and score criteria shown alongside. Raters could zoom into individual diagrams before scoring visual dimensions.
+Human evaluation was conducted through a dedicated annotation website. Raters were presented with a K-12 STEM problem, its gold-standard solution, and the generated illustrated explanation (including rendered diagrams). For each explanation, raters scored 7 dimensions (Logical Coherence through Typographic Clarity) on a coarse 3-level ordinal scale \{0, 0.5, 1\}, where 0 indicates poor quality, 0.5 indicates acceptable quality, and 1 indicates high quality. Correctness \& Completeness was excluded from human evaluation because solution correctness can be determined objectively by comparing against the gold-standard answer, making subjective human judgment unnecessary and potentially inconsistent. Each page displayed one explanation at a time, with the rubric description and score criteria shown alongside. Raters could zoom into individual diagrams before scoring visual dimensions.
 
-\textbf{Rater Training.} Before formal scoring, all 20 raters underwent a calibration session. For each of the 7 dimensions, we presented two anchor examples---one high-quality explanation demonstrating exemplary visual and textual clarity, and one low-quality explanation exhibiting common failure modes (e.g., overlapping diagram elements, misaligned labels, or pedagogically ineffective step sequencing). Particular emphasis was placed on the aesthetic dimensions (D5 Element Layout Quality and D6 Visual Consistency), as these proved most subjective. Raters discussed borderline cases together to align their interpretation of the 3-level scale.
+\textbf{Rater Training.} Before formal scoring, all 20 raters underwent a calibration session. For each of the 7 dimensions, we presented two anchor examples---one high-quality explanation demonstrating exemplary visual and textual clarity, and one low-quality explanation exhibiting common failure modes (e.g., overlapping diagram elements, misaligned labels, or pedagogically ineffective step sequencing). Particular emphasis was placed on the aesthetic dimensions (Element Layout Quality and Visual Consistency), as these proved most subjective. Raters discussed borderline cases together to align their interpretation of the 3-level scale.
 
 \textbf{Pilot Scoring.} Following training, raters completed a pilot round on 5 held-out explanations not included in the final evaluation set. Inter-rater agreement was computed via Krippendorff's $\alpha$ after the pilot. Raters whose individual agreement with the group fell below an acceptable threshold were given additional feedback before proceeding. The pilot Krippendorff's $\alpha$ across all dimensions exceeded 0.60, confirming sufficient calibration to proceed with formal scoring.
 

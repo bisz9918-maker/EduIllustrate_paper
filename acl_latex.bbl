@@ -1,4 +1,4 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Chen et~al.(2025)Chen, Wu, Zhang, and Liu}]{chen2025code2video}
@@ -51,16 +51,6 @@ Richard~E. Mayer. 2001.
 \newblock \href {https://doi.org/10.1017/CBO9781139164603} {\emph{Multimedia Learning}}.
 \newblock Cambridge University Press.
 
-\bibitem[{Memari et~al.(2025)Memari, Johnson, and Smith}]{memari2025elementary}
-Sarah Memari, Karen Johnson, and Thomas Smith. 2025.
-\newblock {AI} in elementary {STEM} education: A systematic review of 258 studies.
-\newblock \emph{Computers \& Education}, 195:104726.
-
-\bibitem[{Ni et~al.(2025)Ni, Chen, and Zhao}]{ni2025viscoder}
-Jian Ni, Xiao Chen, and Ming Zhao. 2025.
-\newblock {VisCoder}: Fine-tuning approach with {VisCode-200K} dataset for plotting code generation.
-\newblock In \emph{Proceedings of the 39th AAAI Conference on Artificial Intelligence}, AAAI '25.
-
 \bibitem[{Paivio(1971)}]{paivio1971imagery}
 Allan Paivio. 1971.
 \newblock \emph{Imagery and Verbal Processes}.
@@ -70,11 +60,6 @@ Allan Paivio. 1971.
 Daniel Park, Li~Chen, and Wei Zhang. 2025.
 \newblock {AGACCI}: Distributed evaluation roles for complex artifacts via collaborative agents.
 \newblock In \emph{Proceedings of the 42nd International Conference on Machine Learning}, ICML '25.
-
-\bibitem[{Reux et~al.(2025)Reux, Dubois, and Laurent}]{reux2025vtikz}
-Pierre Reux, Marc Dubois, and Sophie Laurent. 2025.
-\newblock {vTikZ} benchmark: Evaluating code customization with visual coherence.
-\newblock \emph{arXiv preprint arXiv:2501.00009}.
 
 \bibitem[{Sweller(1988)}]{sweller1988cognitive}
 John Sweller. 1988.

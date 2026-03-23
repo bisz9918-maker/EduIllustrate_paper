@@ -1,8 +1,8 @@
-PWD /Users/bisz/Documents/visual_solver/acl-style-files
+PWD /Users/bisz/Documents/visual_solver/EduIllustrate
 INPUT /usr/local/texlive/2025/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-var/web2c/xetex/xelatex.fmt
-INPUT /Users/bisz/Documents/visual_solver/acl-style-files/acl_latex.tex
+INPUT /Users/bisz/Documents/visual_solver/EduIllustrate/acl_latex.tex
 OUTPUT acl_latex.log
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -141,6 +141,10 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/booktabs/booktabs.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/booktabs/booktabs.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/sttools/stfloats.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/sttools/stfloats.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/sttools/cuted.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/sttools/cuted.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 INPUT ./acl_latex.aux
@@ -203,8 +207,11 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-msb.cfg
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
+INPUT ./fig/teaser.png
+INPUT ./fig/teaser.png
+INPUT ./fig/teaser.png
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/latex-fonts/lasy10.tfm
@@ -218,6 +225,7 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
 OUTPUT acl_latex.xdv
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
@@ -232,6 +240,9 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/inconsolata/t1-zi4r-0.tfm
+INPUT ./fig/knowledge_categories.png
+INPUT ./fig/knowledge_categories.png
+INPUT ./fig/knowledge_categories.png
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmr8t.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmi9.tfm
@@ -248,7 +259,9 @@ INPUT ./fig/fig_cost_quality.png
 INPUT ./acl_latex.bbl
 INPUT ./acl_latex.bbl
 INPUT acl_latex.bbl
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm
+INPUT ./fig/question_reviewer.png
+INPUT ./fig/question_reviewer.png
+INPUT ./fig/question_reviewer.png
 INPUT ./fig/doc1_scene1.png
 INPUT ./fig/doc1_scene1.png
 INPUT ./fig/doc1_scene1.png
