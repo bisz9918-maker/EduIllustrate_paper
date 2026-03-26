@@ -38,6 +38,7 @@
 \usepackage{stfloats}
 \usepackage{caption}
 \usepackage{cuted}
+\usepackage{comment}
 % If the title and author information does not fit in the area allocated, uncomment the following
 %
 %\setlength\titlebox{<dim>}
@@ -120,6 +121,90 @@
 Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{118 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.07 at \$0.15/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 12\% over a fully parallel baseline at 17.5\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
 \end{abstract}
 
+
+\begin{comment}
+%% =====================================================================
+%% INTRO 修改大纲（根据老师反馈更新，2026-03）
+%% =====================================================================
+%%
+%% 老师反馈六点：
+%% (1) 突出multimodal reasoning + interleaved（不只是"生成"）
+%% (2) 强调K-12 education gap（当前工作都是大学级别）
+%% (3) benchmark覆盖面很重要，要突出
+%% (4) evaluation rubric gap要说清楚
+%% (5) "精确"diagram与文字交织是独特贡献
+%% (6) Manim不是亮点，不要放在标题/亮点位置
+%%
+%% =====================================================================
+%% 【P1】K-12图文解析的重要性 + 生产困境
+%% =====================================================================
+%%
+%% 【句1】图文结合的认知价值（三篇经典理论，不写具体数字）：
+%%   \citep{sweller1988cognitive}  — Cognitive Load Theory
+%%   \citep{paivio1971imagery}     — Dual Coding Theory
+%%   \citep{mayer2001multimedia}   — Multimedia Learning
+%%
+%% 【句2】生产困境（三层证据）：
+%%   层1 — 时间成本: \citep{philipp2013teachers}, \citep{thompson2024teachers}
+%%   层2 — 能力壁垒: \citep{turkozudincer2025literacy}
+%%   层3 — 系统性缺口: \citep{yao2026instructional}
+%%
+%% → 草稿句（禁止具体数字）:
+%%   However, producing such materials at scale remains a formidable challenge:
+%%   lesson planning and material preparation are among the most time-consuming
+%%   aspects of teachers' work \citep{philipp2013teachers,thompson2024teachers},
+%%   and many educators lack the specialized skills required to create high-quality
+%%   illustrated explanations \citep{turkozudincer2025literacy}, resulting in a
+%%   systematic shortage of such materials for K-12 students \citep{yao2026instructional}.
+%%
+%% =====================================================================
+%% 【P2】Multimodal Interleaved Reasoning 是当前热点（非相关工作综述）
+%% =====================================================================
+%%
+%% 逻辑链：
+%%   交织生成是当前研究热点 \citep{zheng2023interleaved}
+%%   → 现有工作聚焦模型能力本身（幻觉、推理），尚无人系统应用于K-12教育内容生成
+%%     \citep{liu2025rh}（RH-AUC, 幻觉评测）
+%%   → 我们是首个在K-12 STEM场景下系统实现multimodal interleaved生成的工作
+%%
+%% 注意：P2是motivation段，不是related work综述
+%%
+%% =====================================================================
+%% 【P3】双重空白（把相关工作折叠进来）
+%% =====================================================================
+%%
+%% Gap 1 — 生成层面：
+%%   A. 视频生成（大学级别）: \citep{ku2025theoremexplain}, \citep{chen2025code2video}
+%%   B. 纯文字生成: \citep{liu2025cogent}, \citep{wang2025genmentor}
+%%   C. 无K-12图文交织生成系统（待补充3-5篇文献）
+%%
+%% Gap 2 — 评价层面：
+%%   \citep{kumar2025diagramir}（图表评测，但非K-12，非多学科）
+%%   \citep{ji2025eduvis}（EduVisBench，可视化推理，非生成评测）
+%%   → 无benchmark同时评K-12多模态内容的文字质量+视觉质量
+%%
+%% =====================================================================
+%% 【P4】我们的工作：EduIllustrate + EduIllustrateBench
+%% =====================================================================
+%%
+%% EduIllustrate: 四阶段pipeline，multimodal interleaved输出（文字+图）
+%% EduIllustrateBench: 覆盖3个年级，5个学科，配套8维评测rubric
+%%
+%% =====================================================================
+%% 【P5】三条贡献
+%% =====================================================================
+%%
+%% 1. 方法：首个K-12 STEM图文交织解析自动生成pipeline
+%% 2. 评测：EduIllustrateBench（多学科、多年级benchmark + 8维rubric）
+%% 3. 实验：5个前沿LLM对比，消融分析，human evaluation验证
+%%
+%% =====================================================================
+%% 待办：
+%% [ ] P2: 确认zheng2023interleaved (2310.02239) 和 liu2025rh (2505.21523) 引用正确
+%% [ ] P3: 补充类别C相关工作（约需3-5篇文献，K-12图文/插图生成方向）
+%% [ ] 写完整draft文本（当前只有P1草稿句）
+%% =====================================================================
+\end{comment}
 
 \section{Introduction}
 
