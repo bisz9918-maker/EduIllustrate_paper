@@ -35,9 +35,9 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{natbib}
-\usepackage{stfloats}
+% \usepackage{stfloats}
 \usepackage{caption}
-\usepackage{cuted}
+% \usepackage{cuted}
 \usepackage{comment}
 % If the title and author information does not fit in the area allocated, uncomment the following
 %
@@ -158,30 +158,44 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
 %%   systematic shortage of such materials for K-12 students \citep{yao2026instructional}.
 %%
 %% =====================================================================
-%% 【P2】Multimodal Interleaved Reasoning 是当前热点（非相关工作综述）
+%% 【P2】Multimodal Interleaved 生成是当前热点（纯背景，不提gap）
 %% =====================================================================
 %%
-%% 逻辑链：
-%%   交织生成是当前研究热点 \citep{zheng2023interleaved}
-%%   → 现有工作聚焦模型能力本身（幻觉、推理），尚无人系统应用于K-12教育内容生成
-%%     \citep{liu2025rh}（RH-AUC, 幻觉评测）
-%%   → 我们是首个在K-12 STEM场景下系统实现multimodal interleaved生成的工作
+%% 职责：只建立技术背景，说明这个方向很重要、很热，不在此段提任何gap。
 %%
-%% 注意：P2是motivation段，不是related work综述
+%% 逻辑：
+%%   交织生成从两个维度同步推进——
+%%
+%%   生成侧：从早期MiniGPT-5 \citep{zheng2023interleaved}，
+%%           到ANOLE \citep{chern2024anole}、Orthus \citep{kou2025orthus}，
+%%           autoregressive交织生成能力持续演进
+%%
+%%   评测侧：OpenLEAF \citep{an2024openleaf}、MMIE \citep{xia2025mmie}
+%%           建立了面向交织生成的统一评价标准
+%%
+%% → 段尾只说"这两个维度的发展表明交织生成正成为多模态AI的核心范式"，不提K-12
 %%
 %% =====================================================================
-%% 【P3】双重空白（把相关工作折叠进来）
+%% 【P3】交叉空白 = 交织生成 × K-12教育（两条线汇聚分析）
 %% =====================================================================
 %%
-%% Gap 1 — 生成层面：
-%%   A. 视频生成（大学级别）: \citep{ku2025theoremexplain}, \citep{chen2025code2video}
-%%   B. 纯文字生成: \citep{liu2025cogent}, \citep{wang2025genmentor}
-%%   C. 无K-12图文交织生成系统（待补充3-5篇文献）
+%% 职责：P3才是gap分析，从两个方向夹逼，说明交叉点是空白。
 %%
-%% Gap 2 — 评价层面：
-%%   \citep{kumar2025diagramir}（图表评测，但非K-12，非多学科）
-%%   \citep{ji2025eduvis}（EduVisBench，可视化推理，非生成评测）
-%%   → 无benchmark同时评K-12多模态内容的文字质量+视觉质量
+%% 方向一（K-12教育内容生成）：
+%%   现有K-12/教育生成工作要么纯文字: \citep{liu2025cogent}, \citep{wang2025genmentor}
+%%   要么大学级别视频: \citep{ku2025theoremexplain}, \citep{chen2025code2video}
+%%   → 没有K-12 STEM的交织图文生成
+%%
+%% 方向二（交织生成工作）：
+%%   生成侧和评测侧（见P2）均聚焦通用场景（故事/how-to/网页），生成自然图像
+%%   → 没有应用于K-12教育，且不要求几何精确的学科示意图
+%%
+%% 交叉空白：
+%%   两条线发展迅猛，但交叉点无人涉及
+%%   → Gap 1: 无系统将交织生成范式用于K-12 STEM内容生成
+%%   → Gap 2: 无benchmark同时评K-12多模态内容的文字质量+视觉质量
+%%            (\citep{kumar2025diagramir} 仅评数学图表，非K-12多学科；
+%%             \citep{ji2025eduvis} 评可视化推理，非生成评测)
 %%
 %% =====================================================================
 %% 【P4】我们的工作：EduIllustrate + EduIllustrateBench
@@ -198,33 +212,135 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
 %% 2. 评测：EduIllustrateBench（多学科、多年级benchmark + 8维rubric）
 %% 3. 实验：5个前沿LLM对比，消融分析，human evaluation验证
 %%
+%% 
+\end{comment}
+
 %% =====================================================================
-%% 待办：
-%% [ ] P2: 确认zheng2023interleaved (2310.02239) 和 liu2025rh (2505.21523) 引用正确
-%% [ ] P3: 补充类别C相关工作（约需3-5篇文献，K-12图文/插图生成方向）
-%% [ ] 写完整draft文本（当前只有P1草稿句）
+%% 中文全文草稿（含引用，供审阅思路用）
 %% =====================================================================
+\begin{comment}
+
+【P1】
+在K-12 STEM教育中，图文结合的解析材料对学生理解抽象概念至关重要。
+认知负荷理论~\citep{sweller1988cognitive}、双重编码理论~\citep{paivio1971imagery}
+与多媒体学习原则~\citep{mayer2001multimedia}均表明，将视觉图示与文字推理协同呈现，
+能显著降低认知负担、提升概念理解深度。
+然而，制作此类高质量图文解析材料面临重重障碍：
+备课与材料制作是教师工作中最耗时的环节之一~\citep{philipp2013teachers,thompson2024teachers}，
+而大量教师缺乏制作规范图示所需的专业技能~\citep{turkozudincer2025literacy}，
+由此造成K-12学生可获取的优质图文解析材料的系统性短缺~\citep{yao2026instructional}。
+
+【P2】
+与此同时，多模态交织生成（interleaved image-text generation）正成为多模态AI研究的核心前沿，
+并从两个维度同步推进：
+在生成侧，从MiniGPT-5~\citep{zheng2023interleaved}
+到ANOLE~\citep{chern2024anole}、Orthus~\citep{kou2025orthus}，
+自回归交织生成能力持续演进；
+在评测侧，OpenLEAF~\citep{an2024openleaf}与MMIE~\citep{xia2025mmie}
+已建立面向交织生成的统一评价框架。
+这两个维度的快速发展表明，交织生成正在成为多模态内容理解与生成的主流范式。
+
+【P3】
+然而，上述两条研究线在K-12 STEM教育场景下均存在系统性空白。
+一方面，现有教育内容生成工作分化为两类：
+文字生成系统（如COGENT~\citep{liu2025cogent}、GenMentor~\citep{wang2025genmentor}）
+不包含视觉内容，
+视频生成系统（如TheoremExplainAgent~\citep{ku2025theoremexplain}、
+Code2Video~\citep{chen2025code2video}）则面向大学级别定理，
+均未实现K-12 STEM的图文交织解析生成。
+另一方面，现有交织生成工作聚焦于通用场景（故事、how-to、网页），
+生成的视觉内容为自然图像，无法满足K-12学科示意图对几何精度和学科规范的要求。
+两条线的交叉点至今空白。
+此外，评测层面同样缺失：
+现有图表评测工作（DiagramIR~\citep{kumar2025diagramir}）仅覆盖数学单科，
+EduVisBench~\citep{ji2025eduvis}面向可视化推理而非生成质量评测，
+尚无benchmark能够同时评估K-12多模态内容的文字质量与视觉质量。
+
+【P4】
+为填补上述空白，本文提出\textbf{EduIllustrate}——
+首个面向K-12 STEM的多模态交织图文解析自动生成系统。
+给定一道K-12 STEM题目，EduIllustrate通过四阶段pipeline输出
+结构化的图文交织解析：文字推理步骤与学科示意图交替呈现，
+示意图由程序化渲染生成，保证几何精度与跨图视觉一致性。
+为支撑系统评测，我们构建\textbf{EduIllustrateBench}，
+覆盖小学、初中、高中三个年级，数学、物理、化学、生物、地理五个学科，
+并提出基于多媒体学习理论的\textbf{8维评测rubric}，
+同时覆盖文字质量与视觉质量。
+
+【P5】
+本文的主要贡献包括：
+（1）\textbf{方法}：提出首个K-12 STEM多模态交织图文解析自动生成pipeline，
+引入顺序锚定策略保证跨图视觉一致性；
+（2）\textbf{评测}：构建EduIllustrateBench及8维评测rubric，
+填补K-12多学科多模态内容评测的空白；
+（3）\textbf{实验}：对五个前沿LLM进行对比分析，
+结合消融实验与人工评测验证系统有效性与LLM-as-judge可靠性。
+
 \end{comment}
 
 \section{Introduction}
 
-High-quality illustrated explanations are fundamental to K-12 STEM pedagogy. Research in educational psychology demonstrates that combining textual reasoning with visual diagrams significantly enhances conceptual understanding, particularly for abstract scientific concepts and mathematical problem-solving~\citep{mayer2001multimedia}. However, producing such multimodal educational content at scale remains labor-intensive, requiring both deep domain expertise and technical proficiency in diagram creation tools.
+High-quality illustrated explanations are fundamental to K-12 STEM pedagogy.
+Cognitive Load Theory~\citep{sweller1988cognitive}, Dual Coding Theory~\citep{paivio1971imagery},
+and the Multimedia Learning Principle~\citep{mayer2001multimedia} collectively demonstrate
+that coordinating visual diagrams with textual reasoning substantially reduces cognitive burden
+and deepens conceptual understanding.
+Yet producing such materials at scale remains a formidable challenge:
+lesson planning and material preparation rank among the most time-consuming aspects
+of teachers' professional work~\citep{philipp2013teachers,thompson2024teachers},
+many educators lack the specialized skills required to create geometrically accurate
+diagrams~\citep{turkozudincer2025literacy},
+resulting in a systematic shortage of high-quality illustrated explanations
+available to K-12 students~\citep{yao2026instructional}.
 
-Recent advances in large language models (LLMs) have enabled curriculum-aligned content generation~\citep{liu2025cogent}, personalized learning frameworks~\citep{wang2025genmentor}, and programmatic educational video generation via Manim animations~\citep{ku2025theoremexplain,chen2025code2video}.
+Meanwhile, interleaved image-text generation has emerged as a central frontier
+in multimodal AI research, advancing along two parallel tracks.
+On the generation side, the field has progressed from early approaches such as
+MiniGPT-5~\citep{zheng2023interleaved} to autoregressive systems including
+ANOLE~\citep{chern2024anole} and Orthus~\citep{kou2025orthus},
+with steadily improving coherence in interleaved outputs.
+On the evaluation side, OpenLEAF~\citep{an2024openleaf} and MMIE~\citep{xia2025mmie}
+have established unified benchmarks for assessing interleaved generation quality.
+Together, these developments position interleaved generation as an increasingly
+dominant paradigm for multimodal content understanding and production.
 
-Yet a critical gap remains for \textbf{K-12 STEM education}: existing approaches target university-level theorems with long-form animations, while K-12 problem explanations require \textbf{static, geometrically accurate diagrams}---carrying precise semantic meaning across subjects (exact angle measurements in geometry, force vectors in physics, molecular structures in chemistry)---seamlessly integrated with step-by-step reasoning. No unified benchmark exists to jointly evaluate textual and visual quality across K-12 STEM disciplines.
+Despite this progress, a critical intersection remains unaddressed.
+On the education side, existing K-12 content generation systems bifurcate into
+text-only approaches~\citep{liu2025cogent,wang2025genmentor} and video-based systems
+targeting university-level theorems~\citep{ku2025theoremexplain,chen2025code2video}---neither
+produces interleaved text-diagram explanations for K-12 STEM.
+On the interleaved generation side, existing systems target general-purpose domains
+(storytelling, how-to, webpage synthesis) and generate photorealistic images,
+which cannot satisfy the geometric precision and discipline-specific conventions
+required for educational diagrams.
+The intersection of these two rapidly advancing lines remains vacant.
+Evaluation is equally underdeveloped: DiagramIR~\citep{kumar2025diagramir}
+evaluates mathematical diagrams in isolation, EduVisBench~\citep{ji2025eduvis}
+targets visual reasoning rather than generation quality, and no benchmark
+jointly assesses both textual and visual quality of K-12 multimodal educational content.
 
-We address these challenges with \textbf{EduIllustrate}, an automated four-stage pipeline generating illustrated K-12 STEM explanations with programmatically rendered diagrams via Manim. Our system decomposes generation into: (1) structured outline with interleaved text and scene specifications, (2) per-scene implementation planning with explicit spatial constraints, (3) parallel Manim code generation and rendering, and (4) final Markdown assembly. To systematically evaluate multimodal educational content, we construct a benchmark of \textbf{118 K-12 STEM problems} spanning three grade levels and five subjects, proposing an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory.
+We address these gaps with \textbf{EduIllustrate}, the first automated system for
+generating interleaved text-diagram explanations for K-12 STEM problems.
+Given a problem as input, EduIllustrate produces a structured explanation in which
+textual reasoning steps and subject-specific diagrams alternate seamlessly,
+with diagrams programmatically rendered to ensure geometric accuracy and
+cross-diagram visual consistency.
+To enable systematic evaluation, we construct \textbf{EduIllustrateBench},
+spanning three grade levels (elementary, middle, and high school) and five subjects
+(mathematics, physics, chemistry, biology, and geography), paired with an
+\textbf{8-dimension evaluation rubric} grounded in multimedia learning theory
+that jointly covers textual and visual quality.
 
-\textbf{Our contributions are:}
-
-\begin{enumerate}
-\item An automated four-stage pipeline for generating diagram-rich K-12 STEM explanations with explicit geometric accuracy and visual consistency constraints
-\item A curated benchmark of 118 problems across 3 grade levels and 5 subjects for standardized multimodal evaluation
-\item An 8-dimension evaluation rubric with automated and human protocols grounded in educational psychology
-\item Comparative study of five frontier LLMs identifying model-specific strengths and failure modes
-\item Validation of LLM-as-judge reliability for multimodal content through correlation analysis with human expert ratings
-\end{enumerate}
+Our main contributions are:
+\begin{itemize}
+  \item \textbf{System}: EduIllustrate, the first pipeline for automated generation
+    of interleaved text-diagram K-12 STEM explanations, incorporating a sequential
+    anchoring strategy to ensure cross-diagram visual consistency.
+  \item \textbf{Benchmark}: EduIllustrateBench with an 8-dimension evaluation rubric,
+    addressing the gap in multi-subject, multi-grade multimodal educational content evaluation.
+  \item \textbf{Experiments}: Comparative analysis of five frontier LLMs, ablation studies,
+    and human evaluation validating system effectiveness and LLM-as-judge reliability.
+\end{itemize}
 
 \section{Related Work}
 
