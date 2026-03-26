@@ -110,12 +110,12 @@
 \begin{document}
 \maketitle
 
-\begin{strip}
+\begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{fig/teaser.png}
-\captionof{figure}{EduIllustrate takes a K-12 STEM problem as input and produces a structured explanation interleaved with geometrically accurate diagrams rendered via Manim. \textit{Left}: the input problem (Grade 9 Mathematics). \textit{Right}: two generated scenes illustrating the inscribed angle theorem and the resulting right triangle used to compute $AB = 3$.}
+\caption{EduIllustrate takes a K-12 STEM problem as input and produces a structured explanation interleaved with geometrically accurate diagrams rendered via Manim. \textit{Left}: the input problem (Grade 9 Mathematics). \textit{Right}: two generated scenes illustrating the inscribed angle theorem and the resulting right triangle used to compute $AB = 3$.}
 \label{fig:teaser}
-\end{strip}
+\end{figure*}
 
 \begin{abstract}
 Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{118 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.07 at \$0.15/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 12\% over a fully parallel baseline at 17.5\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
@@ -333,12 +333,12 @@ that jointly covers textual and visual quality.
 
 Our main contributions are:
 \begin{itemize}
-  \item \textbf{System}: EduIllustrate, the first pipeline for automated generation
+  \item  EduIllustrate, the first pipeline for automated generation
     of interleaved text-diagram K-12 STEM explanations, incorporating a sequential
     anchoring strategy to ensure cross-diagram visual consistency.
-  \item \textbf{Benchmark}: EduIllustrateBench with an 8-dimension evaluation rubric,
+  \item EduIllustrateBench with an 8-dimension evaluation rubric,
     addressing the gap in multi-subject, multi-grade multimodal educational content evaluation.
-  \item \textbf{Experiments}: Comparative analysis of five frontier LLMs, ablation studies,
+  \item  Comparative analysis of five frontier LLMs, ablation studies,
     and human evaluation validating system effectiveness and LLM-as-judge reliability.
 \end{itemize}
 
