@@ -174,13 +174,20 @@ Our evaluation framework is grounded in multimedia learning theories. \textbf{Co
 
 \section{Method}
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig/framework.png}
+  \caption{Overview of the EduIllustrate system. Given a K-12 STEM problem, the EduIllustrate Agent generates a structured explanation document through a four-stage pipeline. The resulting output is evaluated using an 8-dimension rubric validated against human expert raters via both automated LLM-as-judge and human evaluation protocols.}
+  \label{fig:framework}
+\end{figure*}
+
 \subsection{Task Definition}
 
 The agent receives a K-12 STEM problem statement (with an optional problem diagram image) and outputs a structured Markdown document containing step-by-step textual explanations with pedagogical scaffolding interleaved with programmatically rendered static PNG diagrams via Manim.
 
 \subsection{EduIllustrate Agent}
 
-We develop \textbf{EduIllustrate Agent}, a four-stage pipeline that decomposes illustrated explanation generation into sequential stages addressing specific multimodal content creation challenges. Figure~\ref{fig:pipeline} illustrates the complete pipeline.
+We develop \textbf{EduIllustrate Agent}, a four-stage pipeline that decomposes illustrated explanation generation into sequential stages addressing specific multimodal content creation challenges. Figure~\ref{fig:pipeline} illustrates the pipeline in detail.
 
 \begin{figure*}[t]
   \centering
