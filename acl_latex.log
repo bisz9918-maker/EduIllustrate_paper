@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.10.14)  26 MAR 2026 10:35
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.10.14)  26 MAR 2026 17:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -598,22 +598,9 @@ Underfull \hbox (badness 4328) in paragraph at lines 199--200
 
 
 [3]
-Underfull \hbox (badness 2538) in paragraph at lines 209--210
-\T1/ptm/b/n/10.95 Dataset Con-struc-tion. \T1/ptm/m/n/10.95 We con-struct a cu-
+Underfull \hbox (badness 1077) in paragraph at lines 209--210
+\T1/ptm/b/n/10.95 So-lu-tions\T1/ptm/m/n/10.95 ---verified step-by-step so-lu-tions with
  []
-
-
-Underfull \hbox (badness 2142) in paragraph at lines 209--210
-\T1/ptm/m/n/10.95 rated bench-mark de-rived from the K12-Vista
- []
-
-
-Underfull \hbox (badness 1762) in paragraph at lines 209--210
-\T1/ptm/m/n/10.95 i-tory of Chi-nese K-12 STEM prob-lems with
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -630,13 +617,16 @@ Overfull \hbox (16.94055pt too wide) in paragraph at lines 223--234
  []
 
 
-
-[4]
 Underfull \hbox (badness 1158) in paragraph at lines 240--241
 \T1/ptm/m/n/10.95 strate-gies; Ty-po-graphic Clarity---proper math-e-
  []
 
 
+Underfull \vbox (badness 4531) has occurred while \output is active []
+
+
+
+[4]
 Underfull \hbox (badness 1082) in paragraph at lines 242--243
 \T1/ptm/m/n/10.95 Consistency---whether mul-ti-ple di-a-grams main-
  []
@@ -647,11 +637,11 @@ Underfull \hbox (badness 1616) in paragraph at lines 242--243
  []
 
 
-
-
 Underfull \hbox (badness 1888) in paragraph at lines 244--245
 \T1/ptm/m/n/10.95 the rel-e-vant ren-dered di-a-grams along-side sur-
  []
+
+
 
 
 Underfull \hbox (badness 1184) in paragraph at lines 246--247
@@ -668,9 +658,6 @@ Underfull \hbox (badness 1281) in paragraph at lines 281--282
  []
 
 
-Underfull \vbox (badness 6078) has occurred while \output is active []
-
-
 
 [6]
 Underfull \hbox (badness 1527) in paragraph at lines 306--307
@@ -685,11 +672,11 @@ Underfull \hbox (badness 1527) in paragraph at lines 306--307
 File: fig/fig_cost_quality.png Graphic file (type bmp)
 <fig/fig_cost_quality.png>
 
-
-
 Underfull \hbox (badness 2221) in paragraph at lines 385--386
 \T1/ptm/m/n/10.95 pro-duce pro-cess an-i-ma-tions by re-mov-ing the
  []
+
+
 
 
 Underfull \hbox (badness 2158) in paragraph at lines 387--388
@@ -699,20 +686,45 @@ Underfull \hbox (badness 2158) in paragraph at lines 387--388
 
 
 [8] (./acl_latex.bbl
-
-
-Underfull \hbox (badness 3746) in paragraph at lines 25--28
-[]\T1/ptm/m/n/10 Firuz Ka-malov, David San-tan-dreu Ca-longe, and
+Underfull \hbox (badness 2165) in paragraph at lines 15--18
+\T1/ptm/m/n/10 Prashanth Kallur Ra-maswamy, Jeremy Roghair,
  []
 
 
-Underfull \hbox (badness 5133) in paragraph at lines 40--43
-[]\T1/ptm/m/n/10 Hyun Lee, Joon Park, and Se-ung Kim. 2025.
+
+
+Underfull \hbox (badness 1571) in paragraph at lines 20--23
+\T1/ptm/m/n/10 mark and multi-agent frame-work for reasoning-
  []
 
 
-Underfull \hbox (badness 1226) in paragraph at lines 70--73
-\T1/ptm/m/n/10 2025.  Gen-Men-tor: Goal-oriented per-son-al-ized
+Underfull \hbox (badness 1168) in paragraph at lines 25--28
+[]\T1/ptm/m/n/10 Firuz Ka-malov, David San-tan-dreu Ca-longe, Linda
+ []
+
+
+Underfull \hbox (badness 2042) in paragraph at lines 35--38
+\T1/ptm/m/n/10 Ma-lik, David Bro-man, and Dorottya Dem-szky.
+ []
+
+
+Underfull \hbox (badness 2809) in paragraph at lines 45--48
+[]\T1/ptm/m/n/10 Zhengyuan Liu, Stella Xin Yin, Dion Hoe-Lian
+ []
+
+
+Underfull \hbox (badness 6125) in paragraph at lines 45--48
+\T1/ptm/m/n/10 Goh, and Nancy F Chen. 2025.  Co-gent:
+ []
+
+
+Underfull \hbox (badness 2012) in paragraph at lines 45--48
+\T1/ptm/m/n/10 a curriculum-oriented frame-work for gen-er-at-ing
+ []
+
+
+Underfull \hbox (badness 4713) in paragraph at lines 45--48
+\T1/ptm/m/n/10 grade-appropriate ed-u-ca-tional con-tent.  \T1/ptm/m/it/10 arXiv
  []
 
 
@@ -814,21 +826,21 @@ File: fig/doc_problem_103_gemini-3-pro-preview_scene3.png Graphic file (type bmp
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-
-[10]
 File: fig/doc_problem_40_gpt-5_scene1.png Graphic file (type bmp)
 <fig/doc_problem_40_gpt-5_scene1.png>
 File: fig/doc_problem_40_gpt-5_scene2.png Graphic file (type bmp)
 <fig/doc_problem_40_gpt-5_scene2.png>
 
-
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+
+[10]
 File: fig/doc_problem_111_gpt-5_scene1.png Graphic file (type bmp)
 <fig/doc_problem_111_gpt-5_scene1.png>
 File: fig/doc_problem_111_gpt-5_scene2.png Graphic file (type bmp)
 <fig/doc_problem_111_gpt-5_scene2.png>
+
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -892,12 +904,12 @@ Package rerunfilecheck Info: File `acl_latex.out' has not changed.
 (rerunfilecheck)             Checksum: D95733376F688FF7FE0FB9DB5DD005D3;3823.
  ) 
 Here is how much of TeX's memory you used:
- 14903 strings out of 473832
- 249192 string characters out of 5729480
- 717096 words of memory out of 5000000
- 37722 multiletter control sequences out of 15000+600000
+ 14900 strings out of 473832
+ 249108 string characters out of 5729480
+ 717083 words of memory out of 5000000
+ 37719 multiletter control sequences out of 15000+600000
  595525 words of font info for 101 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  84i,11n,93p,1828b,518s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on acl_latex.xdv (21 pages, 179852 bytes).
+Output written on acl_latex.xdv (21 pages, 178768 bytes).

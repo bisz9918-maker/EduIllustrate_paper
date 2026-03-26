@@ -1,79 +1,74 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{14}
 \providecommand{\natexlab}[1]{#1}
 
-\bibitem[{Chen et~al.(2025)Chen, Wu, Zhang, and Liu}]{chen2025code2video}
-Yuxuan Chen, Zheng Wu, Lin Zhang, and Yang Liu. 2025.
-\newblock \href {https://arxiv.org/abs/2510.01174} {{Code2Video}: A code-centric paradigm for educational video generation}.
-\newblock In \emph{Proceedings of the 13th International Conference on Learning Representations}, ICLR '25.
+\bibitem[{Chen et~al.(2025)Chen, Lin, and Shou}]{chen2025code2video}
+Yanzhe Chen, Kevin~Qinghong Lin, and Mike~Zheng Shou. 2025.
+\newblock Code2video: A code-centric paradigm for educational video generation.
+\newblock \emph{arXiv preprint arXiv:2510.01174}.
 
-\bibitem[{Cui et~al.(2025)Cui, Wang, and Liu}]{cui2025draw}
-Lei Cui, Yue Wang, and Zhen Liu. 2025.
-\newblock Draw with thought: Training-free framework for scientific diagram reconstruction.
-\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, CVPR '25.
+\bibitem[{Cui et~al.(2025)Cui, Yuan, Wang, Li, Du, and Ding}]{cui2025draw}
+Zhiqing Cui, Jiahao Yuan, Hanqing Wang, Yanshu Li, Chenxu Du, and Zhenglong Ding. 2025.
+\newblock Draw with thought: Unleashing multimodal reasoning for scientific diagram generation.
+\newblock In \emph{Proceedings of the 33rd ACM International Conference on Multimedia}, pages 5050--5059.
 
-\bibitem[{{EvidentlyAI Team}(2025)}]{evidentlyai2025judge}
-{EvidentlyAI Team}. 2025.
-\newblock \href {https://evidentlyai.com/blog/llm-as-judge} {{LLM-as-Judge}: Achieving 80\% human agreement at 500$\times$ lower cost}.
-\newblock EvidentlyAI Blog.
+\bibitem[{Enguehard et~al.(2025)Enguehard, Van~Ermengem, Atkinson, Cha, Chowdhury, Ramaswamy, Roghair, Marlowe, Negreanu, Boxall et~al.}]{lee2025lemaj}
+Joseph Enguehard, Morgane Van~Ermengem, Kate Atkinson, Sujeong Cha, Arijit~Ghosh Chowdhury, Prashanth~Kallur Ramaswamy, Jeremy Roghair, Hannah~R Marlowe, Carina~Suzana Negreanu, Kitty Boxall, and 1 others. 2025.
+\newblock Lemaj (legal llm-as-a-judge): Bridging legal reasoning and llm evaluation.
+\newblock In \emph{Proceedings of the Natural Legal Language Processing Workshop 2025}, pages 318--337.
 
-\bibitem[{Ji et~al.(2025)Ji, Zhang, and Liu}]{ji2025eduvis}
-Wei Ji, Xin Zhang, and Yan Liu. 2025.
-\newblock {EduVis}: Coordinating specialized agents for pedagogical visualization tasks.
-\newblock In \emph{Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems}, CHI '25.
+\bibitem[{Ji et~al.(2025)Ji, Qiu, Xin, Han, Chen, Zhang, Wang, and Yao}]{ji2025eduvis}
+Haonian Ji, Shi Qiu, Siyang Xin, Siwei Han, Zhaorun Chen, Dake Zhang, Hongyi Wang, and Huaxiu Yao. 2025.
+\newblock From eduvisbench to eduvisagent: A benchmark and multi-agent framework for reasoning-driven pedagogical visualization.
+\newblock \emph{arXiv preprint arXiv:2505.16832}.
 
-\bibitem[{Kamalov et~al.(2025)Kamalov, Santandreu~Calonge, and Gurrib}]{kamalov2025agentic}
-Firuz Kamalov, David Santandreu~Calonge, and Ikhlaas Gurrib. 2025.
-\newblock The evolution and impact of agentic workflows in education: A comprehensive review.
-\newblock \emph{arXiv preprint arXiv:2501.00003}.
+\bibitem[{Kamalov et~al.(2025)Kamalov, Calonge, Smail, Azizov, Thadani, Kwong, and Atif}]{kamalov2025agentic}
+Firuz Kamalov, David~Santandreu Calonge, Linda Smail, Dilshod Azizov, Dimple~R Thadani, Theresa Kwong, and Amara Atif. 2025.
+\newblock Evolution of ai in education: Agentic workflows.
+\newblock \emph{arXiv preprint arXiv:2504.20082}.
 
 \bibitem[{Ku et~al.(2025)Ku, Chong, Leung, Shah, Yu, and Chen}]{ku2025theoremexplain}
-Max Ku, Thomas Chong, Jonathan Leung, Krish Shah, Alvin Yu, and Wenhu Chen. 2025.
-\newblock \href {https://arxiv.org/abs/2502.19400} {{TheoremExplainAgent}: Towards video-based multimodal explanations for {LLM} theorem understanding}.
-\newblock \emph{arXiv preprint arXiv:2502.19400}.
+Max Ku, Cheuk~Hei Chong, Jonathan Leung, Krish Shah, Alvin Yu, and Wenhu Chen. 2025.
+\newblock Theoremexplainagent: Towards video-based multimodal explanations for llm theorem understanding.
+\newblock In \emph{Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 6663--6684.
 
-\bibitem[{Kumar et~al.(2025)Kumar, Patel, and Zhang}]{kumar2025diagramir}
-Ankit Kumar, Ravi Patel, and Hui Zhang. 2025.
-\newblock {DiagramIR}: Automatic evaluation pipeline for educational math diagrams using intermediate representations.
-\newblock In \emph{Advances in Neural Information Processing Systems}, NeurIPS '25.
+\bibitem[{Kumar et~al.(2025)Kumar, Mishra, Hao, Malik, Broman, and Demszky}]{kumar2025diagramir}
+Vishal Kumar, Shubhra Mishra, Rebecca Hao, Rizwaan Malik, David Broman, and Dorottya Demszky. 2025.
+\newblock Diagramir: An automatic pipeline for educational math diagram evaluation.
+\newblock \emph{arXiv preprint arXiv:2511.08283}.
 
-\bibitem[{Lee et~al.(2025)Lee, Park, and Kim}]{lee2025lemaj}
-Hyun Lee, Joon Park, and Seung Kim. 2025.
-\newblock Reference-free evaluation in legal domain: {LEMAJ} framework.
-\newblock In \emph{Proceedings of the 2025 Conference of the North American Chapter of the Association for Computational Linguistics}, NAACL '25.
+\bibitem[{Li et~al.(2025)Li, Zhu, Zhang, Lin, Zhou, and Xie}]{zhang2025k12vista}
+Chong Li, Chenglin Zhu, Tao Zhang, Mingan Lin, Zenan Zhou, and Jian Xie. 2025.
+\newblock K12vista: Exploring the boundaries of mllms in k-12 education.
+\newblock \emph{arXiv preprint arXiv:2506.01676}.
 
-\bibitem[{Liu et~al.(2025)Liu, Zhang, Chen, and Wang}]{liu2025cogent}
-Xiang Liu, Yu~Zhang, Wei Chen, and Li~Wang. 2025.
-\newblock {COGENT}: Curriculum-oriented content generation for {K-12} {STEM} education.
-\newblock In \emph{Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing}, EMNLP '25.
+\bibitem[{Liu et~al.(2025)Liu, Yin, Goh, and Chen}]{liu2025cogent}
+Zhengyuan Liu, Stella~Xin Yin, Dion Hoe-Lian Goh, and Nancy~F Chen. 2025.
+\newblock Cogent: a curriculum-oriented framework for generating grade-appropriate educational content.
+\newblock \emph{arXiv preprint arXiv:2506.09367}.
 
-\bibitem[{Mayer(2001)}]{mayer2001multimedia}
-Richard~E. Mayer. 2001.
-\newblock \href {https://doi.org/10.1017/CBO9781139164603} {\emph{Multimedia Learning}}.
-\newblock Cambridge University Press.
+\bibitem[{Mayer(2002)}]{mayer2001multimedia}
+Richard~E Mayer. 2002.
+\newblock Multimedia learning.
+\newblock In \emph{Psychology of learning and motivation}, volume~41, pages 85--139. Elsevier.
 
 \bibitem[{Paivio(1971)}]{paivio1971imagery}
 Allan Paivio. 1971.
 \newblock \emph{Imagery and Verbal Processes}.
 \newblock Holt, Rinehart and Winston, New York.
 
-\bibitem[{Park et~al.(2025)Park, Chen, and Zhang}]{park2025agacci}
-Daniel Park, Li~Chen, and Wei Zhang. 2025.
-\newblock {AGACCI}: Distributed evaluation roles for complex artifacts via collaborative agents.
-\newblock In \emph{Proceedings of the 42nd International Conference on Machine Learning}, ICML '25.
+\bibitem[{Park and Yang(2025)}]{park2025agacci}
+Kwangsuk Park and Jiwoong Yang. 2025.
+\newblock Agacci: Affiliated grading agents for criteria-centric interface in educational coding contexts.
+\newblock \emph{arXiv preprint arXiv:2507.05321}.
 
 \bibitem[{Sweller(1988)}]{sweller1988cognitive}
 John Sweller. 1988.
 \newblock \href {https://doi.org/10.1207/s15516709cog1202_4} {Cognitive load during problem solving: Effects on learning}.
 \newblock \emph{Cognitive Science}, 12(2):257--285.
 
-\bibitem[{Wang et~al.(2025)Wang, Liu, Zhang, and Chen}]{wang2025genmentor}
-Lei Wang, Hao Liu, Shuai Zhang, and Ming Chen. 2025.
-\newblock {GenMentor}: Goal-oriented personalized learning with multi-agent {LLM} systems.
-\newblock In \emph{Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics}, ACL '25.
-
-\bibitem[{Zhang et~al.(2025)Zhang, Wang, Chen, and Liu}]{zhang2025k12vista}
-Hao Zhang, Li~Wang, Ming Chen, and Jie Liu. 2025.
-\newblock {K12-Vista}: A large-scale repository of chinese {K-12} {STEM} problems with fine-grained knowledge point annotations.
-\newblock In \emph{Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing}, EMNLP '25.
+\bibitem[{Wang et~al.(2025)Wang, Zhan, Lian, Hu, Yuan, Zhang, Xie, and Xiong}]{wang2025genmentor}
+Tianfu Wang, Yi~Zhan, Jianxun Lian, Zhengyu Hu, Nicholas~Jing Yuan, Qi~Zhang, Xing Xie, and Hui Xiong. 2025.
+\newblock Llm-powered multi-agent framework for goal-oriented learning in intelligent tutoring system.
+\newblock In \emph{Companion Proceedings of the ACM on Web Conference 2025}, pages 510--519.
 
 \end{thebibliography}
