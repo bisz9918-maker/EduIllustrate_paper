@@ -1,18 +1,18 @@
 # Fdb version 4
-["bibtex acl_latex"] 1774516337.13938 "acl_latex.aux" "acl_latex.bbl" "acl_latex" 1774516343.12023 0
+["bibtex acl_latex"] 1774516760.0552 "acl_latex.aux" "acl_latex.bbl" "acl_latex" 1774516766.06344 0
   "./acl_natbib.bst" 1773585730.64798 45186 3d1af46d62cc9172ef6e42b56c1cd613 ""
-  "./custom.bib" 1774516336.2038 5290 2d5738cb0bf9af1ea7ec4162e6fc9d8e ""
-  "acl_latex.aux" 1774516337.71128 25812 596cd7e9bf7ddfe9df0ba65634ca7d88 "xelatex"
+  "./custom.bib" 1774516759.28711 5290 2d5738cb0bf9af1ea7ec4162e6fc9d8e ""
+  "acl_latex.aux" 1774516760.5913 25812 6feefe763bd6917693ca6ff8f9bc9fce "xelatex"
   (generated)
   "acl_latex.bbl"
   "acl_latex.blg"
   (rewritten before read)
-["xdvipdfmx"] 1774516337.9125 "acl_latex.xdv" "acl_latex.pdf" "acl_latex" 1774516343.12136 0
-  "acl_latex.xdv" 1774516337.71245 178768 498d649a0b7815bd1cb51fcaf7405d85 "xelatex"
+["xdvipdfmx"] 1774516760.80244 "acl_latex.xdv" "acl_latex.pdf" "acl_latex" 1774516766.06462 0
+  "acl_latex.xdv" 1774516760.59244 178768 4927bfebde19ae5eb68bf49decaa70cf "xelatex"
   (generated)
   "acl_latex.pdf"
   (rewritten before read)
-["xelatex"] 1774516337.22767 "/Users/bisz/Documents/visual_solver/EduIllustrate/acl_latex.tex" "acl_latex.xdv" "acl_latex" 1774516343.12029 0
+["xelatex"] 1774516760.13039 "/Users/bisz/Documents/visual_solver/EduIllustrate/acl_latex.tex" "acl_latex.xdv" "acl_latex" 1774516766.06351 0
   "/Users/bisz/Documents/visual_solver/EduIllustrate/acl_latex.tex" 1774515700.34138 69335 0a164b7be3e50b2c54fc20e7066f4d98 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/helvetic/phvb.tfm" 1136768653 2300 14616918391efa49ac8b481a75fbdc1a ""
@@ -131,9 +131,9 @@
   "/usr/local/texlive/2025/texmf-var/web2c/xetex/xelatex.fmt" 1760426198 5639812 636cd5d11df4691b52b0caf530868350 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "acl.sty" 1773585730.6476 11615 e2c027f483aa40e577ed34264c8b0655 ""
-  "acl_latex.aux" 1774516337.71128 25812 596cd7e9bf7ddfe9df0ba65634ca7d88 "xelatex"
-  "acl_latex.bbl" 1774516337.22508 4570 272d32f025d122234596a496a8db2ba5 "bibtex acl_latex"
-  "acl_latex.out" 1774516337.71225 3823 d95733376f688ff7fe0fb9db5dd005d3 "xelatex"
+  "acl_latex.aux" 1774516760.5913 25812 6feefe763bd6917693ca6ff8f9bc9fce "xelatex"
+  "acl_latex.bbl" 1774516760.1284 4570 272d32f025d122234596a496a8db2ba5 "bibtex acl_latex"
+  "acl_latex.out" 1774516760.59225 3823 d95733376f688ff7fe0fb9db5dd005d3 "xelatex"
   "acl_latex.tex" 1774515700.34138 69335 0a164b7be3e50b2c54fc20e7066f4d98 ""
   "fig/doc1_scene1.png" 1773973468.35015 25422 4a96eea99e9c45e7957e12747f842757 ""
   "fig/doc1_scene2.png" 1773973468.35178 26128 3fe0145032b4cf31d01d02aa0a79457f ""
@@ -167,7 +167,7 @@
   "fig/doc_problem_85_gpt-5_scene3.png" 1773976725.41986 14412 b922eeac67f8f2ef23c9821d660e7328 ""
   "fig/doc_problem_97_gemini-3-pro-preview_scene1.png" 1773976725.42517 18141 f1a9935393c2320bdbd475fc0aa04898 ""
   "fig/doc_problem_97_gemini-3-pro-preview_scene2.png" 1773976725.42824 18260 837d395f7a7d0e52bac6b03f354ad7be ""
-  "fig/fig1.png" 1774492116.07259 972443 e0052f87b5c2fd5befd089c463546f91 ""
+  "fig/fig1.png" 1774516748.9946 1013990 687b02267a4e015e76a007f81c56078e ""
   "fig/fig_cost_quality.png" 1774097762.64785 69299 6cda362c95637cd29fe7f1c55fe69399 ""
   "fig/framework.png" 1774490417.41509 1181974 e412e04b1fffd547905847862ce73600 ""
   "fig/human_evaluation.png" 1773757149.76611 651069 9010f24a92a51e6e2f8f1324e0cd5bec ""
