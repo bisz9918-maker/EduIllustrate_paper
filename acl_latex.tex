@@ -123,23 +123,67 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
 
 \section{Introduction}
 
-High-quality illustrated explanations are fundamental to K-12 STEM pedagogy. Research in educational psychology demonstrates that combining textual reasoning with visual diagrams significantly enhances conceptual understanding, particularly for abstract scientific concepts and mathematical problem-solving~\citep{mayer2001multimedia}. However, producing such multimodal educational content at scale remains labor-intensive, requiring both deep domain expertise and technical proficiency in diagram creation tools.
+High-quality illustrated explanations are fundamental to K-12 STEM pedagogy.
+Cognitive Load Theory~\citep{sweller1988cognitive}, Dual Coding Theory~\citep{paivio1971imagery},
+and the Multimedia Learning Principle~\citep{mayer2001multimedia} collectively demonstrate
+that coordinating visual diagrams with textual reasoning substantially reduces cognitive burden
+and deepens conceptual understanding.
+Yet producing such materials at scale remains a formidable challenge:
+lesson planning and material preparation rank among the most time-consuming aspects
+of teachers' professional work~\citep{philipp2013teachers,thompson2024teachers},
+many educators lack the specialized skills required to create geometrically accurate
+diagrams~\citep{turkozudincer2025literacy},
+resulting in a systematic shortage of high-quality illustrated explanations
+available to K-12 students~\citep{yao2026instructional}.
 
-Recent advances in large language models (LLMs) have enabled curriculum-aligned content generation~\citep{liu2025cogent}, personalized learning frameworks~\citep{wang2025genmentor}, and programmatic educational video generation via Manim animations~\citep{ku2025theoremexplain,chen2025code2video}.
+Meanwhile, interleaved image-text generation has emerged as a central frontier
+in multimodal AI research, advancing along two parallel tracks.
+On the generation side, the field has progressed from early approaches such as
+MiniGPT-5~\citep{zheng2023interleaved} to autoregressive systems including
+ANOLE~\citep{chern2024anole} and Orthus~\citep{kou2025orthus},
+with steadily improving coherence in interleaved outputs.
+On the evaluation side, OpenLEAF~\citep{an2024openleaf} and MMIE~\citep{xia2025mmie}
+have established unified benchmarks for assessing interleaved generation quality.
+Together, these developments position interleaved generation as an increasingly
+dominant paradigm for multimodal content understanding and production.
 
-Yet a critical gap remains for \textbf{K-12 STEM education}: existing approaches target university-level theorems with long-form animations, while K-12 problem explanations require \textbf{static, geometrically accurate diagrams}---carrying precise semantic meaning across subjects (exact angle measurements in geometry, force vectors in physics, molecular structures in chemistry)---seamlessly integrated with step-by-step reasoning. No unified benchmark exists to jointly evaluate textual and visual quality across K-12 STEM disciplines.
+Despite this progress, a critical intersection remains unaddressed.
+On the education side, existing K-12 content generation systems bifurcate into
+text-only approaches~\citep{liu2025cogent,wang2025genmentor} and video-based systems
+targeting university-level theorems~\citep{ku2025theoremexplain,chen2025code2video}---neither
+produces interleaved text-diagram explanations for K-12 STEM.
+On the interleaved generation side, existing systems target general-purpose domains
+(storytelling, how-to, webpage synthesis) and generate photorealistic images,
+which cannot satisfy the geometric precision and discipline-specific conventions
+required for educational diagrams.
+The intersection of these two rapidly advancing lines remains vacant.
+Evaluation is equally underdeveloped: DiagramIR~\citep{kumar2025diagramir}
+evaluates mathematical diagrams in isolation, EduVisBench~\citep{ji2025eduvis}
+targets visual reasoning rather than generation quality, and no benchmark
+jointly assesses both textual and visual quality of K-12 multimodal educational content.
 
-We address these challenges with \textbf{EduIllustrate}, an automated four-stage pipeline generating illustrated K-12 STEM explanations with programmatically rendered diagrams via Manim. Our system decomposes generation into: (1) structured outline with interleaved text and scene specifications, (2) per-scene implementation planning with explicit spatial constraints, (3) parallel Manim code generation and rendering, and (4) final Markdown assembly. To systematically evaluate multimodal educational content, we construct a benchmark of \textbf{118 K-12 STEM problems} spanning three grade levels and five subjects, proposing an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory.
+We address these gaps with \textbf{EduIllustrate}, the first automated system for
+generating interleaved text-diagram explanations for K-12 STEM problems.
+Given a problem as input, EduIllustrate produces a structured explanation in which
+textual reasoning steps and subject-specific diagrams alternate seamlessly,
+with diagrams programmatically rendered to ensure geometric accuracy and
+cross-diagram visual consistency.
+To enable systematic evaluation, we construct \textbf{EduIllustrateBench},
+spanning three grade levels (elementary, middle, and high school) and five subjects
+(mathematics, physics, chemistry, biology, and geography), paired with an
+\textbf{8-dimension evaluation rubric} grounded in multimedia learning theory
+that jointly covers textual and visual quality.
 
-\textbf{Our contributions are:}
-
-\begin{enumerate}
-\item An automated four-stage pipeline for generating diagram-rich K-12 STEM explanations with explicit geometric accuracy and visual consistency constraints
-\item A curated benchmark of 118 problems across 3 grade levels and 5 subjects for standardized multimodal evaluation
-\item An 8-dimension evaluation rubric with automated and human protocols grounded in educational psychology
-\item Comparative study of five frontier LLMs identifying model-specific strengths and failure modes
-\item Validation of LLM-as-judge reliability for multimodal content through correlation analysis with human expert ratings
-\end{enumerate}
+Our main contributions are:
+\begin{itemize}
+  \item  EduIllustrate, the first pipeline for automated generation
+    of interleaved text-diagram K-12 STEM explanations, incorporating a sequential
+    anchoring strategy to ensure cross-diagram visual consistency.
+  \item EduIllustrateBench with an 8-dimension evaluation rubric,
+    addressing the gap in multi-subject, multi-grade multimodal educational content evaluation.
+  \item  Comparative analysis of five frontier LLMs, ablation studies,
+    and human evaluation validating system effectiveness and LLM-as-judge reliability.
+\end{itemize}
 
 \section{Related Work}
 
