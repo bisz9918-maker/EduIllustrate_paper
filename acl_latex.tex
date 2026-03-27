@@ -123,6 +123,14 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
 
 \section{Introduction}
 
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig/framework.png}
+  \caption{Overview of the EduIllustrate system. Given a K-12 STEM problem, the EduIllustrate Agent generates a structured explanation document through a four-stage pipeline. The resulting output is evaluated using an 8-dimension rubric validated against human expert raters via both automated LLM-as-judge and human evaluation protocols.}
+  \label{fig:framework}
+\end{figure*}
+
 High-quality illustrated explanations are fundamental to K-12 STEM pedagogy.
 Cognitive Load Theory~\citep{sweller1988cognitive}, Dual Coding Theory~\citep{paivio1971imagery},
 and the Multimedia Learning Principle~\citep{mayer2001multimedia} collectively demonstrate
@@ -162,7 +170,7 @@ evaluates mathematical diagrams in isolation, EduVisBench~\citep{ji2025eduvis}
 targets visual reasoning rather than generation quality, and no benchmark
 jointly assesses both textual and visual quality of K-12 multimodal educational content.
 
-We address these gaps with \textbf{EduIllustrate}, the first automated system for
+We address these gaps with \textbf{EduIllustrate} (Figure~\ref{fig:framework}), the first automated system for
 generating interleaved text-diagram explanations for K-12 STEM problems.
 Given a problem as input, EduIllustrate produces a structured explanation in which
 textual reasoning steps and subject-specific diagrams alternate seamlessly,
@@ -185,6 +193,8 @@ Our main contributions are:
     and human evaluation validating system effectiveness and LLM-as-judge reliability.
 \end{itemize}
 
+
+
 \section{Related Work}
 
 
@@ -202,28 +212,11 @@ Recent work has explored generating educational content through executable code.
 
 Programmatic diagram generation leverages tools like TikZ, Manim, and Matplotlib. \citet{kumar2025diagramir} introduced DiagramIR, an automatic evaluation pipeline for educational math diagrams using intermediate representations of LaTeX TikZ code, demonstrating higher agreement with human raters than LLM-as-judge baselines. \citet{cui2025draw} proposed Draw with Thought, a training-free framework guiding multimodal LLMs to reconstruct scientific diagrams into editable mxGraph XML code through Chain-of-Thought reasoning.
 
-Our work introduces \textbf{domain-specific constraints for educational diagrams}: safe margins, minimum element spacing, and discipline-specific conventions, while addressing \textbf{visual consistency across multiple diagrams} through conditional generation where subsequent scenes reference Scene 1's code as a visual anchor.
-
 \subsection{LLM-as-Judge Evaluation}
 
 LLMs as evaluators provide practical alternatives to costly human evaluation. \citet{lee2025lemaj} revealed in the legal domain that reference-free evaluation protocols correlate better with human expert judgments. \citet{park2025agacci} demonstrated AGACCI framework improves accuracy through distributing specialized evaluation roles across collaborative agents.
 
-Existing LLM-as-judge frameworks focus on text quality with limited visual assessment. Our work extends this methodology to multimodal educational content, decomposing evaluation into text-only and vision-enabled dimensions and validating automated metrics against 20 human expert raters.
-
-\subsection{Multi-Modal Learning Theory}
-
-Our evaluation framework is grounded in multimedia learning theories. \textbf{Cognitive Load Theory}~\citep{sweller1988cognitive} posits working memory has limited capacity---effective diagrams reduce intrinsic load by externalizing spatial relationships. \textbf{Dual Coding Theory}~\citep{paivio1971imagery} proposes information is processed through separate verbal and visual channels, with learning enhanced when both engage. \textbf{Multimedia Learning Principles}~\citep{mayer2001multimedia} provide design guidelines including spatial contiguity, temporal contiguity, and coherence.
-
-\citet{ji2025eduvis} demonstrated that coordinating specialized agents for instructional planning, reasoning decomposition, and visualization design substantially improves educational alignment in pedagogical visualization tasks. These frameworks inform our 8-dimension rubric: Correctness \& Completeness and Logical Coherence ensure cognitive accuracy; Pedagogical Effectiveness and Typographic Clarity align with coherence principles; Diagram--Problem Alignment and Text--Diagram Coordination operationalize dual coding and spatial contiguity; Element Layout Quality and Visual Consistency reduce extraneous load through predictable visual patterns.
-
 \section{Method}
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\textwidth]{fig/framework.png}
-  \caption{Overview of the EduIllustrate system. Given a K-12 STEM problem, the EduIllustrate Agent generates a structured explanation document through a four-stage pipeline. The resulting output is evaluated using an 8-dimension rubric validated against human expert raters via both automated LLM-as-judge and human evaluation protocols.}
-  \label{fig:framework}
-\end{figure*}
 
 \subsection{Task Definition}
 
@@ -261,6 +254,7 @@ The benchmark comprises 118 problems across three grade levels (elementary, midd
   \label{fig:knowledge-categories}
 \end{figure*}
 
+\setlength{\tabcolsep}{4pt}
 \begin{table}[t]
 \centering
 \small
@@ -268,11 +262,11 @@ The benchmark comprises 118 problems across three grade levels (elementary, midd
 \hline
 \textbf{Grade} & \textbf{Math} & \textbf{Phys} & \textbf{Chem} & \textbf{Bio} & \textbf{Geo} & \textbf{Total} \\
 \hline
-Elementary & 10 & --- & --- & --- & --- & 10 \\
-Middle     & 20 & 20  & 3   & 5   & 5   & 53 \\
-High       & 20 & 20  & 5   & 5   & 5   & 55 \\
+Elementary & 20 & --- & --- & --- & --- & 20 \\
+Middle     & 30 & 30  & 15  & 15  & 15  & 105 \\
+High       & 30 & 30  & 15  & 15  & 15  & 105 \\
 \hline
-\textbf{Total} & \textbf{50} & \textbf{40} & \textbf{8} & \textbf{10} & \textbf{10} & \textbf{118} \\
+\textbf{Total} & \textbf{80} & \textbf{60} & \textbf{30} & \textbf{30} & \textbf{30} & \textbf{230} \\
 \hline
 \end{tabular}
 \caption{Benchmark distribution across grade levels and subjects.}
@@ -347,7 +341,14 @@ Table~\ref{tab:subject-grade-results} shows subject- and grade-level performance
 
 \subsection{Workflow Ablation Study}
 
-EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 32\% higher input token consumption (100.3K vs. 75.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---17.5\% higher cost (\$1.14 vs. \$0.97), 48\% longer latency (7.32 vs. 4.94 minutes)---attributable to the additional model calls required for per-scene planning---, and 12\% worse Visual Consistency (3.89 vs. 4.42), while achieving lower overall quality (4.29 vs. 4.40). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is provided in Appendix~\ref{sec:case-study} (Figure~\ref{fig:case-study}). This validates our sequential anchoring strategy.
+EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 32\% higher input token consumption (100.3K vs. 75.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---17.5\% higher cost (\$1.14 vs. \$0.97), 48\% longer latency (7.32 vs. 4.94 minutes)---attributable to the additional model calls required for per-scene planning---, and 12\% worse Visual Consistency (3.89 vs. 4.42), while achieving lower overall quality (4.29 vs. 4.40). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is shown in Figure~\ref{fig:case-study}. This validates our sequential anchoring strategy.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig/case_study.png}
+  \caption{Visual consistency comparison between our sequential anchoring workflow (top) and the all-parallel baseline (bottom) on the same problem (four-pyramid $P$-$ABCD$). In our workflow, Scene 1 and Scene 2 render the identical pyramid structure---Scene 2 simply highlights the $PAC$ face on top of the same base diagram---maintaining full geometric and stylistic consistency. In the all-parallel baseline, the pyramid in Scene 1 and Scene 2 is drawn differently, breaking visual coherence and forcing the reader to reconcile two inconsistent representations of the same object.}
+  \label{fig:case-study}
+\end{figure}
 
 \begin{table*}[t]
 \centering
@@ -537,24 +538,6 @@ Qwen 3.5-35B            & 2.98 & 2.67 \\
 \label{tab:judge-bias}
 \end{table}
 
-\section{Visual Consistency Case Study}
-\label{sec:case-study}
-
-To illustrate the impact of our sequential Scene 1 anchoring strategy on Visual Consistency, we present a side-by-side comparison of two explanations generated for the same high school mathematics problem (four-pyramid $P$-$ABCD$, finding $NC:NP$ given $MN \parallel$ plane $PAD$). Both explanations are generated by Gemini 3.0 Pro Preview: the top row uses our workflow (sequential Scene 1 planning + parallel Scenes 2--N conditioned on Scene 1's code), while the bottom row uses the all-parallel baseline (all scenes planned and generated independently).
-
-\begin{figure*}[t]
-  \centering
-  \textbf{Ours (Sequential Anchoring) --- Visual Consistency = 4.42}\\[4pt]
-  \includegraphics[width=0.32\textwidth]{fig/doc1_scene1.png}\hfill
-  \includegraphics[width=0.32\textwidth]{fig/doc1_scene2.png}\hfill
-  \includegraphics[width=0.32\textwidth]{fig/doc1_scene3.png}\\[10pt]
-  \textbf{All-Parallel Baseline --- Visual Consistency = 3.89}\\[4pt]
-  \includegraphics[width=0.32\textwidth]{fig/doc2_scene1.png}\hfill
-  \includegraphics[width=0.32\textwidth]{fig/doc2_scene2.png}\hfill
-  \includegraphics[width=0.32\textwidth]{fig/doc2_scene3.png}
-  \caption{Visual consistency comparison between our sequential anchoring workflow (top) and the all-parallel baseline (bottom) on the same problem (four-pyramid $P$-$ABCD$). In our workflow, Scene 1 and Scene 2 render the identical pyramid structure---Scene 2 simply highlights the $PAC$ face on top of the same base diagram---maintaining full geometric and stylistic consistency. In the all-parallel baseline, the pyramid in Scene 1 and Scene 2 is drawn differently, breaking visual coherence and forcing the reader to reconcile two inconsistent representations of the same object.}
-  \label{fig:case-study}
-\end{figure*}
 
 \section{A Gallery of Generated Explanations}
 \label{sec:gallery}
