@@ -117,7 +117,7 @@
 \end{strip}
 
 \begin{abstract}
-Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{118 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.07 at \$0.15/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 12\% over a fully parallel baseline at 17.5\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
+Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{230 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.39/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.04 at \$0.12/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
 \end{abstract}
 
 
@@ -243,9 +243,9 @@ We develop \textbf{EduIllustrate Agent}, a four-stage pipeline that decomposes i
 
 \subsection{EduIllustrate Benchmark}
 
-\textbf{Dataset Construction.} We construct a curated benchmark derived from the K12-Vista dataset~\citep{zhang2025k12vista}, a large-scale repository of Chinese K-12 STEM problems with gold-standard solutions and fine-grained knowledge point annotations. We extract 118 problems following three curation criteria: \textbf{(1) Diagram-Appropriate Problems}---problems where visual representations convey spatial, topological, or relational information essential to problem-solving, rather than merely restating text~\citep{ji2025eduvis}; \textbf{(2) Clear Gold Solutions}---verified step-by-step solutions with intermediate reasoning steps, enabling objective correctness evaluation; \textbf{(3) Diverse Knowledge Points}---sampling to maximize diversity at the 3rd level of K12-Vista's 4-level knowledge point taxonomy, ensuring varied conceptual coverage. The full knowledge point breakdown is provided in Appendix~\ref{sec:benchmark-details}.
+\textbf{Dataset Construction.} We construct a curated benchmark derived from the K12-Vista dataset~\citep{zhang2025k12vista}, a large-scale repository of Chinese K-12 STEM problems with gold-standard solutions and fine-grained knowledge point annotations. We extract 230 problems following three curation criteria: \textbf{(1) Diagram-Appropriate Problems}---problems where visual representations convey spatial, topological, or relational information essential to problem-solving, rather than merely restating text~\citep{ji2025eduvis}; \textbf{(2) Clear Gold Solutions}---verified step-by-step solutions with intermediate reasoning steps, enabling objective correctness evaluation; \textbf{(3) Diverse Knowledge Points}---sampling to maximize diversity at the 3rd level of K12-Vista's 4-level knowledge point taxonomy, ensuring varied conceptual coverage. The full knowledge point breakdown is provided in Appendix~\ref{sec:benchmark-details}.
 
-The benchmark comprises 118 problems across three grade levels (elementary, middle, high school) and five STEM subjects, as shown in Table~\ref{tab:dataset}. All 118 problems include original diagrams in the problem statement, requiring models to interpret visual input and generate explanatory diagrams that reference or extend the given figure. Problems require 2--6 solution steps (mean = 3.8, SD = 1.2), and collectively span 102 distinct knowledge points at the 3rd taxonomy level. Figure~\ref{fig:knowledge-categories} shows the knowledge point categories by subject.
+The benchmark comprises 230 problems across three grade levels (elementary, middle, high school) and five STEM subjects, as shown in Table~\ref{tab:dataset}. All 230 problems include original diagrams in the problem statement, requiring models to interpret visual input and generate explanatory diagrams that reference or extend the given figure. Problems require 2--6 solution steps (mean = 3.8, SD = 1.2), and collectively span 102 distinct knowledge points at the 3rd taxonomy level. Figure~\ref{fig:knowledge-categories} shows the knowledge point categories by subject.
 
 \begin{figure*}[t]
   \centering
@@ -292,11 +292,11 @@ We evaluate five frontier LLMs on the EduIllustrate benchmark, analyzing perform
 
 \subsection{Experimental Setup}
 
-\textbf{Models Evaluated.} We test five state-of-the-art LLMs: (1) Gemini 3.0 Pro Preview (Google DeepMind), (2) GPT-5 (OpenAI), (3) Claude Sonnet 4.5 (Anthropic), (4) Kimi-K2.5 (Moonshot AI), and (5) Qwen 3.5-35B (Alibaba Cloud). All models use identical prompts with temperature=0.7 on all 118 benchmark problems.
+\textbf{Models Evaluated.} We test five state-of-the-art LLMs: (1) Gemini 3.0 Pro Preview (Google DeepMind), (2) GPT-5 (OpenAI), (3) Claude Sonnet 4.5 (Anthropic), (4) Kimi-K2.5 (Moonshot AI), and (5) Qwen 3.5-35B (Alibaba Cloud). All models use identical prompts with temperature=0.7 on all 230 benchmark problems.
 
 \subsection{Main Results}
 
-Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (4.40/5.0), substantially outperforming all other models. Kimi-K2.5 ranks second (4.07), while Claude Sonnet 4.5, GPT-5, and Qwen 3.5-35B cluster at 2.98-3.12. The 32\% performance gap between best and worst models demonstrates that architectural choices significantly impact multimodal educational content quality.
+Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (4.39/5.0), substantially outperforming all other models. Kimi-K2.5 ranks second (4.04), while GPT-5 and Claude Sonnet 4.5 cluster at 2.89--2.90, and Qwen 3.5-35B scores 3.29. The 34\% performance gap between best and worst models demonstrates that architectural choices significantly impact multimodal educational content quality.
 
 \begin{table*}[t]
 \centering
@@ -305,18 +305,18 @@ Table~\ref{tab:main-results} presents overall performance across all eight dimen
 \hline
 \textbf{Model} & \textbf{C\&C} & \textbf{LC} & \textbf{DPA} & \textbf{PE} & \textbf{ELQ} & \textbf{VC} & \textbf{TDC} & \textbf{TC} & \textbf{Overall} \\
 \hline
-Gemini 3.0 Pro Preview & 4.45 & 4.67 & 4.44 & 3.91 & 4.95 & 4.23 & 4.42 & 4.67 & \textbf{4.40} \\
-Kimi-K2.5 & 4.50 & 4.70 & 3.51 & 3.78 & 4.85 & 3.35 & 4.48 & 4.20 & \textbf{4.07} \\
-Claude Sonnet 4.5 & 3.09 & 3.17 & 2.46 & 2.69 & 3.91 & 3.24 & 4.33 & 3.64 & \textbf{3.12} \\
-GPT-5 & 3.57 & 4.03 & 2.44 & 2.54 & 3.27 & 3.00 & 4.57 & 3.51 & \textbf{3.11} \\
-Qwen 3.5-35B & 4.29 & 4.58 & 1.80 & 3.50 & 4.30 & 2.50 & 4.13 & 2.46 & \textbf{2.98} \\
+Gemini 3.0 Pro Preview & 4.38 & 4.74 & 4.37 & 3.92 & 4.92 & 4.23 & 4.47 & 4.63 & \textbf{4.39} \\
+Kimi-K2.5 & 4.26 & 4.61 & 3.57 & 3.67 & 4.87 & 3.44 & 4.43 & 4.31 & \textbf{4.04} \\
+Claude Sonnet 4.5 & 2.76 & 2.94 & 2.13 & 2.38 & 3.87 & 3.20 & 4.21 & 3.44 & \textbf{2.89} \\
+GPT-5 & 2.95 & 3.34 & 2.22 & 2.20 & 3.71 & 2.96 & 4.60 & 3.19 & \textbf{2.90} \\
+Qwen 3.5-35B & 4.17 & 4.45 & 1.98 & 3.46 & 4.39 & 2.68 & 4.43 & 2.75 & \textbf{3.29} \\
 \hline
 \end{tabular}
-\caption{Model performance across 8 evaluation dimensions (0--5 scale, 118 problems). C\&C: Correctness \& Completeness, LC: Logical Coherence, DPA: Diagram--Problem Alignment, PE: Pedagogical Effectiveness, ELQ: Element Layout Quality, VC: Visual Consistency, TDC: Text--Diagram Coordination, TC: Typographic Clarity. Overall score computed as geometric mean.}
+\caption{Model performance across 8 evaluation dimensions (0--5 scale, 230 problems). C\&C: Correctness \& Completeness, LC: Logical Coherence, DPA: Diagram--Problem Alignment, PE: Pedagogical Effectiveness, ELQ: Element Layout Quality, VC: Visual Consistency, TDC: Text--Diagram Coordination, TC: Typographic Clarity. Overall score computed as geometric mean.}
 \label{tab:main-results}
 \end{table*}
 
-All models excel at Logical Coherence and Typographic Clarity (scores $\geq$ 3.17), reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 4.33, GPT-5: 4.57), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 1.80 to 4.44. Qwen's catastrophic score of 1.80 reflects frequent semantic misalignment---geometrically valid diagrams that do not match problem specifications. Pedagogical Effectiveness is universally weakest (2.54-3.91), indicating all models struggle with grade-appropriate language and scaffolding strategies. Qwen encountered 11 complete failures (9.3\% failure rate), primarily on high school physics and chemistry problems, while GPT-5 had 2 failures (1.7\%). All other models completed all 118 problems.
+All models excel at Logical Coherence and Typographic Clarity (scores $\geq$ 2.94), reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 4.21, GPT-5: 4.60), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 1.98 to 4.37. Qwen's low score of 1.98 reflects frequent semantic misalignment---geometrically valid diagrams that do not match problem specifications. Pedagogical Effectiveness is universally weakest (2.20-3.92), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (4 failures, 1.7\%), followed by Gemini (6, 2.6\%), Claude (9, 3.9\%), GPT-5 (24, 10.4\%), and Qwen (37, 16.1\%). Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
 
 
 \begin{table*}[t]
@@ -326,28 +326,35 @@ All models excel at Logical Coherence and Typographic Clarity (scores $\geq$ 3.1
 \hline
 \textbf{Model} & \textbf{Math} & \textbf{Phys} & \textbf{Chem} & \textbf{Bio} & \textbf{Geo} & & \textbf{Elem.} & \textbf{Middle} & \textbf{High} \\
 \hline
-Gemini 3.0 Pro Preview & 4.42 & 4.44 & 4.48 & 4.43 & 4.07 & & 4.27 & 4.41 & 4.42 \\
-Kimi-K2.5              & 4.17 & 4.02 & 4.13 & 4.17 & 3.71 & & 3.97 & 4.03 & 4.13 \\
-Claude Sonnet 4.5      & 3.17 & 3.15 & 3.37 & 3.06 & 2.65 & & 3.32 & 3.04 & 3.17 \\
-GPT-5                  & 3.16 & 3.05 & 3.81 & 3.03 & 2.55 & & 3.85 & 3.09 & 3.00 \\
-Qwen 3.5-35B           & 3.19 & 2.83 & 3.18 & 3.05 & 2.25 & & 3.64 & 2.93 & 2.90 \\
+Gemini 3.0 Pro Preview & 4.47 & 4.36 & 4.24 & 4.14 & 4.19 & & 4.34 & 4.32 & 4.35 \\
+Kimi-K2.5              & 4.19 & 4.03 & 3.85 & 3.94 & 3.77 & & 4.00 & 4.01 & 4.03 \\
+Claude Sonnet 4.5      & 3.03 & 2.89 & 2.46 & 2.48 & 2.48 & & 3.21 & 2.67 & 2.79 \\
+GPT-5                  & 2.99 & 2.88 & 2.49 & 1.90 & 2.15 & & 3.43 & 2.69 & 2.47 \\
+Qwen 3.5-35B           & 3.32 & 2.94 & 3.14 & 2.81 & 2.62 & & 3.67 & 2.97 & 3.00 \\
 \hline
 \end{tabular}
 \caption{Model performance by subject (left) and grade level (right), overall score on 0--5 scale. Due to small sample sizes (Chem: n=8, Bio: n=10, Geo: n=10), cross-subject comparisons for these disciplines should be treated as exploratory and do not support causal inference.}
 \label{tab:subject-grade-results}
 \end{table*}
 
-Table~\ref{tab:subject-grade-results} shows subject- and grade-level performance. Mathematics and physics consistently achieve highest scores, while geography scores lowest (2.25--4.07). Gemini and Kimi maintain consistency across grade levels (Gemini: 4.27--4.42, Kimi: 3.97--4.13), while other models degrade substantially on high school problems. GPT-5's sharp drop from elementary (3.85) to high school (3.00) and Qwen's 9.3\% failure rate concentrated on high school problems both correlate with increasing diagram complexity at higher grade levels.
+Table~\ref{tab:subject-grade-results} shows subject- and grade-level performance. Mathematics consistently achieves highest scores, while geography scores lowest (2.15--4.19). Gemini and Kimi maintain consistency across grade levels (Gemini: 4.32--4.35, Kimi: 4.00--4.03), while other models degrade substantially on high school problems. GPT-5's sharp drop from elementary (3.43) to high school (2.47) correlates with increasing diagram complexity at higher grade levels. Failure analysis reveals that 98.7\% of failures (79/80) concentrate in middle and high school problems, with biology the most failure-prone subject (25/80, 31.3\%)---likely due to the complex cellular and ecological diagrams these problems require. GPT-5 and Qwen together account for 76.3\% of all failures (61/80), with both models particularly struggling on biology (10 and 9 failures, respectively) and geography (7 and 8 failures).
 
 \subsection{Workflow Ablation Study}
 
-EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 32\% higher input token consumption (100.3K vs. 75.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---17.5\% higher cost (\$1.14 vs. \$0.97), 48\% longer latency (7.32 vs. 4.94 minutes)---attributable to the additional model calls required for per-scene planning---, and 12\% worse Visual Consistency (3.89 vs. 4.42), while achieving lower overall quality (4.29 vs. 4.40). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is shown in Figure~\ref{fig:case-study}. This validates our sequential anchoring strategy.
+EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 104\% higher input token consumption (95.5K vs. 46.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---94\% higher cost (\$1.05 vs. \$0.54), 48\% longer latency (7.32 vs. 4.94 minutes)---attributable to the additional model calls required for per-scene planning---, and 13\% worse Visual Consistency (3.89 vs. 4.47), while achieving lower overall quality (4.29 vs. 4.39). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is shown in Figure~\ref{fig:case-study}. This validates our sequential anchoring strategy.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{fig/case_study.png}
   \caption{Visual consistency comparison between our sequential anchoring workflow (top) and the all-parallel baseline (bottom) on the same problem (four-pyramid $P$-$ABCD$). In our workflow, Scene 1 and Scene 2 render the identical pyramid structure---Scene 2 simply highlights the $PAC$ face on top of the same base diagram---maintaining full geometric and stylistic consistency. In the all-parallel baseline, the pyramid in Scene 1 and Scene 2 is drawn differently, breaking visual coherence and forcing the reader to reconcile two inconsistent representations of the same object.}
   \label{fig:case-study}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{fig/fig_workflow_cost.png}
+  \caption{Per-stage cost comparison between our sequential anchoring workflow and the all-parallel baseline (both using Gemini 3.0 Pro Preview). The all-parallel approach incurs substantially higher Implementation Plans cost due to independent per-scene planning.}
+  \label{fig:workflow-cost}
 \end{figure}
 
 \begin{table*}[t]
@@ -358,11 +365,11 @@ EduIllustrate is built upon a modified version of the TheoremExplainAgent codeba
 \textbf{Workflow} & \textbf{Tokens} & \textbf{Cost} & \textbf{Latency} & \textbf{VC} & \textbf{Overall} \\
  & \textbf{(In/Out)} & \textbf{(\$)} & \textbf{(min)} & & \\
 \hline
-Ours & 75.8K / 68.1K & 0.97 & 4.94 & 4.42 & \textbf{4.40} \\
-All-Parallel & 100.3K / 78.5K & 1.14 & 7.32 & 3.89 & \textbf{4.29} \\
+Ours & 46.8K / 37.1K & 0.54 & 4.94 & 4.47 & \textbf{4.39} \\
+All-Parallel & 95.5K / 71.4K & 1.05 & 7.32 & 3.89 & \textbf{4.29} \\
 \hline
 \end{tabular}
-\caption{Workflow comparison using Gemini 3.0 Pro Preview on 118 problems. Our workflow achieves superior visual consistency at lower cost and latency.}
+\caption{Workflow comparison using Gemini 3.0 Pro Preview on 50 problems. Our workflow achieves superior visual consistency at lower cost and latency.}
 \label{tab:workflow}
 \end{table*}
 
@@ -393,7 +400,7 @@ ELQ & 0.39 & 0.32 & Weak \\
 
 \subsection{Cost Analysis}
 
-Table~\ref{tab:cost} presents cost and latency metrics. As shown in Figure~\ref{fig:cost-quality}, Kimi offers the best cost-efficiency at \$0.15/problem (4.07 score), representing only 7.5\% quality degradation relative to Gemini (\$0.97, 4.40 score) at 10$\times$ lower cost. Qwen is cheapest (\$0.06) but sacrifices 32\% quality.
+Table~\ref{tab:cost} presents cost and latency metrics. As shown in Figure~\ref{fig:cost-quality}, Kimi offers the best cost-efficiency at \$0.12/problem (4.04 score), representing only 8.0\% quality degradation relative to Gemini (\$0.54, 4.39 score) at 4.5$\times$ lower cost. Qwen is cheapest (\$0.04) but sacrifices 25\% quality.
 
 \begin{table*}[t]
 \centering
@@ -403,27 +410,34 @@ Table~\ref{tab:cost} presents cost and latency metrics. As shown in Figure~\ref{
 \textbf{Model} & \textbf{Avg Input} & \textbf{Avg Output} & \textbf{Input} & \textbf{Output} & \textbf{Avg Cost} & \textbf{Latency} \\
  & \textbf{Tokens} & \textbf{Tokens} & \textbf{(\$/M)} & \textbf{(\$/M)} & \textbf{(\$)} & \textbf{(min)} \\
 \hline
-Claude Sonnet 4.5 & 90,439 & 79,035 & 3.00 & 15.00 & 1.46 & 6.92 \\
-Gemini 3.0 Pro Preview & 75,802 & 68,093 & 2.00 & 12.00 & 0.97 & 4.94 \\
-GPT-5 & 66,420 & 42,677 & 1.25 & 10.00 & 0.51 & 7.67 \\
-Kimi-K2.5 & 58,689 & 54,893 & 0.45 & 2.20 & 0.15 & 6.34 \\
-Qwen 3.5-35B & 61,883 & 37,737 & 0.16 & 1.30 & 0.06 & 5.34 \\
+Claude Sonnet 4.5 & 71,889 & 23,964 & 3.00 & 15.00 & 0.58 & 6.92 \\
+Gemini 3.0 Pro Preview & 46,821 & 37,096 & 2.00 & 12.00 & 0.54 & 4.94 \\
+GPT-5 & 34,568 & 10,178 & 1.25 & 10.00 & 0.14 & 7.67 \\
+Kimi-K2.5 & 44,537 & 43,628 & 0.45 & 2.20 & 0.12 & 6.34 \\
+Qwen 3.5-35B & 37,269 & 24,943 & 0.16 & 1.30 & 0.04 & 5.34 \\
 \hline
 \end{tabular}
-\caption{Cost and latency analysis per problem (118 problems, average values).}
+\caption{Cost and latency analysis per problem (230 problems, average values).}
 \label{tab:cost}
 \end{table*}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{fig/fig_cost_quality.png}
-  \caption{Cost vs.\ quality trade-off across five models. X-axis: average cost per problem (USD); Y-axis: overall score (0--5). Kimi-K2.5 offers the best cost-efficiency, achieving 4.07 at \$0.15/problem.}
+  \caption{Cost vs.\ quality trade-off across five models. X-axis: average cost per problem (USD); Y-axis: overall score (0--5). Kimi-K2.5 offers the best cost-efficiency, achieving 4.04 at \$0.12/problem.}
   \label{fig:cost-quality}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{fig/fig_cost_breakdown.png}
+  \caption{Per-stage cost breakdown across five models. Each bar decomposes the average per-problem cost into three pipeline stages: Scene Outline, Implementation Plans, and Scene Rendering. Scene Rendering dominates cost for all models.}
+  \label{fig:cost-breakdown}
 \end{figure}
 
 \section{Conclusion}
 
-We presented EduIllustrate, a four-stage agentic pipeline with sequential Scene 1 anchoring, a 118-problem benchmark, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 12\% over fully parallel generation at 17.5\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
+We presented EduIllustrate, a four-stage agentic pipeline with sequential Scene 1 anchoring, a 230-problem benchmark, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 13\% over fully parallel generation at 94\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
 
 \section*{Limitations}
 
@@ -464,7 +478,7 @@ Benchmark construction followed a two-phase procedure. In the first phase, Kimi-
 
 \subsection*{Knowledge Point Coverage}
 
-Table~\ref{tab:benchmark-full} lists the complete knowledge point coverage of the 118 benchmark problems, organized by grade level and subject.
+Table~\ref{tab:benchmark-full} lists the complete knowledge point coverage of the 230 benchmark problems, organized by grade level and subject.
 
 \begin{table*}[t]
 \centering
@@ -509,33 +523,61 @@ Elementary & Mathematics (10)
  & Three-view and net diagrams; Observing 3D shapes from different views; Shape composition; Position and direction; Rotation and coordinate position; Perimeter of composite plane figures; Overlapping problems; Cube/cuboid nets and folding \\
 \hline
 \end{tabular}
-\caption{Complete knowledge point coverage of the 118 EduIllustrate benchmark problems. Numbers in parentheses indicate problem count per subject-level combination. Some high school mathematics problems have unlabeled knowledge points in the original K12-Vista dataset.}
+\caption{Complete knowledge point coverage of the 230 EduIllustrate benchmark problems. Numbers in parentheses indicate problem count per subject-level combination. Some high school mathematics problems have unlabeled knowledge points in the original K12-Vista dataset.}
 \label{tab:benchmark-full}
 \end{table*}
 
 \section{Judge Model Self-Preference Analysis}
 \label{sec:judge-bias}
 
-A potential concern with using Gemini 3.0 Pro Preview as the judge model is self-preference bias: the judge may systematically inflate scores for outputs it generated. To investigate this, we sampled 50 problems (the same problems across all models) and re-evaluated all outputs using GPT-5 as an alternative judge, then compared the two scoring distributions.
+A potential concern with using Gemini 3.0 Pro Preview as the judge model is self-preference bias: the judge may systematically inflate scores for outputs it generated. To investigate this, we sampled 20 problems and re-evaluated all outputs from all five models plus the all-parallel workflow variant (120 explanations total) using GPT-5 as an alternative judge, then compared the two scoring distributions.
 
-Table~\ref{tab:judge-bias} reports overall scores assigned by each judge. Two observations address the self-preference concern. First, both judges agree on the \textbf{ranking} of all five models---Gemini $>$ Kimi $>$ Claude $\approx$ GPT-5 $>$ Qwen---suggesting the relative conclusions of our main results are robust to judge choice. Second, GPT-5 assigns \textit{higher} absolute scores to Gemini (4.76 vs.\ 4.40) and to most other models, indicating that if any self-preference exists in Gemini-as-judge, it does not inflate Gemini's relative standing. The score gap between Gemini and the next-best model (Kimi) is 0.33 under Gemini-as-judge and 0.57 under GPT-5-as-judge, further confirming that Gemini's top position is not an artifact of self-scoring. We therefore conclude that the main findings are not materially affected by judge model self-preference.
+\paragraph{Both Judges Exhibit Self-Preference, but Gemini's Is Smaller.} Table~\ref{tab:judge-bias} reports the mean overall score assigned by each judge. Both judges show self-preference: Gemini-as-judge scores its own outputs 0.46 points higher than GPT-5-as-judge does ($4.44$ vs.\ $3.98$), while GPT-5-as-judge scores its own outputs 1.03 points higher than Gemini-as-judge does ($4.09$ vs.\ $3.06$). Crucially, Gemini's self-preference magnitude ($|\Delta|{=}0.46$) is less than half of GPT-5's ($|\Delta|{=}1.03$). Moreover, GPT-5's self-preference is severe enough to alter rankings: GPT-5-as-judge ranks itself first, whereas Gemini-as-judge ranks it last. By contrast, Gemini-as-judge and GPT-5-as-judge agree on the \textbf{top-2 ranking} (Gemini $>$ Kimi), confirming that Gemini's self-preference does not distort the main comparative conclusions. Kimi-K2.5 serves as a neutral anchor with the smallest cross-judge gap ($|\Delta|{=}0.12$), further validating the evaluation framework's consistency on models with no judge affiliation.
+
+\paragraph{Dimension-Level Agreement.} Table~\ref{tab:judge-dim} reports Pearson $r$, Spearman $\rho$, and MAE between the two judges across all 120 explanations for each dimension. Element Layout Quality ($r{=}0.58$, $\rho{=}0.56$) and Text--Diagram Coordination ($r{=}0.56$, $\rho{=}0.58$) show the highest agreement, reflecting relatively objective visual criteria. Diagram--Problem Alignment has the largest MAE (1.15), indicating the two judges disagree most on diagram--problem semantic matching. Typographic Clarity shows near-zero correlation ($r{=}0.10$, $\rho{=}0.12$, both non-significant), suggesting this dimension's assessment is highly judge-dependent. The overall score achieves moderate agreement ($r{=}0.50$, $\rho{=}0.43$, MAE${=}0.61$), indicating directionally consistent but numerically divergent scoring.
+
+\paragraph{Implications.} Self-preference bias is present in both judge models, consistent with prior findings on LLM-as-judge self-preference~\citep{zheng2023judging}. We select Gemini over GPT-5 as the primary judge because (1) its self-preference is substantially smaller, (2) it does not alter the model ranking, and (3) the top-2 ranking is robust across both judges. Nevertheless, the moderate cross-judge agreement on overall scores (Spearman $\rho{=}0.43$) underscores that absolute score values should be interpreted with caution, and we recommend future work report multi-judge robustness checks.
 
 \begin{table}[t]
 \centering
 \small
-\begin{tabular}{lcc}
+\begin{tabular}{lccr}
 \hline
-\textbf{Model (Generator)} & \textbf{Gemini Judge} & \textbf{GPT-5 Judge} \\
+\textbf{Model (Generator)} & \textbf{Gemini} & \textbf{GPT-5} & \textbf{$\Delta$} \\
+ & \textbf{Judge} & \textbf{Judge} & \\
 \hline
-Gemini 3.0 Pro Preview & 4.40 & 4.76 \\
-Kimi-K2.5              & 4.07 & 4.20 \\
-Claude Sonnet 4.5       & 3.12 & 3.43 \\
-GPT-5                   & 3.11 & 3.21 \\
-Qwen 3.5-35B            & 2.98 & 2.67 \\
+Gemini 3.0 Pro Preview & 4.44 & 3.98 & $-$0.46 \\
+Kimi-K2.5              & 4.06 & 3.94 & $-$0.12 \\
+Qwen 3.5-35B           & 3.39 & 3.73 & +0.35 \\
+Claude Sonnet 4.5      & 3.17 & 3.64 & +0.47 \\
+GPT-5                  & 3.06 & 4.09 & +1.03 \\
 \hline
 \end{tabular}
-\caption{Overall scores (0--5) assigned by Gemini 3.0 Pro Preview and GPT-5 as judge models, evaluated on the same 50 problems per generator model. Model ranking is consistent across both judges.}
+\caption{Mean overall scores (0--5) assigned by Gemini 3.0 Pro Preview and GPT-5 as judge models on the same 20 problems (120 explanations). $\Delta$ = GPT-5 judge $-$ Gemini judge. GPT-5-as-judge exhibits strong self-preference ($\Delta{=}+1.03$).}
 \label{tab:judge-bias}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lccc}
+\hline
+\textbf{Dimension} & \textbf{Pearson} & \textbf{Spearman} & \textbf{MAE} \\
+ & \textbf{$r$} & \textbf{$\rho$} & \\
+\hline
+ELQ & 0.58 & 0.56 & 0.62 \\
+TDC & 0.56 & 0.58 & 0.74 \\
+VC  & 0.48 & 0.46 & 0.45 \\
+LC  & 0.45 & 0.38 & 0.74 \\
+DPA & 0.40 & 0.42 & 1.15 \\
+C\&C & 0.39 & 0.39 & 0.87 \\
+PE  & 0.29 & 0.27 & 0.90 \\
+TC  & 0.10$^{\dag}$ & 0.12$^{\dag}$ & 0.77 \\
+Overall & 0.50 & 0.43 & 0.61 \\
+\hline
+\end{tabular}
+\caption{Dimension-level agreement between Gemini and GPT-5 judges (120 explanations). $^{\dag}$Non-significant ($p > 0.05$). Dimensions sorted by Pearson $r$.}
+\label{tab:judge-dim}
 \end{table}
 
 

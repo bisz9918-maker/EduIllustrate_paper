@@ -1,10 +1,20 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{23}
 \providecommand{\natexlab}[1]{#1}
+
+\bibitem[{An et~al.(2024)An, Yang, Li, Wang, Lin, Liu, Wang, and Luo}]{an2024openleaf}
+Jie An, Zhengyuan Yang, Linjie Li, Jianfeng Wang, Kevin Lin, Zicheng Liu, Lijuan Wang, and Jiebo Luo. 2024.
+\newblock \href {https://doi.org/10.1145/3664647.3685511} {Openleaf: A novel benchmark for open-domain interleaved image-text generation}.
+\newblock In \emph{Proceedings of the 32nd ACM International Conference on Multimedia}.
 
 \bibitem[{Chen et~al.(2025)Chen, Lin, and Shou}]{chen2025code2video}
 Yanzhe Chen, Kevin~Qinghong Lin, and Mike~Zheng Shou. 2025.
 \newblock Code2video: A code-centric paradigm for educational video generation.
 \newblock \emph{arXiv preprint arXiv:2510.01174}.
+
+\bibitem[{Chern et~al.(2024)Chern, Su, Ma, and Liu}]{chern2024anole}
+Ethan Chern, Jiadi Su, Yan Ma, and Pengfei Liu. 2024.
+\newblock Anole: An open, autoregressive, native large multimodal models for interleaved image-text generation.
+\newblock \emph{arXiv preprint arXiv:2407.06135}.
 
 \bibitem[{Cui et~al.(2025)Cui, Yuan, Wang, Li, Du, and Ding}]{cui2025draw}
 Zhiqing Cui, Jiahao Yuan, Hanqing Wang, Yanshu Li, Chenxu Du, and Zhenglong Ding. 2025.
@@ -25,6 +35,11 @@ Haonian Ji, Shi Qiu, Siyang Xin, Siwei Han, Zhaorun Chen, Dake Zhang, Hongyi Wan
 Firuz Kamalov, David~Santandreu Calonge, Linda Smail, Dilshod Azizov, Dimple~R Thadani, Theresa Kwong, and Amara Atif. 2025.
 \newblock Evolution of ai in education: Agentic workflows.
 \newblock \emph{arXiv preprint arXiv:2504.20082}.
+
+\bibitem[{Kou et~al.(2025)Kou, Jin, Liu, Liu, Ma, Jia, Chen, Jiang, and Deng}]{kou2025orthus}
+Siqi Kou, Jiachun Jin, Zhihong Liu, Chang Liu, Ye~Ma, Jian Jia, Quan Chen, Peng Jiang, and Zhijie Deng. 2025.
+\newblock Orthus: Autoregressive interleaved image-text generation with modality-specific heads.
+\newblock \emph{arXiv preprint arXiv:2412.00127}.
 
 \bibitem[{Ku et~al.(2025)Ku, Chong, Leung, Shah, Yu, and Chen}]{ku2025theoremexplain}
 Max Ku, Cheuk~Hei Chong, Jonathan Leung, Krish Shah, Alvin Yu, and Wenhu Chen. 2025.
@@ -61,14 +76,46 @@ Kwangsuk Park and Jiwoong Yang. 2025.
 \newblock Agacci: Affiliated grading agents for criteria-centric interface in educational coding contexts.
 \newblock \emph{arXiv preprint arXiv:2507.05321}.
 
+\bibitem[{Philipp(2007)}]{philipp2013teachers}
+Randolph~A Philipp. 2007.
+\newblock Mathematics teachers' beliefs and affect.
+\newblock In Frank~K Lester, editor, \emph{Second Handbook of Research on Mathematics Teaching and Learning}, pages 257--315. Information Age Publishing, Charlotte, NC.
+
 \bibitem[{Sweller(1988)}]{sweller1988cognitive}
 John Sweller. 1988.
 \newblock \href {https://doi.org/10.1207/s15516709cog1202_4} {Cognitive load during problem solving: Effects on learning}.
 \newblock \emph{Cognitive Science}, 12(2):257--285.
 
+\bibitem[{Thompson and Dahlin(2024)}]{thompson2024teachers}
+Paul~N Thompson and Michael Dahlin. 2024.
+\newblock \href {https://doi.org/10.3102/0013189X231209264} {Teachers' time use and well-being: Evidence from the american time use survey}.
+\newblock \emph{Educational Researcher}, 53(2):99--110.
+
+\bibitem[{T{\"u}rk{\"o}z{\"u} and Din{\c{c}}er(2025)}]{turkozudincer2025literacy}
+Tugba T{\"u}rk{\"o}z{\"u} and Bahar Din{\c{c}}er. 2025.
+\newblock Visual literacy in science education: Pre-service teachers' competencies and challenges in creating instructional materials.
+\newblock \emph{Journal of Science Education and Technology}.
+\newblock In press.
+
 \bibitem[{Wang et~al.(2025)Wang, Zhan, Lian, Hu, Yuan, Zhang, Xie, and Xiong}]{wang2025genmentor}
 Tianfu Wang, Yi~Zhan, Jianxun Lian, Zhengyu Hu, Nicholas~Jing Yuan, Qi~Zhang, Xing Xie, and Hui Xiong. 2025.
 \newblock Llm-powered multi-agent framework for goal-oriented learning in intelligent tutoring system.
 \newblock In \emph{Companion Proceedings of the ACM on Web Conference 2025}, pages 510--519.
+
+\bibitem[{Xia et~al.(2025)Xia, Han, Qiu, Zhou, Wang, Zheng, Chen, Cui, Ding, Li, Wang, and Yao}]{xia2025mmie}
+Peng Xia, Siwei Han, Shi Qiu, Yiyang Zhou, Zhaoyang Wang, Wenhao Zheng, Zhaorun Chen, Chenhang Cui, Mingyu Ding, Linjie Li, Lijuan Wang, and Huaxiu Yao. 2025.
+\newblock Mmie: Massive multimodal interleaved comprehension benchmark for large vision-language models.
+\newblock In \emph{International Conference on Learning Representations}.
+
+\bibitem[{Yao et~al.(2026)}]{yao2026instructional}
+Jianping Yao and 1 others. 2026.
+\newblock Instructional material design in k-12 stem: A systematic review of challenges and technological interventions.
+\newblock \emph{Computers \& Education}.
+\newblock In press.
+
+\bibitem[{Zheng et~al.(2023)Zheng, He, and Wang}]{zheng2023interleaved}
+Kaizhi Zheng, Xuehai He, and Xin~Eric Wang. 2023.
+\newblock Minigpt-5: Interleaved vision-and-language generation via generative vokens.
+\newblock \emph{arXiv preprint arXiv:2310.02239}.
 
 \end{thebibliography}
