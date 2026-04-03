@@ -34,6 +34,7 @@
 \usepackage{xcolor}
 \usepackage{amssymb}
 \usepackage{booktabs}
+\usepackage{makecell}
 \usepackage{natbib}
 \usepackage{stfloats}
 \usepackage{caption}
@@ -300,54 +301,70 @@ Table~\ref{tab:main-results} presents overall performance across all eight dimen
 
 \begin{table*}[t]
 \centering
-\small
-\begin{tabular}{lcccccccccc}
-\hline
-\textbf{Model} & \textbf{C\&C} & \textbf{LC} & \textbf{DPA} & \textbf{PE} & \textbf{ELQ} & \textbf{VC} & \textbf{TDC} & \textbf{TC} & \textbf{Overall} & \textbf{Fail} \\
-\hline
-Gemini 3.0 Pro Preview & 4.38 & \textbf{4.74} & \textbf{4.37} & \textbf{3.92} & \textbf{4.92} & 4.23 & 4.47 & \textbf{4.63} & \textbf{4.39} & 2.6\% \\
-Kimi-K2.5 & 4.26 & 4.61 & 3.57 & 3.67 & 4.87 & 3.44 & 4.43 & 4.31 & 4.04 & \textbf{1.7\%} \\
-qwen3.5-397b & \textbf{4.43} & 4.72 & 2.46 & 3.51 & 4.56 & 3.09 & 4.18 & 3.39 & 3.60 & 6.1\% \\
-Qwen3.5-122B & 4.17 & 4.60 & 2.14 & 3.56 & 4.67 & 2.90 & 4.23 & 2.97 & 3.43 & 5.2\% \\
-Qwen 3.5-35B & 4.17 & 4.45 & 1.98 & 3.46 & 4.39 & 2.68 & 4.43 & 2.75 & 3.29 & 16.1\% \\
-GPT-5 & 2.95 & 3.34 & 2.22 & 2.20 & 3.71 & 2.96 & 4.60 & 3.19 & 2.90 & 10.4\% \\
-Claude Sonnet 4.5 & 2.76 & 2.94 & 2.13 & 2.38 & 3.87 & 3.20 & 4.21 & 3.44 & 2.89 & 3.9\% \\
-Mistral-Large-3 & 1.99 & 2.00 & 1.23 & 1.62 & 4.10 & 2.38 & 4.16 & 2.25 & 2.15 & 25.2\% \\
-Mistral-Small-4 & 1.99 & 1.90 & 1.19 & 1.51 & 3.58 & 2.47 & 4.08 & 1.97 & 2.04 & 29.6\% \\
-Ministral-3-14B & 1.88 & 1.85 & 1.19 & 1.55 & 3.88 & 2.48 & \textbf{4.62} & 1.77 & 2.05 & 82.6\% \\
-\hline
-\end{tabular}
-\caption{Model performance across 8 evaluation dimensions (0--5 scale, 230 problems). C\&C: Correctness \& Completeness, LC: Logical Coherence, DPA: Diagram--Problem Alignment, PE: Pedagogical Effectiveness, ELQ: Element Layout Quality, VC: Visual Consistency, TDC: Text--Diagram Coordination, TC: Typographic Clarity. Overall score is geometric mean. Fail: percentage of problems where the pipeline failed to produce any output. Bold indicates best per column (lowest for Fail).}
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & \textbf{4.38} & \textbf{4.74} & \textbf{4.37} & \textbf{3.92} & \textbf{4.23} & 4.47 & \textbf{4.63} & \textbf{4.92} & \textbf{4.39} & 97.4\% \\
+Kimi-K2.5              & 4.26 & 4.61 & 3.57 & 3.67 & 3.44 & 4.43 & 4.31 & 4.87 & 4.04 & \textbf{98.3\%} \\
+Qwen3.5-397B           & \textbf{4.43} & 4.72 & 2.46 & 3.51 & 3.09 & 4.18 & 3.39 & 4.56 & 3.60 & 93.9\% \\
+Qwen3.5-122B           & 4.17 & 4.60 & 2.14 & 3.56 & 2.90 & 4.23 & 2.97 & 4.67 & 3.43 & 94.8\% \\
+Qwen 3.5-35B           & 4.17 & 4.45 & 1.98 & 3.46 & 2.68 & 4.43 & 2.75 & 4.39 & 3.29 & 83.9\% \\
+GPT-5                  & 2.95 & 3.33 & 2.22 & 2.20 & 2.96 & \textbf{4.60} & 3.19 & 3.71 & 2.90 & 89.6\% \\
+Claude Sonnet 4.5      & 2.76 & 2.94 & 2.13 & 2.38 & 3.20 & 4.21 & 3.44 & 3.87 & 2.89 & 96.1\% \\
+Mistral-Large-3        & 1.99 & 2.00 & 1.23 & 1.62 & 2.38 & 4.16 & 2.25 & 4.10 & 2.15 & 74.8\% \\
+Mistral-Small-4        & 1.99 & 1.90 & 1.19 & 1.51 & 2.46 & 4.08 & 1.97 & 3.58 & 2.04 & 70.4\% \\
+Ministral-3-14B        & 1.88 & 1.85 & 1.19 & 1.55 & 2.48 & \textbf{4.62} & 1.77 & 3.88 & 2.05 & 17.4\% \\
+\bottomrule
+\end{tabular}}
+\caption{Model performance on the full EduIllustrate benchmark (n=230, 0--5 scale). Overall: geometric mean of 8 dimensions. Success Rate: pipeline success rate. Bold indicates best per column. Per-subject and per-grade breakdowns are in Appendix~\ref{sec:full-results}.}
 \label{tab:main-results}
 \end{table*}
 
 All models excel at Logical Coherence and Typographic Clarity, reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 4.21, GPT-5: 4.60), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 1.19 to 4.37. Qwen 3.5-35B's low score of 1.98 and the Mistral family's scores near 1.19--1.23 reflect frequent semantic misalignment. Pedagogical Effectiveness is universally weakest (1.51--3.92), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (1.7\%), followed by Gemini (2.6\%), Claude (3.9\%), Qwen3.5-122B (5.2\%), qwen3.5-397b (6.1\%), GPT-5 (10.4\%), Qwen 3.5-35B (16.1\%), Mistral-Large-3 (25.2\%), Mistral-Small-4 (29.6\%), and Ministral-3-14B (82.6\%). The Mistral family---particularly Ministral-3-14B---shows substantially higher failure rates, indicating limited robustness to complex Manim code generation. Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
 
 
+Per-subject and per-grade breakdowns with full dimension scores are provided in Appendix~\ref{sec:full-results}. Table~\ref{tab:subject-grade} summarizes the overall scores for five representative models across subjects and grade levels. Mathematics consistently achieves highest scores across models, while geography scores lowest. Gemini and Kimi maintain consistency across grade levels, while other models show greater degradation on high school problems.
+
 \begin{table*}[t]
 \centering
-\small
+\fontsize{10}{12}\selectfont
+\setlength{\tabcolsep}{4pt}
+\renewcommand\arraystretch{1.3}
 \begin{tabular}{lcccccc|ccc}
-\hline
-\textbf{Model} & \textbf{Math} & \textbf{Phys} & \textbf{Chem} & \textbf{Bio} & \textbf{Geo} & & \textbf{Elem.} & \textbf{Middle} & \textbf{High} \\
-\hline
-Gemini 3.0 Pro Preview & \textbf{4.47} & \textbf{4.43} & \textbf{4.39} & \textbf{4.29} & \textbf{4.19} & & \textbf{4.34} & \textbf{4.40} & \textbf{4.39} \\
-Kimi-K2.5              & 4.19 & 4.03 & 3.99 & 3.94 & 3.77 & & 4.00 & 4.01 & 4.07 \\
-qwen3.5-397b           & 3.75 & 3.63 & 3.54 & 3.41 & 3.36 & & 3.81 & 3.63 & 3.52 \\
-Qwen3.5-122B           & 3.65 & 3.44 & 3.34 & 3.17 & 3.15 & & 3.71 & 3.46 & 3.35 \\
-Qwen 3.5-35B           & 3.46 & 3.23 & 3.25 & 3.08 & 3.09 & & 3.67 & 3.29 & 3.18 \\
-GPT-5                  & 3.03 & 2.92 & 2.87 & 2.75 & 2.52 & & 3.43 & 2.86 & 2.82 \\
-Claude Sonnet 4.5      & 3.10 & 2.99 & 2.73 & 2.66 & 2.48 & & 3.21 & 2.84 & 2.88 \\
-Mistral-Large-3        & 2.32 & 2.11 & 2.13 & 1.89 & 1.95 & & 2.36 & 2.22 & 2.04 \\
-Mistral-Small-4        & 2.26 & 1.97 & 1.92 & 1.86 & 1.85 & & 2.12 & 2.06 & 1.99 \\
-Ministral-3-14B        & 2.25 & 2.05 & 1.81 & 1.45 & 1.76 & & 1.76 & 2.14 & 2.03 \\
-\hline
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Mathe-}\\\small\textbf{matics}} &
+\makecell{\small\textbf{Physics}} &
+\makecell{\small\textbf{Chem-}\\\small\textbf{istry}} &
+\makecell{\small\textbf{Biology}} &
+\makecell{\small\textbf{Geog-}\\\small\textbf{raphy}} &
+\makecell{\small\textbf{Subject}\\\small\textbf{Avg.}} &
+\makecell{\small\textbf{Elem.}\\\small\textbf{School}} &
+\makecell{\small\textbf{Middle}\\\small\textbf{School}} &
+\makecell{\small\textbf{High}\\\small\textbf{School}} \\
+\midrule
+Gemini 3.0 Pro Preview & \textbf{4.47} & \textbf{4.43} & \textbf{4.39} & \textbf{4.29} & \textbf{4.19} & \textbf{4.35} & \textbf{4.34} & \textbf{4.40} & \textbf{4.39} \\
+Kimi-K2.5              & 4.19 & 4.03 & 3.99 & 3.94 & 3.77 & 3.98 & 4.00 & 4.01 & 4.07 \\
+Qwen 3.5-35B           & 3.46 & 3.23 & 3.25 & 3.08 & 3.09 & 3.22 & 3.67 & 3.29 & 3.18 \\
+GPT-5                  & 3.03 & 2.92 & 2.87 & 2.75 & 2.52 & 2.82 & 3.43 & 2.86 & 2.82 \\
+Claude Sonnet 4.5      & 3.10 & 2.99 & 2.73 & 2.66 & 2.48 & 2.79 & 3.21 & 2.84 & 2.88 \\
+\bottomrule
 \end{tabular}
-\caption{Model performance by subject (left) and grade level (right), overall score on 0--5 scale. Due to small sample sizes (Chem: n=8, Bio: n=10, Geo: n=10), cross-subject comparisons for these disciplines should be treated as exploratory. Bold indicates best per column.}
-\label{tab:subject-grade-results}
+\caption{Overall scores (geometric mean, 0--5 scale) by subject and grade level for five representative models. Subject Average: unweighted mean across five subjects. Full results for all 10 models with per-dimension breakdowns are in Appendix~\ref{sec:full-results}. Bold indicates best per column.}
+\label{tab:subject-grade}
 \end{table*}
-
-Table~\ref{tab:subject-grade-results} shows subject- and grade-level performance. Mathematics consistently achieves highest scores, while geography scores lowest (2.15--4.19). Gemini and Kimi maintain consistency across grade levels (Gemini: 4.32--4.35, Kimi: 4.00--4.03), while other models degrade substantially on high school problems. GPT-5's sharp drop from elementary (3.43) to high school (2.47) correlates with increasing diagram complexity at higher grade levels. Failure analysis reveals that 98.7\% of failures (79/80) concentrate in middle and high school problems, with biology the most failure-prone subject (25/80, 31.3\%)---likely due to the complex cellular and ecological diagrams these problems require. GPT-5 and Qwen together account for 76.3\% of all failures (61/80), with both models particularly struggling on biology (10 and 9 failures, respectively) and geography (7 and 8 failures).
 
 \subsection{Workflow Ablation Study}
 
@@ -369,16 +386,19 @@ EduIllustrate is built upon a modified version of the TheoremExplainAgent codeba
 
 \begin{table}[t]
 \centering
-\small
-\begin{tabular}{lcccc}
-\hline
-\textbf{Workflow} & \textbf{Tokens} & \textbf{Cost} & \textbf{VC} & \textbf{Overall} \\
- & \textbf{(In/Out)} & \textbf{(\$)} & & \\
-\hline
+\renewcommand\arraystretch{1.3}
+\resizebox{\columnwidth}{!}{\begin{tabular}{lcccc}
+\toprule
+\makecell{\small\textbf{Workflow}} &
+\makecell{\small\textbf{Tokens}\\\small\textbf{(In/Out)}} &
+\makecell{\small\textbf{Cost}\\\small\textbf{(\$)}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\small\textbf{Overall} \\
+\midrule
 Ours & 46.8K / 37.1K & 0.49 & 4.47 & \textbf{4.39} \\
 All-Parallel & 95.5K / 71.4K & 0.94 & 3.89 & \textbf{4.29} \\
-\hline
-\end{tabular}
+\bottomrule
+\end{tabular}}
 \caption{Workflow comparison using Gemini 3.0 Pro Preview on 50 problems. Our workflow achieves superior visual consistency at lower cost.}
 \label{tab:workflow}
 \end{table}
@@ -855,5 +875,276 @@ Human evaluation was conducted through a dedicated annotation website. Raters we
 \textbf{Formal Scoring.} Each of the 30 explanations in the final evaluation set was independently scored by all 20 raters, producing 30 $\times$ 7 $\times$ 20 = 4{,}200 human judgments. Figure~\ref{fig:annotation} shows a screenshot of the annotation interface.
 
 
+
+\section{Full Per-Subset Benchmark Results}
+\label{sec:full-results}
+
+Tables~\ref{tab:results-math}--\ref{tab:results-highschool} report complete 8-dimension scores for each subject and grade-level subset of the EduIllustrate benchmark. Column headers and scoring follow Table~\ref{tab:main-results}. Bold indicates best per column.
+
+
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & 4.50 & 4.67 & \textbf{4.54} & \textbf{3.95} & \textbf{4.33} & 4.42 & \textbf{4.74} & \textbf{5.00} & \textbf{4.47} & \textbf{100\%} \\
+Kimi-K2.5              & \textbf{4.55} & 4.75 & 3.86 & 3.74 & 3.59 & 4.41 & 4.41 & 4.95 & 4.19 & \textbf{100\%} \\
+Qwen3.5-397B           & \textbf{4.68} & 4.75 & 2.74 & 3.59 & 3.33 & 4.19 & 3.40 & 4.68 & 3.75 & 95.0\% \\
+Qwen3.5-122B           & 4.51 & \textbf{4.76} & 2.42 & 3.72 & 3.14 & \textbf{4.36} & 3.03 & 4.83 & 3.65 & 95.0\% \\
+Qwen 3.5-35B           & 4.45 & 4.56 & 2.29 & 3.52 & 2.86 & 4.50 & 2.78 & 4.56 & 3.46 & 88.8\% \\
+GPT-5                  & 3.31 & 3.63 & 2.41 & 2.26 & 3.11 & 4.56 & 3.12 & 3.73 & 3.03 & 97.5\% \\
+Claude Sonnet 4.5      & 3.22 & 3.15 & 2.51 & 2.63 & 3.35 & 4.26 & 3.43 & 3.79 & 3.10 & 97.5\% \\
+Mistral-Large-3        & 2.44 & 2.27 & 1.41 & 1.92 & 2.52 & 4.09 & 2.25 & 3.98 & 2.32 & 80.0\% \\
+Mistral-Small-4        & 2.55 & 2.28 & 1.35 & 1.85 & 2.67 & 4.11 & 2.06 & 3.48 & 2.26 & 75.0\% \\
+Ministral-3-14B        & 2.06 & 2.19 & 1.38 & 1.75 & 2.74 & \textbf{4.73} & 1.98 & 4.00 & 2.25 & 20.0\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Mathematics subset (n=80).}
+\label{tab:results-math}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & 4.51 & \textbf{4.85} & \textbf{4.27} & \textbf{4.00} & \textbf{4.22} & 4.60 & \textbf{4.55} & \textbf{4.93} & \textbf{4.43} & 98.3\% \\
+Kimi-K2.5              & 4.43 & 4.72 & 3.38 & 3.80 & 3.18 & 4.60 & 4.13 & 4.90 & 4.03 & \textbf{100\%} \\
+Qwen3.5-397B           & \textbf{4.69} & 4.78 & 2.26 & 3.80 & 2.83 & 4.27 & 3.45 & 4.65 & 3.63 & 91.7\% \\
+Qwen3.5-122B           & 4.32 & 4.63 & 2.04 & 3.69 & 2.78 & 4.33 & 2.94 & 4.71 & 3.44 & 98.3\% \\
+Qwen 3.5-35B           & 4.31 & 4.51 & 1.70 & 3.65 & 2.43 & 4.35 & 2.70 & 4.43 & 3.23 & 85.0\% \\
+GPT-5                  & 3.05 & 3.46 & 2.19 & 2.37 & 2.62 & 4.55 & 3.37 & 3.61 & 2.92 & 98.3\% \\
+Claude Sonnet 4.5      & 3.02 & 3.21 & 2.09 & 2.74 & 3.02 & 4.41 & 3.54 & 3.64 & 2.99 & 96.7\% \\
+Mistral-Large-3        & 1.81 & 1.88 & 1.23 & 1.60 & 2.23 & 4.12 & 2.21 & 4.38 & 2.11 & 80.0\% \\
+Mistral-Small-4        & 1.89 & 1.84 & 1.14 & 1.39 & 2.24 & 4.21 & 1.93 & 3.45 & 1.97 & 63.3\% \\
+Ministral-3-14B        & 2.00 & 1.93 & 1.12 & 1.71 & 2.32 & \textbf{4.44} & 1.61 & 3.93 & 2.05 & 23.3\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Physics subset (n=60).}
+\label{tab:results-physics}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & 4.59 & \textbf{4.93} & \textbf{4.03} & \textbf{4.22} & \textbf{4.20} & 4.52 & \textbf{4.48} & \textbf{4.78} & \textbf{4.39} & 90.0\% \\
+Kimi-K2.5              & \textbf{4.31} & 4.66 & 3.28 & 3.79 & 3.29 & 4.50 & 4.30 & 4.69 & 3.99 & 96.7\% \\
+Qwen3.5-397B           & 4.34 & 4.72 & 2.44 & 3.62 & 2.79 & 4.25 & 3.24 & 4.41 & 3.54 & 96.7\% \\
+Qwen3.5-122B           & 4.00 & 4.48 & 1.97 & 3.48 & 2.81 & 4.28 & 3.05 & 4.48 & 3.34 & 96.7\% \\
+Qwen 3.5-35B           & 4.11 & 4.71 & 1.71 & 3.64 & 2.46 & 4.48 & 2.77 & 4.39 & 3.25 & 93.3\% \\
+GPT-5                  & 2.81 & 3.15 & 2.34 & 2.35 & 2.77 & \textbf{4.59} & 3.07 & 3.65 & 2.87 & 86.7\% \\
+Claude Sonnet 4.5      & 2.52 & 2.85 & 1.82 & 2.30 & 3.10 & 4.06 & 3.25 & 4.00 & 2.73 & 90.0\% \\
+Mistral-Large-3        & 2.05 & 2.00 & 1.11 & 1.45 & 2.39 & 4.48 & 2.48 & 3.91 & 2.13 & 73.3\% \\
+Mistral-Small-4        & 1.59 & 1.88 & 1.06 & 1.47 & 2.30 & 3.88 & 2.01 & 3.53 & 1.92 & 56.7\% \\
+Ministral-3-14B        & 1.60 & 1.20 & 1.00 & 1.00 & 2.49 & \textbf{4.68} & 1.80 & 3.40 & 1.81 & 16.7\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Chemistry subset (n=30).}
+\label{tab:results-chemistry}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & \textbf{4.07} & \textbf{4.68} & \textbf{4.56} & \textbf{3.82} & \textbf{4.18} & 4.36 & \textbf{4.56} & \textbf{4.71} & \textbf{4.29} & 93.3\% \\
+Kimi-K2.5              & 3.79 & 4.32 & 3.77 & 3.43 & 3.64 & 4.20 & 4.58 & 4.71 & 3.94 & 93.3\% \\
+Qwen3.5-397B           & 4.00 & 4.63 & 2.41 & 3.17 & 3.07 & 3.74 & 3.50 & 4.27 & 3.41 & \textbf{100\%} \\
+Qwen3.5-122B           & 3.97 & 4.50 & 2.00 & 3.37 & 2.56 & 3.70 & 2.65 & 4.50 & 3.17 & \textbf{100\%} \\
+Qwen 3.5-35B           & 3.90 & 4.05 & 2.03 & 3.05 & 2.62 & 4.26 & 2.67 & 3.95 & 3.08 & 70.0\% \\
+GPT-5                  & 2.50 & 2.85 & 2.16 & 1.90 & 3.11 & \textbf{4.66} & 3.30 & 3.90 & 2.75 & 66.7\% \\
+Claude Sonnet 4.5      & 1.96 & 2.57 & 2.05 & 1.75 & 3.29 & 4.03 & 3.62 & 4.18 & 2.66 & 93.3\% \\
+Mistral-Large-3        & 1.42 & 1.63 & 1.01 & 1.26 & 2.08 & 4.13 & 2.18 & 3.95 & 1.89 & 63.3\% \\
+Mistral-Small-4        & 1.64 & 1.41 & 1.06 & 1.23 & 2.19 & 4.11 & 1.89 & 3.82 & 1.86 & 73.3\% \\
+Ministral-3-14B        & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & \textbf{5.00} & 1.00 & 4.00 & 1.45 & 3.3\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Biology subset (n=30).}
+\label{tab:results-biology}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & \textbf{3.93} & \textbf{4.57} & \textbf{4.23} & \textbf{3.47} & \textbf{4.04} & 4.42 & \textbf{4.72} & \textbf{4.97} & \textbf{4.19} & \textbf{100\%} \\
+Kimi-K2.5              & 3.48 & 4.24 & 3.23 & 3.34 & 3.52 & 4.26 & 4.17 & 4.90 & 3.77 & 96.7\% \\
+Qwen3.5-397B           & 3.73 & 4.62 & 2.16 & 2.96 & 3.31 & 4.38 & 3.28 & 4.46 & 3.36 & 86.7\% \\
+Qwen3.5-122B           & 3.12 & 4.29 & 1.85 & 3.04 & 2.97 & 4.18 & 3.23 & 4.54 & 3.15 & 80.0\% \\
+Qwen 3.5-35B           & 3.27 & 4.00 & 1.92 & 3.00 & 3.00 & 4.50 & 2.80 & 4.18 & 3.09 & 73.3\% \\
+GPT-5                  & 2.00 & 2.65 & 1.57 & 1.65 & 3.41 & \textbf{4.88} & 3.01 & 3.83 & 2.52 & 76.7\% \\
+Claude Sonnet 4.5      & 2.00 & 2.27 & 1.61 & 1.73 & 3.19 & 4.02 & 3.25 & 4.13 & 2.48 & \textbf{100\%} \\
+Mistral-Large-3        & 1.42 & 1.79 & 1.00 & 1.21 & 2.60 & 4.19 & 2.14 & 4.16 & 1.95 & 63.3\% \\
+Mistral-Small-4        & 1.36 & 1.48 & 1.06 & 1.16 & 2.67 & 3.93 & 1.86 & 3.84 & 1.85 & 83.3\% \\
+Ministral-3-14B        & 1.25 & 1.25 & 1.00 & 1.00 & 2.32 & \textbf{4.67} & 1.65 & 3.75 & 1.76 & 13.3\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Geography subset (n=30).}
+\label{tab:results-geography}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & 4.20 & 4.55 & \textbf{4.34} & \textbf{3.65} & \textbf{4.29} & 4.52 & \textbf{4.82} & \textbf{5.00} & \textbf{4.34} & \textbf{100\%} \\
+Kimi-K2.5              & 4.05 & 4.45 & 3.48 & 3.40 & 3.76 & 4.33 & 4.68 & 4.95 & 4.00 & \textbf{100\%} \\
+Qwen3.5-397B           & 4.55 & \textbf{4.85} & 2.95 & 3.40 & 3.83 & 4.32 & 3.52 & 4.40 & 3.81 & \textbf{100\%} \\
+Qwen3.5-122B           & 4.40 & \textbf{4.85} & 2.56 & 3.55 & 3.29 & 4.37 & 3.27 & 4.80 & 3.71 & \textbf{100\%} \\
+Qwen 3.5-35B           & \textbf{4.60} & \textbf{4.85} & 2.82 & 3.45 & 3.04 & 4.53 & 3.08 & 4.50 & 3.67 & \textbf{100\%} \\
+GPT-5                  & 3.53 & 4.00 & 2.95 & 2.47 & 3.67 & 4.58 & 3.71 & 4.16 & 3.43 & 95.0\% \\
+Claude Sonnet 4.5      & 3.25 & 3.45 & 2.28 & 2.75 & 3.63 & 4.29 & 3.48 & 4.25 & 3.21 & \textbf{100\%} \\
+Mistral-Large-3        & 2.36 & 2.00 & 1.27 & 2.07 & 3.04 & 4.45 & 2.28 & 4.21 & 2.36 & 70.0\% \\
+Mistral-Small-4        & 2.00 & 2.00 & 1.24 & 1.53 & 3.05 & 4.19 & 1.89 & 3.71 & 2.12 & 85.0\% \\
+Ministral-3-14B        & 1.00 & 2.33 & 1.00 & 1.00 & 1.67 & \textbf{4.62} & 1.67 & 4.33 & 1.76 & 15.0\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Elementary School subset (n=20).}
+\label{tab:results-elementary}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & 4.36 & \textbf{4.74} & \textbf{4.41} & \textbf{3.98} & \textbf{4.24} & 4.41 & \textbf{4.66} & \textbf{4.94} & \textbf{4.40} & 96.2\% \\
+Kimi-K2.5              & 4.24 & 4.65 & 3.47 & 3.66 & 3.48 & 4.43 & 4.18 & 4.88 & 4.01 & \textbf{99.0\%} \\
+Qwen3.5-397B           & \textbf{4.55} & 4.74 & 2.50 & 3.59 & 3.04 & 4.10 & 3.49 & 4.61 & 3.63 & 95.2\% \\
+Qwen3.5-122B           & 4.26 & 4.74 & 2.15 & 3.69 & 2.83 & 4.17 & 3.00 & 4.70 & 3.46 & 94.3\% \\
+Qwen 3.5-35B           & 4.33 & 4.53 & 1.88 & 3.64 & 2.66 & 4.42 & 2.66 & 4.44 & 3.29 & 86.7\% \\
+GPT-5                  & 2.80 & 3.23 & 2.17 & 2.15 & 2.96 & \textbf{4.67} & 3.27 & 3.78 & 2.86 & 91.4\% \\
+Claude Sonnet 4.5      & 2.68 & 2.90 & 2.01 & 2.26 & 3.21 & 4.18 & 3.47 & 3.99 & 2.84 & 94.3\% \\
+Mistral-Large-3        & 2.10 & 2.26 & 1.26 & 1.69 & 2.37 & 4.18 & 2.29 & 4.10 & 2.22 & 76.2\% \\
+Mistral-Small-4        & 1.93 & 1.92 & 1.18 & 1.56 & 2.50 & 4.16 & 2.10 & 3.67 & 2.06 & 68.6\% \\
+Ministral-3-14B        & 1.75 & 1.69 & 1.38 & 1.50 & 2.83 & \textbf{4.78} & 2.13 & 3.88 & 2.14 & 15.2\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the Middle School subset (n=105).}
+\label{tab:results-middleschool}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\renewcommand\arraystretch{1.3}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{\begin{tabular}{lcccccccccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Correctness \&}\\\small\textbf{Completeness}} &
+\makecell{\small\textbf{Logical}\\\small\textbf{Coherence}} &
+\makecell{\small\textbf{Diagram--Problem}\\\small\textbf{Alignment}} &
+\makecell{\small\textbf{Pedagogical}\\\small\textbf{Effectiveness}} &
+\makecell{\small\textbf{Element}\\\small\textbf{Layout Quality}} &
+\makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
+\makecell{\small\textbf{Text--Diagram}\\\small\textbf{Coordination}} &
+\makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
+\small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
+\midrule
+Gemini 3.0 Pro Preview & 4.45 & \textbf{4.77} & \textbf{4.34} & \textbf{3.90} & \textbf{4.21} & 4.52 & \textbf{4.57} & \textbf{4.87} & \textbf{4.39} & 98.1\% \\
+Kimi-K2.5              & \textbf{4.31} & 4.60 & 3.68 & 3.74 & 3.34 & 4.45 & 4.37 & 4.84 & 4.07 & 97.1\% \\
+Qwen3.5-397B           & 4.28 & 4.68 & 2.32 & 3.46 & 2.99 & 4.23 & 3.26 & 4.53 & 3.52 & 91.4\% \\
+Qwen3.5-122B           & 4.02 & 4.41 & 2.04 & 3.43 & 2.89 & 4.26 & 2.89 & 4.63 & 3.35 & 94.3\% \\
+Qwen 3.5-35B           & 3.89 & 4.27 & 1.88 & 3.27 & 2.62 & 4.42 & 2.77 & 4.32 & 3.18 & 78.1\% \\
+GPT-5                  & 2.98 & 3.31 & 2.12 & 2.20 & 2.81 & \textbf{4.54} & 2.99 & 3.55 & 2.82 & 86.7\% \\
+Claude Sonnet 4.5      & 2.74 & 2.87 & 2.22 & 2.43 & 3.11 & 4.23 & 3.40 & 3.69 & 2.88 & \textbf{97.1\%} \\
+Mistral-Large-3        & 1.81 & 1.73 & 1.20 & 1.47 & 2.28 & 4.09 & 2.20 & 4.08 & 2.04 & 74.3\% \\
+Mistral-Small-4        & 2.04 & 1.85 & 1.18 & 1.47 & 2.30 & 3.99 & 1.87 & 3.47 & 1.99 & 69.5\% \\
+Ministral-3-14B        & 2.10 & 1.90 & 1.08 & 1.67 & 2.32 & \textbf{4.50} & 1.51 & 3.81 & 2.03 & 20.0\% \\
+\bottomrule
+\end{tabular}}
+\caption{Results on the High School subset (n=105).}
+\label{tab:results-highschool}
+\end{table*}
 
 \end{document}
