@@ -118,7 +118,7 @@
 \end{strip}
 
 \begin{abstract}
-Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{230 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (4.39/5.0), while Kimi-K2.5 offers the best cost-efficiency (4.04 at \$0.12/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
+Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{230 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), while Kimi-K2.5 offers the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
 \end{abstract}
 
 
@@ -274,7 +274,7 @@ High       & 30 & 30  & 15  & 15  & 15  & 105 \\
 \label{tab:dataset}
 \end{table}
 
-\textbf{Evaluation Framework.} We propose an \textbf{8-dimension rubric} grounded in multimedia learning theory~\citep{sweller1988cognitive,paivio1971imagery,mayer2001multimedia}, covering three aspects of multimodal educational content. Each dimension is scored on a 0--5 Likert scale.
+\textbf{Evaluation Framework.} We propose an \textbf{8-dimension rubric} grounded in multimedia learning theory~\citep{sweller1988cognitive,paivio1971imagery,mayer2001multimedia}, covering three aspects of multimodal educational content. Each dimension is scored on a 0--5 Likert scale and reported as a percentage (0--100\%).
 
 \textit{Text quality} (evaluated on extracted \texttt{<TEXT\_k>} blocks): Correctness \& Completeness---whether the explanation reaches the correct answer through valid reasoning with all intermediate steps; Logical Coherence---whether reasoning flows naturally from premises to conclusions; Pedagogical Effectiveness---whether explanations use grade-appropriate language and effective instructional strategies; Typographic Clarity---proper mathematical notation, consistent formatting, and absence of artifacts.
 
@@ -282,7 +282,7 @@ High       & 30 & 30  & 15  & 15  & 15  & 105 \\
 
 \textbf{Automated Evaluation Protocol.} We employ Gemini 3.0 Pro Preview (temperature=0) as the judge model, selected for its strong multimodal reasoning and 2M-token context window. Evaluation input varies by dimension type: text-only dimensions (Correctness \& Completeness, Logical Coherence, Pedagogical Effectiveness, Typographic Clarity) receive the problem statement, extracted text, and rubric criteria (plus the gold solution for Correctness \& Completeness); multimodal dimensions (Diagram--Problem Alignment, Text--Diagram Coordination) additionally receive the relevant rendered diagrams alongside surrounding text. For Element Layout Quality, each diagram is scored independently and aggregated via geometric mean $ELQ = \left(\prod_{i=1}^N s_i\right)^{1/N}$, ensuring a single poor diagram substantially penalizes the overall score. For Visual Consistency, Scene 1 serves as the visual anchor; each subsequent diagram is compared against it, with $VC = \left(\prod_{i=2}^N s_{6,i}\right)^{1/(N-1)}$.
 
-\textbf{Human Evaluation Protocol.} To validate LLM-as-judge reliability, we conduct human evaluation on 30 stratified random sampled explanations, scored by 20 expert raters across 7 dimensions (Correctness \& Completeness excluded) on a 3-level scale \{0, 0.5, 1\}, producing 4,200 judgments. To enable direct comparison with the automated 0--5 Likert scores, LLM scores are normalized to [0, 1] by dividing by 5 before computing Spearman's $\rho$. We compute Krippendorff's $\alpha$ for inter-rater agreement and Spearman's $\rho$ for human-AI correlation. Full annotation procedures are described in Appendix~\ref{sec:annotation}.
+\textbf{Human Evaluation Protocol.} To validate LLM-as-judge reliability, we conduct human evaluation on 30 stratified random sampled explanations, scored by 20 expert raters across 7 dimensions (Correctness \& Completeness excluded) on a 3-level scale \{0, 0.5, 1\}, producing 4,200 judgments. To enable direct comparison with the automated scores (reported as percentages), LLM scores are normalized to [0, 1] by dividing by 5 before computing Spearman's $\rho$. We compute Krippendorff's $\alpha$ for inter-rater agreement and Spearman's $\rho$ for human-AI correlation. Full annotation procedures are described in Appendix~\ref{sec:annotation}.
 
 
 
@@ -297,7 +297,7 @@ We evaluate five frontier LLMs on the EduIllustrate benchmark, analyzing perform
 
 \subsection{Main Results}
 
-Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (4.39/5.0), substantially outperforming all other models. Kimi-K2.5 ranks second (4.04), while GPT-5 and Claude Sonnet 4.5 cluster at 2.89--2.90, and Qwen 3.5-35B scores 3.29. The 34\% performance gap between best and worst models demonstrates that architectural choices significantly impact multimodal educational content quality.
+Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), substantially outperforming all other models. Kimi-K2.5 ranks second (80.8\%), while GPT-5 and Claude Sonnet 4.5 cluster at 57.8--58.0\%, and Qwen 3.5-35B scores 65.8\%. The 34\% performance gap between best and worst models demonstrates that architectural choices significantly impact multimodal educational content quality.
 
 \begin{table*}[t]
 \centering
@@ -316,23 +316,23 @@ Table~\ref{tab:main-results} presents overall performance across all eight dimen
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & \textbf{4.38} & \textbf{4.74} & \textbf{4.37} & \textbf{3.92} & \textbf{4.23} & 4.47 & \textbf{4.63} & \textbf{4.92} & \textbf{4.39} & 97.4\% \\
-Kimi-K2.5              & 4.26 & 4.61 & 3.57 & 3.67 & 3.44 & 4.43 & 4.31 & 4.87 & 4.04 & \textbf{98.3\%} \\
-Qwen3.5-397B           & \textbf{4.43} & 4.72 & 2.46 & 3.51 & 3.09 & 4.18 & 3.39 & 4.56 & 3.60 & 93.9\% \\
-Qwen3.5-122B           & 4.17 & 4.60 & 2.14 & 3.56 & 2.90 & 4.23 & 2.97 & 4.67 & 3.43 & 94.8\% \\
-Qwen 3.5-35B           & 4.17 & 4.45 & 1.98 & 3.46 & 2.68 & 4.43 & 2.75 & 4.39 & 3.29 & 83.9\% \\
-GPT-5                  & 2.95 & 3.33 & 2.22 & 2.20 & 2.96 & \textbf{4.60} & 3.19 & 3.71 & 2.90 & 89.6\% \\
-Claude Sonnet 4.5      & 2.76 & 2.94 & 2.13 & 2.38 & 3.20 & 4.21 & 3.44 & 3.87 & 2.89 & 96.1\% \\
-Mistral-Large-3        & 1.99 & 2.00 & 1.23 & 1.62 & 2.38 & 4.16 & 2.25 & 4.10 & 2.15 & 74.8\% \\
-Mistral-Small-4        & 1.99 & 1.90 & 1.19 & 1.51 & 2.46 & 4.08 & 1.97 & 3.58 & 2.04 & 70.4\% \\
-Ministral-3-14B        & 1.88 & 1.85 & 1.19 & 1.55 & 2.48 & \textbf{4.62} & 1.77 & 3.88 & 2.05 & 17.4\% \\
+Gemini 3.0 Pro Preview & \textbf{87.6\%} & \textbf{94.8\%} & \textbf{87.4\%} & \textbf{78.4\%} & \textbf{84.6\%} & 89.4\% & \textbf{92.6\%} & \textbf{98.4\%} & \textbf{87.8\%} & 97.4\% \\
+Kimi-K2.5              & 85.2\% & 92.2\% & 71.4\% & 73.4\% & 68.8\% & 88.6\% & 86.2\% & 97.4\% & 80.8\% & \textbf{98.3\%} \\
+Qwen3.5-397B           & \textbf{88.6\%} & 94.4\% & 49.2\% & 70.2\% & 61.8\% & 83.6\% & 67.8\% & 91.2\% & 72.0\% & 93.9\% \\
+Qwen3.5-122B           & 83.4\% & 92.0\% & 42.8\% & 71.2\% & 58.0\% & 84.6\% & 59.4\% & 93.4\% & 68.6\% & 94.8\% \\
+Qwen 3.5-35B           & 83.4\% & 89.0\% & 39.6\% & 69.2\% & 53.6\% & 88.6\% & 55.0\% & 87.8\% & 65.8\% & 83.9\% \\
+GPT-5                  & 59.0\% & 66.6\% & 44.4\% & 44.0\% & 59.2\% & \textbf{92.0\%} & 63.8\% & 74.2\% & 58.0\% & 89.6\% \\
+Claude Sonnet 4.5      & 55.2\% & 58.8\% & 42.6\% & 47.6\% & 64.0\% & 84.2\% & 68.8\% & 77.4\% & 57.8\% & 96.1\% \\
+Mistral-Large-3        & 39.8\% & 40.0\% & 24.6\% & 32.4\% & 47.6\% & 83.2\% & 45.0\% & 82.0\% & 43.0\% & 74.8\% \\
+Mistral-Small-4        & 39.8\% & 38.0\% & 23.8\% & 30.2\% & 49.2\% & 81.6\% & 39.4\% & 71.6\% & 40.8\% & 70.4\% \\
+Ministral-3-14B        & 37.6\% & 37.0\% & 23.8\% & 31.0\% & 49.6\% & \textbf{92.4\%} & 35.4\% & 77.6\% & 41.0\% & 17.4\% \\
 \bottomrule
 \end{tabular}}
-\caption{Model performance on the full EduIllustrate benchmark (n=230, 0--5 scale). Overall: geometric mean of 8 dimensions. Success Rate: pipeline success rate. Bold indicates best per column. Per-subject and per-grade breakdowns are in Appendix~\ref{sec:full-results}.}
+\caption{Model performance on the full EduIllustrate benchmark (n=230, 0--100\% scale). Overall: geometric mean of 8 dimensions. Success Rate: pipeline success rate. Bold indicates best per column. Per-subject and per-grade breakdowns are in Appendix~\ref{sec:full-results}.}
 \label{tab:main-results}
 \end{table*}
 
-All models excel at Logical Coherence and Typographic Clarity, reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 4.21, GPT-5: 4.60), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 1.19 to 4.37. Qwen 3.5-35B's low score of 1.98 and the Mistral family's scores near 1.19--1.23 reflect frequent semantic misalignment. Pedagogical Effectiveness is universally weakest (1.51--3.92), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (1.7\%), followed by Gemini (2.6\%), Claude (3.9\%), Qwen3.5-122B (5.2\%), qwen3.5-397b (6.1\%), GPT-5 (10.4\%), Qwen 3.5-35B (16.1\%), Mistral-Large-3 (25.2\%), Mistral-Small-4 (29.6\%), and Ministral-3-14B (82.6\%). The Mistral family---particularly Ministral-3-14B---shows substantially higher failure rates, indicating limited robustness to complex Manim code generation. Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
+All models excel at Logical Coherence and Typographic Clarity, reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 68.8\%, GPT-5: 92.0\%), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 23.8\% to 87.4\%. Qwen 3.5-35B's low score of 39.6\% and the Mistral family's scores near 23.8\%--24.6\% reflect frequent semantic misalignment. Pedagogical Effectiveness is universally weakest (30.2\%--78.4\%), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (1.7\%), followed by Gemini (2.6\%), Claude (3.9\%), Qwen3.5-122B (5.2\%), qwen3.5-397b (6.1\%), GPT-5 (10.4\%), Qwen 3.5-35B (16.1\%), Mistral-Large-3 (25.2\%), Mistral-Small-4 (29.6\%), and Ministral-3-14B (82.6\%). The Mistral family---particularly Ministral-3-14B---shows substantially higher failure rates, indicating limited robustness to complex Manim code generation. Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
 
 
 Per-subject and per-grade breakdowns with full dimension scores are provided in Appendix~\ref{sec:full-results}. Table~\ref{tab:subject-grade} summarizes the overall scores for five representative models across subjects and grade levels. Mathematics consistently achieves highest scores across models, while geography scores lowest. Gemini and Kimi maintain consistency across grade levels, while other models show greater degradation on high school problems.
@@ -355,20 +355,20 @@ Per-subject and per-grade breakdowns with full dimension scores are provided in 
 \makecell{\small\textbf{Middle}\\\small\textbf{School}} &
 \makecell{\small\textbf{High}\\\small\textbf{School}} \\
 \midrule
-Gemini 3.0 Pro Preview & \textbf{4.47} & \textbf{4.43} & \textbf{4.39} & \textbf{4.29} & \textbf{4.19} & \textbf{4.35} & \textbf{4.34} & \textbf{4.40} & \textbf{4.39} \\
-Kimi-K2.5              & 4.19 & 4.03 & 3.99 & 3.94 & 3.77 & 3.98 & 4.00 & 4.01 & 4.07 \\
-Qwen 3.5-35B           & 3.46 & 3.23 & 3.25 & 3.08 & 3.09 & 3.22 & 3.67 & 3.29 & 3.18 \\
-GPT-5                  & 3.03 & 2.92 & 2.87 & 2.75 & 2.52 & 2.82 & 3.43 & 2.86 & 2.82 \\
-Claude Sonnet 4.5      & 3.10 & 2.99 & 2.73 & 2.66 & 2.48 & 2.79 & 3.21 & 2.84 & 2.88 \\
+Gemini 3.0 Pro Preview & \textbf{89.4\%} & \textbf{88.6\%} & \textbf{87.8\%} & \textbf{85.8\%} & \textbf{83.8\%} & \textbf{87.0\%} & \textbf{86.8\%} & \textbf{88.0\%} & \textbf{87.8\%} \\
+Kimi-K2.5              & 83.8\% & 80.6\% & 79.8\% & 78.8\% & 75.4\% & 79.6\% & 80.0\% & 80.2\% & 81.4\% \\
+Qwen 3.5-35B           & 69.2\% & 64.6\% & 65.0\% & 61.6\% & 61.8\% & 64.4\% & 73.4\% & 65.8\% & 63.6\% \\
+GPT-5                  & 60.6\% & 58.4\% & 57.4\% & 55.0\% & 50.4\% & 56.4\% & 68.6\% & 57.2\% & 56.4\% \\
+Claude Sonnet 4.5      & 62.0\% & 59.8\% & 54.6\% & 53.2\% & 49.6\% & 55.8\% & 64.2\% & 56.8\% & 57.6\% \\
 \bottomrule
 \end{tabular}
-\caption{Overall scores (geometric mean, 0--5 scale) by subject and grade level for five representative models. Subject Average: unweighted mean across five subjects. Full results for all 10 models with per-dimension breakdowns are in Appendix~\ref{sec:full-results}. Bold indicates best per column.}
+\caption{Overall scores (geometric mean, 0--100\% scale) by subject and grade level for five representative models. Subject Average: unweighted mean across five subjects. Full results for all 10 models with per-dimension breakdowns are in Appendix~\ref{sec:full-results}. Bold indicates best per column.}
 \label{tab:subject-grade}
 \end{table*}
 
 \subsection{Workflow Ablation Study}
 
-EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 104\% higher input token consumption (95.5K vs. 46.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---92\% higher cost (\$0.94 vs. \$0.49), and 13\% worse Visual Consistency (3.89 vs. 4.47), while achieving lower overall quality (4.29 vs. 4.39). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is shown in Figure~\ref{fig:case-study}. This validates our sequential anchoring strategy.
+EduIllustrate is built upon a modified version of the TheoremExplainAgent codebase~\citep{ku2025theoremexplain}, which originally adopts an all-parallel workflow where all scenes generate implementation plans and code in parallel. We compare our sequential Scene 1 + parallel Scenes 2-N workflow against this all-parallel baseline to quantify the impact of our anchoring strategy. The baseline generates and renders all scenes in parallel without Scene 1 conditioning. Table~\ref{tab:workflow} shows the all-parallel approach incurs 104\% higher input token consumption (95.5K vs. 46.8K)---because every scene independently generates a full implementation plan before code generation, whereas our workflow restricts planning to Scene 1 only---92\% higher cost (\$0.94 vs. \$0.49), and 13\% worse Visual Consistency (77.8\% vs. 89.4\%), while achieving lower overall quality (85.8\% vs. 87.8\%). Manual inspection reveals the all-parallel workflow's consistency failures stem from independent scene generation preventing style propagation. A side-by-side visual comparison is shown in Figure~\ref{fig:case-study}. This validates our sequential anchoring strategy.
 
 \begin{figure}[t]
   \centering
@@ -395,8 +395,8 @@ EduIllustrate is built upon a modified version of the TheoremExplainAgent codeba
 \makecell{\small\textbf{Visual}\\\small\textbf{Consistency}} &
 \small\textbf{Overall} \\
 \midrule
-Ours & 46.8K / 37.1K & 0.49 & 4.47 & \textbf{4.39} \\
-All-Parallel & 95.5K / 71.4K & 0.94 & 3.89 & \textbf{4.29} \\
+Ours & 46.8K / 37.1K & 0.49 & 89.4\% & \textbf{87.8\%} \\
+All-Parallel & 95.5K / 71.4K & 0.94 & 77.8\% & \textbf{85.8\%} \\
 \bottomrule
 \end{tabular}}
 \caption{Workflow comparison using Gemini 3.0 Pro Preview on 50 problems. Our workflow achieves superior visual consistency at lower cost.}
@@ -430,7 +430,7 @@ ELQ & 0.39 & 0.32 & Weak \\
 
 \subsection{Cost Analysis}
 
-Table~\ref{tab:cost} presents cost metrics across all ten models. As shown in Figure~\ref{fig:cost-quality}, Kimi-K2.5 offers the best cost-efficiency among high-quality models at \$0.12/problem (4.04 score), representing only 8.0\% quality degradation relative to Gemini (\$0.49, 4.39 score) at 4.1$\times$ lower cost. Among lower-cost options, Ministral-3-14B achieves the lowest cost at \$0.01/problem, while Mistral-Large-3 and Mistral-Small-4 offer competitive quality at \$0.04 and \$0.02 respectively.
+Table~\ref{tab:cost} presents cost metrics across all ten models. As shown in Figure~\ref{fig:cost-quality}, Kimi-K2.5 offers the best cost-efficiency among high-quality models at \$0.12/problem (80.8\% score), representing only 8.0\% quality degradation relative to Gemini (\$0.49, 87.8\% score) at 4.1$\times$ lower cost. Among lower-cost options, Ministral-3-14B achieves the lowest cost at \$0.01/problem, while Mistral-Large-3 and Mistral-Small-4 offer competitive quality at \$0.04 and \$0.02 respectively.
 
 \begin{table*}[t]
 \centering
@@ -459,7 +459,7 @@ Ministral-3-14B & 50,488 & 18,128 & 0.17 & 0.20 & 0.01 \\
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{fig/fig_cost_quality.png}
-  \caption{Cost vs.\ quality trade-off across ten models. X-axis: average cost per problem (USD); Y-axis: overall score (0--5). Kimi-K2.5 offers the best cost-efficiency among high-quality models, achieving 4.04 at \$0.12/problem.}
+  \caption{Cost vs.\ quality trade-off across ten models. X-axis: average cost per problem (USD); Y-axis: overall score (0--100\%). Kimi-K2.5 offers the best cost-efficiency among high-quality models, achieving 80.8\% at \$0.12/problem.}
   \label{fig:cost-quality}
 \end{figure}
 
@@ -482,7 +482,7 @@ We presented EduIllustrate, a four-stage agentic pipeline with sequential Scene 
 
 \textbf{Technical Implementation Constraints.} The pipeline is tightly coupled to Manim, limiting generalizability to other frameworks (TikZ, matplotlib, SVG). Extending to target-agnostic intermediate representations as proposed by~\citet{kumar2025diagramir} would improve flexibility.
 
-\textbf{Pedagogical Effectiveness.} Pedagogical Effectiveness is the weakest dimension across all models (scores 2.54--3.91), reflecting a fundamental limitation: the current pipeline delivers static, one-shot explanations with no adaptation to the individual learner. The system has no mechanism for grade-appropriate scaffolding, Socratic questioning, or student-specific personalization. Future work will pursue two directions to address this. First, incorporating instructional scaffolding to enable multi-turn interaction with students---guiding them through problems via Socratic dialogue rather than delivering static explanations. Second, integrating student profiles (personality traits, cognitive styles, interests) to personalize both the explanation strategy and diagram design for individual learners.
+\textbf{Pedagogical Effectiveness.} Pedagogical Effectiveness is the weakest dimension across all models (scores 50.8\%--78.4\%), reflecting a fundamental limitation: the current pipeline delivers static, one-shot explanations with no adaptation to the individual learner. The system has no mechanism for grade-appropriate scaffolding, Socratic questioning, or student-specific personalization. Future work will pursue two directions to address this. First, incorporating instructional scaffolding to enable multi-turn interaction with students---guiding them through problems via Socratic dialogue rather than delivering static explanations. Second, integrating student profiles (personality traits, cognitive styles, interests) to personalize both the explanation strategy and diagram design for individual learners.
 
 \section*{Acknowledgments}
 
@@ -567,7 +567,7 @@ Elementary & Mathematics (20)
 
 A potential concern with using Gemini 3.0 Pro Preview as the judge model is self-preference bias: the judge may systematically inflate scores for outputs it generated. To investigate this, we sampled 20 problems and re-evaluated all outputs from all five models plus the all-parallel workflow variant (120 explanations total) using GPT-5 as an alternative judge, then compared the two scoring distributions.
 
-\paragraph{Both Judges Exhibit Self-Preference, but Gemini's Is Smaller.} Table~\ref{tab:judge-bias} reports the mean overall score assigned by each judge. Both judges show self-preference: Gemini-as-judge scores its own outputs 0.46 points higher than GPT-5-as-judge does ($4.44$ vs.\ $3.98$), while GPT-5-as-judge scores its own outputs 1.03 points higher than Gemini-as-judge does ($4.09$ vs.\ $3.06$). Crucially, Gemini's self-preference magnitude ($|\Delta|{=}0.46$) is less than half of GPT-5's ($|\Delta|{=}1.03$). Moreover, GPT-5's self-preference is severe enough to alter rankings: GPT-5-as-judge ranks itself first, whereas Gemini-as-judge ranks it last. By contrast, Gemini-as-judge and GPT-5-as-judge agree on the \textbf{top-2 ranking} (Gemini $>$ Kimi), confirming that Gemini's self-preference does not distort the main comparative conclusions. Kimi-K2.5 serves as a neutral anchor with the smallest cross-judge gap ($|\Delta|{=}0.12$), further validating the evaluation framework's consistency on models with no judge affiliation.
+\paragraph{Both Judges Exhibit Self-Preference, but Gemini's Is Smaller.} Table~\ref{tab:judge-bias} reports the mean overall score assigned by each judge. Both judges show self-preference: Gemini-as-judge scores its own outputs 9.2\% higher than GPT-5-as-judge does (88.8\% vs.\ 79.6\%), while GPT-5-as-judge scores its own outputs 20.6\% higher than Gemini-as-judge does (81.8\% vs.\ 61.2\%). Crucially, Gemini's self-preference magnitude ($|\Delta|{=}9.2\%$) is less than half of GPT-5's ($|\Delta|{=}20.6\%$). Moreover, GPT-5's self-preference is severe enough to alter rankings: GPT-5-as-judge ranks itself first, whereas Gemini-as-judge ranks it last. By contrast, Gemini-as-judge and GPT-5-as-judge agree on the \textbf{top-2 ranking} (Gemini $>$ Kimi), confirming that Gemini's self-preference does not distort the main comparative conclusions. Kimi-K2.5 serves as a neutral anchor with the smallest cross-judge gap ($|\Delta|{=}2.4\%$), further validating the evaluation framework's consistency on models with no judge affiliation.
 
 \paragraph{Dimension-Level Agreement.} Table~\ref{tab:judge-dim} reports Pearson $r$, Spearman $\rho$, and MAE between the two judges across all 120 explanations for each dimension. Element Layout Quality ($r{=}0.58$, $\rho{=}0.56$) and Text--Diagram Coordination ($r{=}0.56$, $\rho{=}0.58$) show the highest agreement, reflecting relatively objective visual criteria. Diagram--Problem Alignment has the largest MAE (1.15), indicating the two judges disagree most on diagram--problem semantic matching. Typographic Clarity shows near-zero correlation ($r{=}0.10$, $\rho{=}0.12$, both non-significant), suggesting this dimension's assessment is highly judge-dependent. The overall score achieves moderate agreement ($r{=}0.50$, $\rho{=}0.43$, MAE${=}0.61$), indicating directionally consistent but numerically divergent scoring.
 
@@ -581,14 +581,14 @@ A potential concern with using Gemini 3.0 Pro Preview as the judge model is self
 \textbf{Model (Generator)} & \textbf{Gemini} & \textbf{GPT-5} & \textbf{$\Delta$} \\
  & \textbf{Judge} & \textbf{Judge} & \\
 \hline
-Gemini 3.0 Pro Preview & 4.44 & 3.98 & $-$0.46 \\
-Kimi-K2.5              & 4.06 & 3.94 & $-$0.12 \\
-Qwen 3.5-35B           & 3.39 & 3.73 & +0.35 \\
-Claude Sonnet 4.5      & 3.17 & 3.64 & +0.47 \\
-GPT-5                  & 3.06 & 4.09 & +1.03 \\
+Gemini 3.0 Pro Preview & 88.8\% & 79.6\% & $-$9.2\% \\
+Kimi-K2.5              & 81.2\% & 78.8\% & $-$2.4\% \\
+Qwen 3.5-35B           & 67.8\% & 74.6\% & +7.0\% \\
+Claude Sonnet 4.5      & 63.4\% & 72.8\% & +9.4\% \\
+GPT-5                  & 61.2\% & 81.8\% & +20.6\% \\
 \hline
 \end{tabular}
-\caption{Mean overall scores (0--5) assigned by Gemini 3.0 Pro Preview and GPT-5 as judge models on the same 20 problems (120 explanations). $\Delta$ = GPT-5 judge $-$ Gemini judge. GPT-5-as-judge exhibits strong self-preference ($\Delta{=}+1.03$).}
+\caption{Mean overall scores (0--100\%) assigned by Gemini 3.0 Pro Preview and GPT-5 as judge models on the same 20 problems (120 explanations). $\Delta$ = GPT-5 judge $-$ Gemini judge. GPT-5-as-judge exhibits strong self-preference ($\Delta{=}+20.6\%$).}
 \label{tab:judge-bias}
 \end{table}
 
@@ -900,16 +900,16 @@ Tables~\ref{tab:results-math}--\ref{tab:results-highschool} report complete 8-di
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & 4.50 & 4.67 & \textbf{4.54} & \textbf{3.95} & \textbf{4.33} & 4.42 & \textbf{4.74} & \textbf{5.00} & \textbf{4.47} & \textbf{100\%} \\
-Kimi-K2.5              & \textbf{4.55} & 4.75 & 3.86 & 3.74 & 3.59 & 4.41 & 4.41 & 4.95 & 4.19 & \textbf{100\%} \\
-Qwen3.5-397B           & \textbf{4.68} & 4.75 & 2.74 & 3.59 & 3.33 & 4.19 & 3.40 & 4.68 & 3.75 & 95.0\% \\
-Qwen3.5-122B           & 4.51 & \textbf{4.76} & 2.42 & 3.72 & 3.14 & \textbf{4.36} & 3.03 & 4.83 & 3.65 & 95.0\% \\
-Qwen 3.5-35B           & 4.45 & 4.56 & 2.29 & 3.52 & 2.86 & 4.50 & 2.78 & 4.56 & 3.46 & 88.8\% \\
-GPT-5                  & 3.31 & 3.63 & 2.41 & 2.26 & 3.11 & 4.56 & 3.12 & 3.73 & 3.03 & 97.5\% \\
-Claude Sonnet 4.5      & 3.22 & 3.15 & 2.51 & 2.63 & 3.35 & 4.26 & 3.43 & 3.79 & 3.10 & 97.5\% \\
-Mistral-Large-3        & 2.44 & 2.27 & 1.41 & 1.92 & 2.52 & 4.09 & 2.25 & 3.98 & 2.32 & 80.0\% \\
-Mistral-Small-4        & 2.55 & 2.28 & 1.35 & 1.85 & 2.67 & 4.11 & 2.06 & 3.48 & 2.26 & 75.0\% \\
-Ministral-3-14B        & 2.06 & 2.19 & 1.38 & 1.75 & 2.74 & \textbf{4.73} & 1.98 & 4.00 & 2.25 & 20.0\% \\
+Gemini 3.0 Pro Preview & 90.0\% & 93.4\% & \textbf{90.8\%} & \textbf{79.0\%} & \textbf{86.6\%} & 88.4\% & \textbf{94.8\%} & \textbf{100.0\%} & \textbf{89.4\%} & \textbf{100\%} \\
+Kimi-K2.5              & \textbf{91.0\%} & 95.0\% & 77.2\% & 74.8\% & 71.8\% & 88.2\% & 88.2\% & 99.0\% & 83.8\% & \textbf{100\%} \\
+Qwen3.5-397B           & \textbf{93.6\%} & 95.0\% & 54.8\% & 71.8\% & 66.6\% & 83.8\% & 68.0\% & 93.6\% & 75.0\% & 95.0\% \\
+Qwen3.5-122B           & 90.2\% & \textbf{95.2\%} & 48.4\% & 74.4\% & 62.8\% & \textbf{87.2\%} & 60.6\% & 96.6\% & 73.0\% & 95.0\% \\
+Qwen 3.5-35B           & 89.0\% & 91.2\% & 45.8\% & 70.4\% & 57.2\% & 90.0\% & 55.6\% & 91.2\% & 69.2\% & 88.8\% \\
+GPT-5                  & 66.2\% & 72.6\% & 48.2\% & 45.2\% & 62.2\% & 91.2\% & 62.4\% & 74.6\% & 60.6\% & 97.5\% \\
+Claude Sonnet 4.5      & 64.4\% & 63.0\% & 50.2\% & 52.6\% & 67.0\% & 85.2\% & 68.6\% & 75.8\% & 62.0\% & 97.5\% \\
+Mistral-Large-3        & 48.8\% & 45.4\% & 28.2\% & 38.4\% & 50.4\% & 81.8\% & 45.0\% & 79.6\% & 46.4\% & 80.0\% \\
+Mistral-Small-4        & 51.0\% & 45.6\% & 27.0\% & 37.0\% & 53.4\% & 82.2\% & 41.2\% & 69.6\% & 45.2\% & 75.0\% \\
+Ministral-3-14B        & 41.2\% & 43.8\% & 27.6\% & 35.0\% & 54.8\% & \textbf{94.6\%} & 39.6\% & 80.0\% & 45.0\% & 20.0\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Mathematics subset (n=80).}
@@ -933,16 +933,16 @@ Ministral-3-14B        & 2.06 & 2.19 & 1.38 & 1.75 & 2.74 & \textbf{4.73} & 1.98
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & 4.51 & \textbf{4.85} & \textbf{4.27} & \textbf{4.00} & \textbf{4.22} & 4.60 & \textbf{4.55} & \textbf{4.93} & \textbf{4.43} & 98.3\% \\
-Kimi-K2.5              & 4.43 & 4.72 & 3.38 & 3.80 & 3.18 & 4.60 & 4.13 & 4.90 & 4.03 & \textbf{100\%} \\
-Qwen3.5-397B           & \textbf{4.69} & 4.78 & 2.26 & 3.80 & 2.83 & 4.27 & 3.45 & 4.65 & 3.63 & 91.7\% \\
-Qwen3.5-122B           & 4.32 & 4.63 & 2.04 & 3.69 & 2.78 & 4.33 & 2.94 & 4.71 & 3.44 & 98.3\% \\
-Qwen 3.5-35B           & 4.31 & 4.51 & 1.70 & 3.65 & 2.43 & 4.35 & 2.70 & 4.43 & 3.23 & 85.0\% \\
-GPT-5                  & 3.05 & 3.46 & 2.19 & 2.37 & 2.62 & 4.55 & 3.37 & 3.61 & 2.92 & 98.3\% \\
-Claude Sonnet 4.5      & 3.02 & 3.21 & 2.09 & 2.74 & 3.02 & 4.41 & 3.54 & 3.64 & 2.99 & 96.7\% \\
-Mistral-Large-3        & 1.81 & 1.88 & 1.23 & 1.60 & 2.23 & 4.12 & 2.21 & 4.38 & 2.11 & 80.0\% \\
-Mistral-Small-4        & 1.89 & 1.84 & 1.14 & 1.39 & 2.24 & 4.21 & 1.93 & 3.45 & 1.97 & 63.3\% \\
-Ministral-3-14B        & 2.00 & 1.93 & 1.12 & 1.71 & 2.32 & \textbf{4.44} & 1.61 & 3.93 & 2.05 & 23.3\% \\
+Gemini 3.0 Pro Preview & 90.2\% & \textbf{97.0\%} & \textbf{85.4\%} & \textbf{80.0\%} & \textbf{84.4\%} & 92.0\% & \textbf{91.0\%} & \textbf{98.6\%} & \textbf{88.6\%} & 98.3\% \\
+Kimi-K2.5              & 88.6\% & 94.4\% & 67.6\% & 76.0\% & 63.6\% & 92.0\% & 82.6\% & 98.0\% & 80.6\% & \textbf{100\%} \\
+Qwen3.5-397B           & \textbf{93.8\%} & 95.6\% & 45.2\% & 76.0\% & 56.6\% & 85.4\% & 69.0\% & 93.0\% & 72.6\% & 91.7\% \\
+Qwen3.5-122B           & 86.4\% & 92.6\% & 40.8\% & 73.8\% & 55.6\% & 86.6\% & 58.8\% & 94.2\% & 68.8\% & 98.3\% \\
+Qwen 3.5-35B           & 86.2\% & 90.2\% & 34.0\% & 73.0\% & 48.6\% & 87.0\% & 54.0\% & 88.6\% & 64.6\% & 85.0\% \\
+GPT-5                  & 61.0\% & 69.2\% & 43.8\% & 47.4\% & 52.4\% & 91.0\% & 67.4\% & 72.2\% & 58.4\% & 98.3\% \\
+Claude Sonnet 4.5      & 60.4\% & 64.2\% & 41.8\% & 54.8\% & 60.4\% & 88.2\% & 70.8\% & 72.8\% & 59.8\% & 96.7\% \\
+Mistral-Large-3        & 36.2\% & 37.6\% & 24.6\% & 32.0\% & 44.6\% & 82.4\% & 44.2\% & 87.6\% & 42.2\% & 80.0\% \\
+Mistral-Small-4        & 37.8\% & 36.8\% & 22.8\% & 27.8\% & 44.8\% & 84.2\% & 38.6\% & 69.0\% & 39.4\% & 63.3\% \\
+Ministral-3-14B        & 40.0\% & 38.6\% & 22.4\% & 34.2\% & 46.4\% & \textbf{88.8\%} & 32.2\% & 78.6\% & 41.0\% & 23.3\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Physics subset (n=60).}
@@ -966,16 +966,16 @@ Ministral-3-14B        & 2.00 & 1.93 & 1.12 & 1.71 & 2.32 & \textbf{4.44} & 1.61
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & 4.59 & \textbf{4.93} & \textbf{4.03} & \textbf{4.22} & \textbf{4.20} & 4.52 & \textbf{4.48} & \textbf{4.78} & \textbf{4.39} & 90.0\% \\
-Kimi-K2.5              & \textbf{4.31} & 4.66 & 3.28 & 3.79 & 3.29 & 4.50 & 4.30 & 4.69 & 3.99 & 96.7\% \\
-Qwen3.5-397B           & 4.34 & 4.72 & 2.44 & 3.62 & 2.79 & 4.25 & 3.24 & 4.41 & 3.54 & 96.7\% \\
-Qwen3.5-122B           & 4.00 & 4.48 & 1.97 & 3.48 & 2.81 & 4.28 & 3.05 & 4.48 & 3.34 & 96.7\% \\
-Qwen 3.5-35B           & 4.11 & 4.71 & 1.71 & 3.64 & 2.46 & 4.48 & 2.77 & 4.39 & 3.25 & 93.3\% \\
-GPT-5                  & 2.81 & 3.15 & 2.34 & 2.35 & 2.77 & \textbf{4.59} & 3.07 & 3.65 & 2.87 & 86.7\% \\
-Claude Sonnet 4.5      & 2.52 & 2.85 & 1.82 & 2.30 & 3.10 & 4.06 & 3.25 & 4.00 & 2.73 & 90.0\% \\
-Mistral-Large-3        & 2.05 & 2.00 & 1.11 & 1.45 & 2.39 & 4.48 & 2.48 & 3.91 & 2.13 & 73.3\% \\
-Mistral-Small-4        & 1.59 & 1.88 & 1.06 & 1.47 & 2.30 & 3.88 & 2.01 & 3.53 & 1.92 & 56.7\% \\
-Ministral-3-14B        & 1.60 & 1.20 & 1.00 & 1.00 & 2.49 & \textbf{4.68} & 1.80 & 3.40 & 1.81 & 16.7\% \\
+Gemini 3.0 Pro Preview & 91.8\% & \textbf{98.6\%} & \textbf{80.6\%} & \textbf{84.4\%} & \textbf{84.0\%} & 90.4\% & \textbf{89.6\%} & \textbf{95.6\%} & \textbf{87.8\%} & 90.0\% \\
+Kimi-K2.5              & \textbf{86.2\%} & 93.2\% & 65.6\% & 75.8\% & 65.8\% & 90.0\% & 86.0\% & 93.8\% & 79.8\% & 96.7\% \\
+Qwen3.5-397B           & 86.8\% & 94.4\% & 48.8\% & 72.4\% & 55.8\% & 85.0\% & 64.8\% & 88.2\% & 70.8\% & 96.7\% \\
+Qwen3.5-122B           & 80.0\% & 89.6\% & 39.4\% & 69.6\% & 56.2\% & 85.6\% & 61.0\% & 89.6\% & 66.8\% & 96.7\% \\
+Qwen 3.5-35B           & 82.2\% & 94.2\% & 34.2\% & 72.8\% & 49.2\% & 89.6\% & 55.4\% & 87.8\% & 65.0\% & 93.3\% \\
+GPT-5                  & 56.2\% & 63.0\% & 46.8\% & 47.0\% & 55.4\% & \textbf{91.8\%} & 61.4\% & 73.0\% & 57.4\% & 86.7\% \\
+Claude Sonnet 4.5      & 50.4\% & 57.0\% & 36.4\% & 46.0\% & 62.0\% & 81.2\% & 65.0\% & 80.0\% & 54.6\% & 90.0\% \\
+Mistral-Large-3        & 41.0\% & 40.0\% & 22.2\% & 29.0\% & 47.8\% & 89.6\% & 49.6\% & 78.2\% & 42.6\% & 73.3\% \\
+Mistral-Small-4        & 31.8\% & 37.6\% & 21.2\% & 29.4\% & 46.0\% & 77.6\% & 40.2\% & 70.6\% & 38.4\% & 56.7\% \\
+Ministral-3-14B        & 32.0\% & 24.0\% & 20.0\% & 20.0\% & 49.8\% & \textbf{93.6\%} & 36.0\% & 68.0\% & 36.2\% & 16.7\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Chemistry subset (n=30).}
@@ -999,16 +999,16 @@ Ministral-3-14B        & 1.60 & 1.20 & 1.00 & 1.00 & 2.49 & \textbf{4.68} & 1.80
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & \textbf{4.07} & \textbf{4.68} & \textbf{4.56} & \textbf{3.82} & \textbf{4.18} & 4.36 & \textbf{4.56} & \textbf{4.71} & \textbf{4.29} & 93.3\% \\
-Kimi-K2.5              & 3.79 & 4.32 & 3.77 & 3.43 & 3.64 & 4.20 & 4.58 & 4.71 & 3.94 & 93.3\% \\
-Qwen3.5-397B           & 4.00 & 4.63 & 2.41 & 3.17 & 3.07 & 3.74 & 3.50 & 4.27 & 3.41 & \textbf{100\%} \\
-Qwen3.5-122B           & 3.97 & 4.50 & 2.00 & 3.37 & 2.56 & 3.70 & 2.65 & 4.50 & 3.17 & \textbf{100\%} \\
-Qwen 3.5-35B           & 3.90 & 4.05 & 2.03 & 3.05 & 2.62 & 4.26 & 2.67 & 3.95 & 3.08 & 70.0\% \\
-GPT-5                  & 2.50 & 2.85 & 2.16 & 1.90 & 3.11 & \textbf{4.66} & 3.30 & 3.90 & 2.75 & 66.7\% \\
-Claude Sonnet 4.5      & 1.96 & 2.57 & 2.05 & 1.75 & 3.29 & 4.03 & 3.62 & 4.18 & 2.66 & 93.3\% \\
-Mistral-Large-3        & 1.42 & 1.63 & 1.01 & 1.26 & 2.08 & 4.13 & 2.18 & 3.95 & 1.89 & 63.3\% \\
-Mistral-Small-4        & 1.64 & 1.41 & 1.06 & 1.23 & 2.19 & 4.11 & 1.89 & 3.82 & 1.86 & 73.3\% \\
-Ministral-3-14B        & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & \textbf{5.00} & 1.00 & 4.00 & 1.45 & 3.3\% \\
+Gemini 3.0 Pro Preview & \textbf{81.4\%} & \textbf{93.6\%} & \textbf{91.2\%} & \textbf{76.4\%} & \textbf{83.6\%} & 87.2\% & \textbf{91.2\%} & \textbf{94.2\%} & \textbf{85.8\%} & 93.3\% \\
+Kimi-K2.5              & 75.8\% & 86.4\% & 75.4\% & 68.6\% & 72.8\% & 84.0\% & 91.6\% & 94.2\% & 78.8\% & 93.3\% \\
+Qwen3.5-397B           & 80.0\% & 92.6\% & 48.2\% & 63.4\% & 61.4\% & 74.8\% & 70.0\% & 85.4\% & 68.2\% & \textbf{100\%} \\
+Qwen3.5-122B           & 79.4\% & 90.0\% & 40.0\% & 67.4\% & 51.2\% & 74.0\% & 53.0\% & 90.0\% & 63.4\% & \textbf{100\%} \\
+Qwen 3.5-35B           & 78.0\% & 81.0\% & 40.6\% & 61.0\% & 52.4\% & 85.2\% & 53.4\% & 79.0\% & 61.6\% & 70.0\% \\
+GPT-5                  & 50.0\% & 57.0\% & 43.2\% & 38.0\% & 62.2\% & \textbf{93.2\%} & 66.0\% & 78.0\% & 55.0\% & 66.7\% \\
+Claude Sonnet 4.5      & 39.2\% & 51.4\% & 41.0\% & 35.0\% & 65.8\% & 80.6\% & 72.4\% & 83.6\% & 53.2\% & 93.3\% \\
+Mistral-Large-3        & 28.4\% & 32.6\% & 20.2\% & 25.2\% & 41.6\% & 82.6\% & 43.6\% & 79.0\% & 37.8\% & 63.3\% \\
+Mistral-Small-4        & 32.8\% & 28.2\% & 21.2\% & 24.6\% & 43.8\% & 82.2\% & 37.8\% & 76.4\% & 37.2\% & 73.3\% \\
+Ministral-3-14B        & 20.0\% & 20.0\% & 20.0\% & 20.0\% & 20.0\% & \textbf{100.0\%} & 20.0\% & 80.0\% & 29.0\% & 3.3\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Biology subset (n=30).}
@@ -1032,16 +1032,16 @@ Ministral-3-14B        & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & \textbf{5.00} & 1.00
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & \textbf{3.93} & \textbf{4.57} & \textbf{4.23} & \textbf{3.47} & \textbf{4.04} & 4.42 & \textbf{4.72} & \textbf{4.97} & \textbf{4.19} & \textbf{100\%} \\
-Kimi-K2.5              & 3.48 & 4.24 & 3.23 & 3.34 & 3.52 & 4.26 & 4.17 & 4.90 & 3.77 & 96.7\% \\
-Qwen3.5-397B           & 3.73 & 4.62 & 2.16 & 2.96 & 3.31 & 4.38 & 3.28 & 4.46 & 3.36 & 86.7\% \\
-Qwen3.5-122B           & 3.12 & 4.29 & 1.85 & 3.04 & 2.97 & 4.18 & 3.23 & 4.54 & 3.15 & 80.0\% \\
-Qwen 3.5-35B           & 3.27 & 4.00 & 1.92 & 3.00 & 3.00 & 4.50 & 2.80 & 4.18 & 3.09 & 73.3\% \\
-GPT-5                  & 2.00 & 2.65 & 1.57 & 1.65 & 3.41 & \textbf{4.88} & 3.01 & 3.83 & 2.52 & 76.7\% \\
-Claude Sonnet 4.5      & 2.00 & 2.27 & 1.61 & 1.73 & 3.19 & 4.02 & 3.25 & 4.13 & 2.48 & \textbf{100\%} \\
-Mistral-Large-3        & 1.42 & 1.79 & 1.00 & 1.21 & 2.60 & 4.19 & 2.14 & 4.16 & 1.95 & 63.3\% \\
-Mistral-Small-4        & 1.36 & 1.48 & 1.06 & 1.16 & 2.67 & 3.93 & 1.86 & 3.84 & 1.85 & 83.3\% \\
-Ministral-3-14B        & 1.25 & 1.25 & 1.00 & 1.00 & 2.32 & \textbf{4.67} & 1.65 & 3.75 & 1.76 & 13.3\% \\
+Gemini 3.0 Pro Preview & \textbf{78.6\%} & \textbf{91.4\%} & \textbf{84.6\%} & \textbf{69.4\%} & \textbf{80.8\%} & 88.4\% & \textbf{94.4\%} & \textbf{99.4\%} & \textbf{83.8\%} & \textbf{100\%} \\
+Kimi-K2.5              & 69.6\% & 84.8\% & 64.6\% & 66.8\% & 70.4\% & 85.2\% & 83.4\% & 98.0\% & 75.4\% & 96.7\% \\
+Qwen3.5-397B           & 74.6\% & 92.4\% & 43.2\% & 59.2\% & 66.2\% & 87.6\% & 65.6\% & 89.2\% & 67.2\% & 86.7\% \\
+Qwen3.5-122B           & 62.4\% & 85.8\% & 37.0\% & 60.8\% & 59.4\% & 83.6\% & 64.6\% & 90.8\% & 63.0\% & 80.0\% \\
+Qwen 3.5-35B           & 65.4\% & 80.0\% & 38.4\% & 60.0\% & 60.0\% & 90.0\% & 56.0\% & 83.6\% & 61.8\% & 73.3\% \\
+GPT-5                  & 40.0\% & 53.0\% & 31.4\% & 33.0\% & 68.2\% & \textbf{97.6\%} & 60.2\% & 76.6\% & 50.4\% & 76.7\% \\
+Claude Sonnet 4.5      & 40.0\% & 45.4\% & 32.2\% & 34.6\% & 63.8\% & 80.4\% & 65.0\% & 82.6\% & 49.6\% & \textbf{100\%} \\
+Mistral-Large-3        & 28.4\% & 35.8\% & 20.0\% & 24.2\% & 52.0\% & 83.8\% & 42.8\% & 83.2\% & 39.0\% & 63.3\% \\
+Mistral-Small-4        & 27.2\% & 29.6\% & 21.2\% & 23.2\% & 53.4\% & 78.6\% & 37.2\% & 76.8\% & 37.0\% & 83.3\% \\
+Ministral-3-14B        & 25.0\% & 25.0\% & 20.0\% & 20.0\% & 46.4\% & \textbf{93.4\%} & 33.0\% & 75.0\% & 35.2\% & 13.3\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Geography subset (n=30).}
@@ -1065,16 +1065,16 @@ Ministral-3-14B        & 1.25 & 1.25 & 1.00 & 1.00 & 2.32 & \textbf{4.67} & 1.65
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & 4.20 & 4.55 & \textbf{4.34} & \textbf{3.65} & \textbf{4.29} & 4.52 & \textbf{4.82} & \textbf{5.00} & \textbf{4.34} & \textbf{100\%} \\
-Kimi-K2.5              & 4.05 & 4.45 & 3.48 & 3.40 & 3.76 & 4.33 & 4.68 & 4.95 & 4.00 & \textbf{100\%} \\
-Qwen3.5-397B           & 4.55 & \textbf{4.85} & 2.95 & 3.40 & 3.83 & 4.32 & 3.52 & 4.40 & 3.81 & \textbf{100\%} \\
-Qwen3.5-122B           & 4.40 & \textbf{4.85} & 2.56 & 3.55 & 3.29 & 4.37 & 3.27 & 4.80 & 3.71 & \textbf{100\%} \\
-Qwen 3.5-35B           & \textbf{4.60} & \textbf{4.85} & 2.82 & 3.45 & 3.04 & 4.53 & 3.08 & 4.50 & 3.67 & \textbf{100\%} \\
-GPT-5                  & 3.53 & 4.00 & 2.95 & 2.47 & 3.67 & 4.58 & 3.71 & 4.16 & 3.43 & 95.0\% \\
-Claude Sonnet 4.5      & 3.25 & 3.45 & 2.28 & 2.75 & 3.63 & 4.29 & 3.48 & 4.25 & 3.21 & \textbf{100\%} \\
-Mistral-Large-3        & 2.36 & 2.00 & 1.27 & 2.07 & 3.04 & 4.45 & 2.28 & 4.21 & 2.36 & 70.0\% \\
-Mistral-Small-4        & 2.00 & 2.00 & 1.24 & 1.53 & 3.05 & 4.19 & 1.89 & 3.71 & 2.12 & 85.0\% \\
-Ministral-3-14B        & 1.00 & 2.33 & 1.00 & 1.00 & 1.67 & \textbf{4.62} & 1.67 & 4.33 & 1.76 & 15.0\% \\
+Gemini 3.0 Pro Preview & 84.0\% & 91.0\% & \textbf{86.8\%} & \textbf{73.0\%} & \textbf{85.8\%} & 90.4\% & \textbf{96.4\%} & \textbf{100.0\%} & \textbf{86.8\%} & \textbf{100\%} \\
+Kimi-K2.5              & 81.0\% & 89.0\% & 69.6\% & 68.0\% & 75.2\% & 86.6\% & 93.6\% & 99.0\% & 80.0\% & \textbf{100\%} \\
+Qwen3.5-397B           & 91.0\% & \textbf{97.0\%} & 59.0\% & 68.0\% & 76.6\% & 86.4\% & 70.4\% & 88.0\% & 76.2\% & \textbf{100\%} \\
+Qwen3.5-122B           & 88.0\% & \textbf{97.0\%} & 51.2\% & 71.0\% & 65.8\% & 87.4\% & 65.4\% & 96.0\% & 74.2\% & \textbf{100\%} \\
+Qwen 3.5-35B           & \textbf{92.0\%} & \textbf{97.0\%} & 56.4\% & 69.0\% & 60.8\% & 90.6\% & 61.6\% & 90.0\% & 73.4\% & \textbf{100\%} \\
+GPT-5                  & 70.6\% & 80.0\% & 59.0\% & 49.4\% & 73.4\% & 91.6\% & 74.2\% & 83.2\% & 68.6\% & 95.0\% \\
+Claude Sonnet 4.5      & 65.0\% & 69.0\% & 45.6\% & 55.0\% & 72.6\% & 85.8\% & 69.6\% & 85.0\% & 64.2\% & \textbf{100\%} \\
+Mistral-Large-3        & 47.2\% & 40.0\% & 25.4\% & 41.4\% & 60.8\% & 89.0\% & 45.6\% & 84.2\% & 47.2\% & 70.0\% \\
+Mistral-Small-4        & 40.0\% & 40.0\% & 24.8\% & 30.6\% & 61.0\% & 83.8\% & 37.8\% & 74.2\% & 42.4\% & 85.0\% \\
+Ministral-3-14B        & 20.0\% & 46.6\% & 20.0\% & 20.0\% & 33.4\% & \textbf{92.4\%} & 33.4\% & 86.6\% & 35.2\% & 15.0\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Elementary School subset (n=20).}
@@ -1098,16 +1098,16 @@ Ministral-3-14B        & 1.00 & 2.33 & 1.00 & 1.00 & 1.67 & \textbf{4.62} & 1.67
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & 4.36 & \textbf{4.74} & \textbf{4.41} & \textbf{3.98} & \textbf{4.24} & 4.41 & \textbf{4.66} & \textbf{4.94} & \textbf{4.40} & 96.2\% \\
-Kimi-K2.5              & 4.24 & 4.65 & 3.47 & 3.66 & 3.48 & 4.43 & 4.18 & 4.88 & 4.01 & \textbf{99.0\%} \\
-Qwen3.5-397B           & \textbf{4.55} & 4.74 & 2.50 & 3.59 & 3.04 & 4.10 & 3.49 & 4.61 & 3.63 & 95.2\% \\
-Qwen3.5-122B           & 4.26 & 4.74 & 2.15 & 3.69 & 2.83 & 4.17 & 3.00 & 4.70 & 3.46 & 94.3\% \\
-Qwen 3.5-35B           & 4.33 & 4.53 & 1.88 & 3.64 & 2.66 & 4.42 & 2.66 & 4.44 & 3.29 & 86.7\% \\
-GPT-5                  & 2.80 & 3.23 & 2.17 & 2.15 & 2.96 & \textbf{4.67} & 3.27 & 3.78 & 2.86 & 91.4\% \\
-Claude Sonnet 4.5      & 2.68 & 2.90 & 2.01 & 2.26 & 3.21 & 4.18 & 3.47 & 3.99 & 2.84 & 94.3\% \\
-Mistral-Large-3        & 2.10 & 2.26 & 1.26 & 1.69 & 2.37 & 4.18 & 2.29 & 4.10 & 2.22 & 76.2\% \\
-Mistral-Small-4        & 1.93 & 1.92 & 1.18 & 1.56 & 2.50 & 4.16 & 2.10 & 3.67 & 2.06 & 68.6\% \\
-Ministral-3-14B        & 1.75 & 1.69 & 1.38 & 1.50 & 2.83 & \textbf{4.78} & 2.13 & 3.88 & 2.14 & 15.2\% \\
+Gemini 3.0 Pro Preview & 87.2\% & \textbf{94.8\%} & \textbf{88.2\%} & \textbf{79.6\%} & \textbf{84.8\%} & 88.2\% & \textbf{93.2\%} & \textbf{98.8\%} & \textbf{88.0\%} & 96.2\% \\
+Kimi-K2.5              & 84.8\% & 93.0\% & 69.4\% & 73.2\% & 69.6\% & 88.6\% & 83.6\% & 97.6\% & 80.2\% & \textbf{99.0\%} \\
+Qwen3.5-397B           & \textbf{91.0\%} & 94.8\% & 50.0\% & 71.8\% & 60.8\% & 82.0\% & 69.8\% & 92.2\% & 72.6\% & 95.2\% \\
+Qwen3.5-122B           & 85.2\% & 94.8\% & 43.0\% & 73.8\% & 56.6\% & 83.4\% & 60.0\% & 94.0\% & 69.2\% & 94.3\% \\
+Qwen 3.5-35B           & 86.6\% & 90.6\% & 37.6\% & 72.8\% & 53.2\% & 88.4\% & 53.2\% & 88.8\% & 65.8\% & 86.7\% \\
+GPT-5                  & 56.0\% & 64.6\% & 43.4\% & 43.0\% & 59.2\% & \textbf{93.4\%} & 65.4\% & 75.6\% & 57.2\% & 91.4\% \\
+Claude Sonnet 4.5      & 53.6\% & 58.0\% & 40.2\% & 45.2\% & 64.2\% & 83.6\% & 69.4\% & 79.8\% & 56.8\% & 94.3\% \\
+Mistral-Large-3        & 42.0\% & 45.2\% & 25.2\% & 33.8\% & 47.4\% & 83.6\% & 45.8\% & 82.0\% & 44.4\% & 76.2\% \\
+Mistral-Small-4        & 38.6\% & 38.4\% & 23.6\% & 31.2\% & 50.0\% & 83.2\% & 42.0\% & 73.4\% & 41.2\% & 68.6\% \\
+Ministral-3-14B        & 35.0\% & 33.8\% & 27.6\% & 30.0\% & 56.6\% & \textbf{95.6\%} & 42.6\% & 77.6\% & 42.8\% & 15.2\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the Middle School subset (n=105).}
@@ -1131,16 +1131,16 @@ Ministral-3-14B        & 1.75 & 1.69 & 1.38 & 1.50 & 2.83 & \textbf{4.78} & 2.13
 \makecell{\small\textbf{Typographic}\\\small\textbf{Clarity}} &
 \small\textbf{Overall} & \makecell{\small\textbf{Success}\\\small\textbf{Rate}} \\
 \midrule
-Gemini 3.0 Pro Preview & 4.45 & \textbf{4.77} & \textbf{4.34} & \textbf{3.90} & \textbf{4.21} & 4.52 & \textbf{4.57} & \textbf{4.87} & \textbf{4.39} & 98.1\% \\
-Kimi-K2.5              & \textbf{4.31} & 4.60 & 3.68 & 3.74 & 3.34 & 4.45 & 4.37 & 4.84 & 4.07 & 97.1\% \\
-Qwen3.5-397B           & 4.28 & 4.68 & 2.32 & 3.46 & 2.99 & 4.23 & 3.26 & 4.53 & 3.52 & 91.4\% \\
-Qwen3.5-122B           & 4.02 & 4.41 & 2.04 & 3.43 & 2.89 & 4.26 & 2.89 & 4.63 & 3.35 & 94.3\% \\
-Qwen 3.5-35B           & 3.89 & 4.27 & 1.88 & 3.27 & 2.62 & 4.42 & 2.77 & 4.32 & 3.18 & 78.1\% \\
-GPT-5                  & 2.98 & 3.31 & 2.12 & 2.20 & 2.81 & \textbf{4.54} & 2.99 & 3.55 & 2.82 & 86.7\% \\
-Claude Sonnet 4.5      & 2.74 & 2.87 & 2.22 & 2.43 & 3.11 & 4.23 & 3.40 & 3.69 & 2.88 & \textbf{97.1\%} \\
-Mistral-Large-3        & 1.81 & 1.73 & 1.20 & 1.47 & 2.28 & 4.09 & 2.20 & 4.08 & 2.04 & 74.3\% \\
-Mistral-Small-4        & 2.04 & 1.85 & 1.18 & 1.47 & 2.30 & 3.99 & 1.87 & 3.47 & 1.99 & 69.5\% \\
-Ministral-3-14B        & 2.10 & 1.90 & 1.08 & 1.67 & 2.32 & \textbf{4.50} & 1.51 & 3.81 & 2.03 & 20.0\% \\
+Gemini 3.0 Pro Preview & 89.0\% & \textbf{95.4\%} & \textbf{86.8\%} & \textbf{78.0\%} & \textbf{84.2\%} & 90.4\% & \textbf{91.4\%} & \textbf{97.4\%} & \textbf{87.8\%} & 98.1\% \\
+Kimi-K2.5              & \textbf{86.2\%} & 92.0\% & 73.6\% & 74.8\% & 66.8\% & 89.0\% & 87.4\% & 96.8\% & 81.4\% & 97.1\% \\
+Qwen3.5-397B           & 85.6\% & 93.6\% & 46.4\% & 69.2\% & 59.8\% & 84.6\% & 65.2\% & 90.6\% & 70.4\% & 91.4\% \\
+Qwen3.5-122B           & 80.4\% & 88.2\% & 40.8\% & 68.6\% & 57.8\% & 85.2\% & 57.8\% & 92.6\% & 67.0\% & 94.3\% \\
+Qwen 3.5-35B           & 77.8\% & 85.4\% & 37.6\% & 65.4\% & 52.4\% & 88.4\% & 55.4\% & 86.4\% & 63.6\% & 78.1\% \\
+GPT-5                  & 59.6\% & 66.2\% & 42.4\% & 44.0\% & 56.2\% & \textbf{90.8\%} & 59.8\% & 71.0\% & 56.4\% & 86.7\% \\
+Claude Sonnet 4.5      & 54.8\% & 57.4\% & 44.4\% & 48.6\% & 62.2\% & 84.6\% & 68.0\% & 73.8\% & 57.6\% & \textbf{97.1\%} \\
+Mistral-Large-3        & 36.2\% & 34.6\% & 24.0\% & 29.4\% & 45.6\% & 81.8\% & 44.0\% & 81.6\% & 40.8\% & 74.3\% \\
+Mistral-Small-4        & 40.8\% & 37.0\% & 23.6\% & 29.4\% & 46.0\% & 79.8\% & 37.4\% & 69.4\% & 39.8\% & 69.5\% \\
+Ministral-3-14B        & 42.0\% & 38.0\% & 21.6\% & 33.4\% & 46.4\% & \textbf{90.0\%} & 30.2\% & 76.2\% & 40.6\% & 20.0\% \\
 \bottomrule
 \end{tabular}}
 \caption{Results on the High School subset (n=105).}
