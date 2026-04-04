@@ -113,11 +113,11 @@
 \begin{strip}
 \centering
 \includegraphics[width=\linewidth]{fig/teaser.png}
-\captionof{figure}{EduIllustrate takes a K-12 STEM problem as input and produces a structured explanation interleaved with geometrically accurate diagrams rendered via Manim. \textit{Left}: the input problem (Grade 9 Mathematics). \textit{Right}: two generated scenes illustrating the inscribed angle theorem and the resulting right triangle used to compute $AB = 3$.}
+\captionof{figure}{EduIllustrate generates geometrically accurate visuals for diverse STEM problems. Taking textual K-12 problems from various subjects as input (left), our system produces a progressive sequence of diagrams (right). These diagrams are interleaved with textual reasoning to form multimodal explanations.}
 \label{fig:teaser}
 \end{strip}
 
-\begin{abstract}
+\begin{abstract}1
 Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{230 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), while Kimi-K2.5 offers the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
 \end{abstract}
 
@@ -333,6 +333,13 @@ Ministral-3-14B        & 37.6\% & 37.0\% & 31.0\% & 77.6\% & 23.8\% & 49.6\% & \
 \caption{Model performance on the full EduIllustrate benchmark (n=230, 0--100\% scale). Overall: geometric mean of 8 dimensions. Success Rate: pipeline success rate. Bold indicates best per column. Per-subject and per-grade breakdowns are in Appendix~\ref{sec:full-results}.}
 \label{tab:main-results}
 \end{table*}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.6\linewidth]{fig/fig_radar.pdf}
+  \caption{Radar chart of 8-dimension scores for all 10 models (0--100\% scale).}
+  \label{fig:radar}
+\end{figure*}
 
 All models excel at Logical Coherence and Typographic Clarity, reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 68.8\%, GPT-5: 92.0\%), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 23.8\% to 87.4\%. Qwen 3.5-35B's low score of 39.6\% and the Mistral family's scores near 23.8\%--24.6\% reflect frequent semantic misalignment. Pedagogical Effectiveness is universally weakest (30.2\%--78.4\%), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (1.7\%), followed by Gemini (2.6\%), Claude (3.9\%), Qwen3.5-122B (5.2\%), qwen3.5-397b (6.1\%), GPT-5 (10.4\%), Qwen 3.5-35B (16.1\%), Mistral-Large-3 (25.2\%), Mistral-Small-4 (29.6\%), and Ministral-3-14B (82.6\%). The Mistral family---particularly Ministral-3-14B---shows substantially higher failure rates, indicating limited robustness to complex Manim code generation. Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
 
