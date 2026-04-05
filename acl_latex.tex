@@ -117,8 +117,8 @@
 \label{fig:teaser}
 \end{strip}
 
-\begin{abstract}1
-Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, an automated four-stage agentic pipeline that takes a K-12 STEM problem as input and produces a structured, diagram-rich explanation with programmatically rendered static diagrams via Manim. Our pipeline introduces a sequential anchoring strategy: Scene 1 undergoes full implementation planning to establish visual conventions (color scheme, label formatting, spatial layout), while subsequent scenes generate in parallel conditioned on Scene 1's code, enforcing cross-diagram consistency without global optimization. To enable systematic evaluation, we construct a benchmark of \textbf{230 problems} spanning three grade levels (elementary, middle, high school) and five subjects (mathematics, physics, chemistry, biology, geography), and propose an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of five frontier LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), while Kimi-K2.5 offers the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms our sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
+\begin{abstract}
+Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, a benchmark for evaluating LLMs' ability to generate interleaved text-diagram explanations for K-12 STEM problems. The benchmark comprises \textbf{230 problems} spanning three grade levels and five subjects, a standardized four-stage generation protocol with sequential anchoring to enforce cross-diagram visual consistency, and an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of ten LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), while Kimi-K2.5 offers the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
 \end{abstract}
 
 
@@ -128,7 +128,7 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{fig/framework.png}
-  \caption{Overview of the EduIllustrate system. Given a K-12 STEM problem, the EduIllustrate Agent generates a structured explanation document through a four-stage pipeline. The resulting output is evaluated using an 8-dimension rubric validated against human expert raters via both automated LLM-as-judge and human evaluation protocols.}
+  \caption{Overview of EduIllustrate. Given a K-12 STEM problem, the generation protocol produces a structured explanation document through four stages. The resulting output is evaluated using an 8-dimension rubric validated against human expert raters.}
   \label{fig:framework}
 \end{figure*}
 
@@ -171,9 +171,9 @@ evaluates mathematical diagrams in isolation, EduVisBench~\citep{ji2025eduvis}
 targets visual reasoning rather than generation quality, and no benchmark
 jointly assesses both textual and visual quality of K-12 multimodal educational content.
 
-We address these gaps with \textbf{EduIllustrate} (Figure~\ref{fig:framework}), the first automated system for
-generating interleaved text-diagram explanations for K-12 STEM problems.
-Given a problem as input, EduIllustrate produces a structured explanation in which
+We address these gaps with \textbf{EduIllustrate} (Figure~\ref{fig:framework}), a benchmark for systematically evaluating LLMs' ability to generate
+interleaved text-diagram explanations for K-12 STEM problems.
+The benchmark includes a standardized generation protocol in which
 textual reasoning steps and subject-specific diagrams alternate seamlessly,
 with diagrams programmatically rendered to ensure geometric accuracy and
 cross-diagram visual consistency.
@@ -185,13 +185,10 @@ that jointly covers textual and visual quality.
 
 Our main contributions are:
 \begin{itemize}
-  \item  EduIllustrate, the first pipeline for automated generation
-    of interleaved text-diagram K-12 STEM explanations, incorporating a sequential
-    anchoring strategy to ensure cross-diagram visual consistency.
-  \item EduIllustrateBench with an 8-dimension evaluation rubric,
-    addressing the gap in multi-subject, multi-grade multimodal educational content evaluation.
-  \item  Comparative analysis of ten LLMs spanning proprietary and open-weight models, ablation studies,
-    and human evaluation validating system effectiveness and LLM-as-judge reliability.
+  \item EduIllustrateBench, comprising 230 curated problems across five subjects and three grade levels, with an 8-dimension evaluation rubric addressing the gap in multi-subject, multi-grade multimodal educational content evaluation.
+  \item A standardized generation protocol with sequential anchoring to ensure cross-diagram visual consistency, serving as both the generation method and an ablation baseline.
+  \item Comparative analysis of ten LLMs spanning proprietary and open-weight models, ablation studies,
+    and human evaluation validating LLM-as-judge reliability.
 \end{itemize}
 
 
@@ -217,41 +214,15 @@ Programmatic diagram generation leverages tools like TikZ, Manim, and Matplotlib
 
 LLMs as evaluators provide practical alternatives to costly human evaluation. \citet{lee2025lemaj} revealed in the legal domain that reference-free evaluation protocols correlate better with human expert judgments. \citet{park2025agacci} demonstrated AGACCI framework improves accuracy through distributing specialized evaluation roles across collaborative agents.
 
-\section{Method}
+\section{EduIllustrate Benchmark}
 
-\subsection{Task Definition}
+\subsection{Task Formulation}
 
-Given a K-12 STEM problem statement (and an optional diagram) as input, the agent generates a structured Markdown document that interleaves programmatically rendered static diagrams with step-by-step, pedagogically scaffolded textual explanations.
+Given a K-12 STEM problem (text and an optional diagram), a model must produce an interleaved explanation: a sequence of textual reasoning steps alternating with programmatically rendered diagrams. This task jointly demands (i) mathematically correct and pedagogically coherent text, (ii) geometrically accurate diagrams faithful to the problem setup, and (iii) visual consistency across multiple diagrams within the same explanation. Failure in any single aspect undermines the explanation's educational value, making this a challenging multimodal generation task.
 
-\subsection{EduIllustrate Agent}
+\subsection{Problem Set}
 
-We develop \textbf{EduIllustrate Agent}, a four-stage pipeline that decomposes illustrated explanation generation into sequential stages addressing specific multimodal content creation challenges. Figure~\ref{fig:pipeline} illustrates the pipeline in detail.
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\textwidth]{fig/fig1.png}
-  \caption{EduIllustrate pipeline overview. Scene 1 undergoes full sequential processing (outline $\to$ implementation planning $\to$ code generation); Scenes 2--$N$ skip implementation planning and generate in parallel, each conditioned on Scene 1's code as a visual anchor.}
-  \label{fig:pipeline}
-\end{figure*}
-
-\textbf{Stage 1: Structured Outline Generation.} The first stage transforms raw K-12 STEM problems into structured outlines interleaving textual explanation blocks with visual scene specifications. The model outputs an XML-based format with \texttt{<SCENE\_OUTLINE>} tags containing alternating \texttt{<TEXT\_k>} and \texttt{<SCENE\_k>} blocks. Each \texttt{<TEXT\_k>} block contains pedagogical explanation; each \texttt{<SCENE\_k>} block specifies geometric/domain-specific visual elements, text annotations, color coding, and spatial layout. \texttt{<SCENE\_k>} blocks are generated only when visual representations genuinely aid conceptual understanding. This structured format enables modular processing for parallel scene generation and error recovery.
-
-\textbf{Stage 2: Scene Implementation Planning (Scene 1 only).} Applying detailed implementation planning to every scene would force each to independently invent its own visual conventions, making cross-scene consistency impossible to guarantee. We therefore restrict this stage exclusively to Scene 1, which serves as the visual anchor for the entire explanation. It converts the high-level \texttt{<SCENE\_1>} specification into a detailed implementation plan describing intended visual appearance in natural language, enumerating construction steps with explicit spatial constraints (safe area bounds, minimum element spacing, relative positioning), and specifying discipline-specific rendering conventions (right-angle markers in geometry, vector arrows in physics, VSEPR molecular geometry in chemistry). The resulting conventions---color scheme, labeling style, line weights, font sizes---are inherited by all subsequent scenes, ensuring a coherent visual language throughout the explanation.
-
-\textbf{Stage 3: Code Generation and Rendering.} This stage translates implementation plans into executable Manim code and renders static PNG images. Scene 1 is generated first from its implementation plan; once complete, its full Manim code is passed as context to Scenes 2--$N$, which generate in parallel conditioned on this anchor. This design enforces visual consistency without requiring global optimization across all scenes simultaneously.
-
-\textbf{Stage 4: Document Assembly.} The final stage assembles \texttt{<TEXT\_k>} blocks and rendered scene images into a structured Markdown document in alternating order, requiring no LLM involvement.
-
-\subsection{EduIllustrate Benchmark}
-
-\textbf{Dataset Construction.} We construct a curated benchmark of 230 problems derived from K12-Vista~\citep{zhang2025k12vista}, spanning three grade levels (elementary, middle, high school) and five STEM subjects (Table~\ref{tab:dataset}). Problems are selected for diagram appropriateness, solution clarity, and knowledge point diversity; full curation details are provided in Appendix~\ref{sec:benchmark-details}.
-
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=\textwidth]{fig/knowledge_categories.png}
-  \caption{Knowledge point categories by subject. Values in parentheses indicate the number of unique knowledge points mapped in each category.}
-  \label{fig:knowledge-categories}
-\end{figure*}
+We curate 230 problems from K12-Vista~\citep{zhang2025k12vista}, spanning three grade levels (elementary, middle, high school) and five STEM subjects (Table~\ref{tab:dataset}, Figure~\ref{fig:knowledge-categories}). Problems are selected for diagram appropriateness, solution clarity, and topic diversity; full curation details are provided in Appendix~\ref{sec:benchmark-details}.
 
 \setlength{\tabcolsep}{4pt}
 \begin{table}[t]
@@ -272,13 +243,41 @@ High       & 30 & 30  & 15  & 15  & 15  & 105 \\
 \label{tab:dataset}
 \end{table}
 
-\textbf{Evaluation Framework.} We propose an \textbf{8-dimension rubric} grounded in multimedia learning theory~\citep{sweller1988cognitive,paivio1971imagery,mayer2001multimedia}, covering three aspects of multimodal educational content. Each dimension is scored on a 0--5 Likert scale and reported as a percentage (0--100\%).
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig/knowledge_categories.png}
+  \caption{Topic categories by subject. Values in parentheses indicate the number of unique topics mapped in each category.}
+  \label{fig:knowledge-categories}
+\end{figure*}
+
+\subsection{Generation Protocol}
+
+To ensure fair comparison, all models generate explanations through a standardized four-stage protocol (Figure~\ref{fig:pipeline}). The protocol is designed to decouple the generation task into manageable subtasks while enforcing cross-diagram visual consistency.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{fig/fig1.png}
+  \caption{Generation protocol overview. Scene 1 undergoes full sequential processing (outline $\to$ implementation planning $\to$ code generation); Scenes 2--$N$ skip implementation planning and generate in parallel, each conditioned on Scene 1's code as a visual anchor.}
+  \label{fig:pipeline}
+\end{figure*}
+
+\textbf{Stage 1: Structured Outline.} The model transforms a problem into an XML-based outline with alternating \texttt{<TEXT\_k>} (pedagogical explanation) and \texttt{<SCENE\_k>} (visual specification) blocks. Scene blocks are generated only when diagrams genuinely aid understanding. This structured format enables modular processing and error recovery.
+
+\textbf{Stage 2: Implementation Planning (Scene 1 only).} Planning every scene independently would cause each to invent its own visual conventions, making consistency impossible to guarantee. We therefore restrict planning to Scene 1 only, converting its specification into a detailed implementation plan: intended appearance, spatial constraints, and discipline-specific rendering conventions (e.g., right-angle markers in geometry, vector arrows in physics). The resulting conventions---color scheme, labeling style, line weights---are inherited by all subsequent scenes.
+
+\textbf{Stage 3: Code Generation and Rendering.} Scene 1 is rendered first from its plan; its complete Manim code then serves as context for Scenes 2--$N$, which generate in parallel. This enforces visual consistency without global optimization.
+
+\textbf{Stage 4: Document Assembly.} Textual blocks and rendered images are assembled into a Markdown document in alternating order, requiring no LLM involvement.
+
+\subsection{Evaluation Framework}
+
+We propose an \textbf{8-dimension rubric} grounded in multimedia learning theory~\citep{sweller1988cognitive,paivio1971imagery,mayer2001multimedia}. Each dimension is scored on a 0--5 Likert scale and reported as a percentage (0--100\%).
 
 \textit{Text quality} (evaluated on extracted \texttt{<TEXT\_k>} blocks): Correctness \& Completeness---whether the explanation reaches the correct answer through valid reasoning with all intermediate steps; Logical Coherence---whether reasoning flows naturally from premises to conclusions; Pedagogical Effectiveness---whether explanations use grade-appropriate language and effective instructional strategies; Typographic Clarity---proper mathematical notation, consistent formatting, and absence of artifacts.
 
 \textit{Visual quality} (evaluated on rendered diagrams): Diagram--Problem Alignment---whether diagrams faithfully represent the problem's geometric or physical setup; Element Layout Quality---whether elements avoid overlap, maintain readable spacing, and follow discipline conventions; Visual Consistency---whether multiple diagrams maintain coherent color schemes, labeling, and style; Text--Diagram Coordination---how well textual references integrate with the corresponding diagrams.
 
-\textbf{Automated Evaluation Protocol.} We employ Gemini 3.0 Pro Preview (temperature=0) as the judge model, selected for its strong multimodal reasoning and 2M-token context window. Evaluation input varies by dimension type: text-only dimensions (Correctness \& Completeness, Logical Coherence, Pedagogical Effectiveness, Typographic Clarity) receive the problem statement, extracted text, and rubric criteria (plus the gold solution for Correctness \& Completeness); multimodal dimensions (Diagram--Problem Alignment, Text--Diagram Coordination) additionally receive the relevant rendered diagrams alongside surrounding text. For Element Layout Quality, each diagram is scored independently and aggregated via geometric mean $ELQ = \left(\prod_{i=1}^N s_i\right)^{1/N}$, ensuring a single poor diagram substantially penalizes the overall score. For Visual Consistency, Scene 1 serves as the visual anchor; each subsequent diagram is compared against it, with $VC = \left(\prod_{i=2}^N s_{6,i}\right)^{1/(N-1)}$.
+\textbf{Automated Evaluation Protocol.} We employ Gemini 3.0 Pro Preview (temperature=0) as the judge model, selected for its strong multimodal reasoning and 2M-token context window. Evaluation input varies by dimension type: text-only dimensions receive the problem statement, extracted text, and rubric criteria (plus the gold solution for Correctness \& Completeness); multimodal dimensions additionally receive the relevant rendered diagrams alongside surrounding text. For Element Layout Quality, each diagram is scored independently and aggregated via geometric mean $ELQ = \left(\prod_{i=1}^N s_i\right)^{1/N}$, ensuring a single poor diagram substantially penalizes the overall score. For Visual Consistency, Scene 1 serves as the visual anchor; each subsequent diagram is compared against it, with $VC = \left(\prod_{i=2}^N s_{6,i}\right)^{1/(N-1)}$.
 
 \textbf{Human Evaluation Protocol.} To validate LLM-as-judge reliability, we conduct human evaluation on 30 stratified random sampled explanations, scored by 20 expert raters across 7 dimensions (Correctness \& Completeness excluded) on a 3-level scale \{0, 0.5, 1\}, producing 4,200 judgments. To enable direct comparison with the automated scores (reported as percentages), LLM scores are normalized to [0, 1] by dividing by 5 before computing Spearman's $\rho$. We compute Krippendorff's $\alpha$ for inter-rater agreement and Spearman's $\rho$ for human-AI correlation. Full annotation procedures are described in Appendix~\ref{sec:annotation}.
 
@@ -479,7 +478,7 @@ Ministral-3-14B & 50,488 & 18,128 & 0.17 & 0.20 & 0.01 \\
 
 \section{Conclusion}
 
-We presented EduIllustrate, a four-stage agentic pipeline with sequential Scene 1 anchoring, a 230-problem benchmark, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 13\% over fully parallel generation at 94\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
+We presented EduIllustrate, a benchmark for evaluating LLMs on K-12 STEM illustrated explanation generation, comprising a 230-problem dataset, a standardized generation protocol with sequential Scene 1 anchoring, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 13\% over fully parallel generation at 94\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
 
 \section*{Limitations}
 
@@ -505,7 +504,7 @@ We thank the 20 expert raters (15 STEM graduate students and 5 education doctora
 
 \subsection*{Dataset Curation Process}
 
-Benchmark construction followed a two-phase procedure. In the first phase, Kimi-K2.5 automatically screened all candidate problems from K12-Vista~\citep{zhang2025k12vista} for \textbf{Diagram Appropriateness}: for each problem, the model was prompted to judge whether a visual representation would convey spatial, topological, or relational information essential to problem-solving (rather than merely restating the text), and to output a binary decision with a brief justification. In the second phase, two human annotators independently reviewed every problem against all three curation criteria---\textbf{(1) Diagram-Appropriate Problems}, \textbf{(2) Clear Gold Solutions}, and \textbf{(3) Diverse Knowledge Points}---and resolved disagreements through discussion, using a dedicated review interface (Figure~\ref{fig:question-reviewer}). Problems were retained only when both annotators confirmed all three criteria were satisfied. This two-phase design combines the scalability of LLM screening with the reliability of human expert judgment.
+Benchmark construction followed a two-phase procedure. In the first phase, Kimi-K2.5 automatically screened all candidate problems from K12-Vista~\citep{zhang2025k12vista} for \textbf{Diagram Appropriateness}: for each problem, the model was prompted to judge whether a visual representation would convey spatial, topological, or relational information essential to problem-solving (rather than merely restating the text), and to output a binary decision with a brief justification. In the second phase, two human annotators independently reviewed every problem against all three curation criteria---\textbf{(1) Diagram-Appropriate Problems}, \textbf{(2) Clear Gold Solutions}, and \textbf{(3) Diverse Topics}---and resolved disagreements through discussion, using a dedicated review interface (Figure~\ref{fig:question-reviewer}). Problems were retained only when both annotators confirmed all three criteria were satisfied. This two-phase design combines the scalability of LLM screening with the reliability of human expert judgment.
 
 \begin{figure*}[t]
   \centering
