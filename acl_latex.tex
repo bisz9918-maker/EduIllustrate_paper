@@ -110,15 +110,15 @@
 \begin{document}
 \maketitle
 
-\begin{strip}
+\begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{fig/teaser.png}
-\captionof{figure}{EduIllustrate generates geometrically accurate visuals for diverse STEM problems. Taking textual K-12 problems from various subjects as input (left), our system produces a progressive sequence of diagrams (right). These diagrams are interleaved with textual reasoning to form multimodal explanations.}
+\caption{EduIllustrate generates geometrically accurate visuals for diverse STEM problems. Taking textual K-12 problems from various subjects as input (left), our system produces a progressive sequence of diagrams (right). These diagrams are interleaved with textual reasoning to form multimodal explanations.}
 \label{fig:teaser}
-\end{strip}
+\end{figure*}
 
 \begin{abstract}
-Generating high-quality illustrated explanations for K-12 STEM problems requires both geometrically accurate diagrams and coherent step-by-step reasoning---a combination that existing LLM-based educational content systems have not addressed. We present \textbf{EduIllustrate}, a benchmark for evaluating LLMs' ability to generate interleaved text-diagram explanations for K-12 STEM problems. The benchmark comprises \textbf{230 problems} spanning three grade levels and five subjects, a standardized four-stage generation protocol with sequential anchoring to enforce cross-diagram visual consistency, and an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text quality and visual quality. Evaluation of ten LLMs shows Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), while Kimi-K2.5 offers the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms sequential anchoring improves Visual Consistency by 13\% over a fully parallel baseline at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho=0.89$ for logical coherence, $\rho=0.83$ for diagram-problem alignment), while revealing limitations on subjective visual assessment.
+Large language models are increasingly used as educational assistants, yet evaluation of their educational capabilities remains concentrated on question-answering and tutoring tasks. A critical gap exists for \textit{multimedia instructional content generation}---the ability to produce coherent, diagram-rich explanations that combine geometrically accurate visuals with step-by-step reasoning. We present \textbf{EduIllustrate}, a benchmark for evaluating LLMs on interleaved text-diagram explanation generation for K-12 STEM problems. The benchmark comprises \textbf{230 problems} spanning five subjects and three grade levels, a standardized generation protocol with sequential anchoring to enforce cross-diagram visual consistency, and an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text and visual quality. Evaluation of ten LLMs reveals a wide performance spread: Gemini 3.0 Pro Preview leads at 87.8\%, while Kimi-K2.5 achieves the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms sequential anchoring improves Visual Consistency by 13\% at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho \geq 0.83$) while revealing limitations on subjective visual assessment.
 \end{abstract}
 
 
@@ -132,64 +132,15 @@ Generating high-quality illustrated explanations for K-12 STEM problems requires
   \label{fig:framework}
 \end{figure*}
 
-High-quality illustrated explanations are fundamental to K-12 STEM pedagogy.
-Cognitive Load Theory~\citep{sweller1988cognitive}, Dual Coding Theory~\citep{paivio1971imagery},
-and the Multimedia Learning Principle~\citep{mayer2001multimedia} collectively demonstrate
-that coordinating visual diagrams with textual reasoning substantially reduces cognitive burden
-and deepens conceptual understanding.
-Yet producing such materials at scale remains a formidable challenge:
-lesson planning and material preparation rank among the most time-consuming aspects
-of teachers' professional work~\citep{philipp2013teachers,thompson2024teachers},
-many educators lack the specialized skills required to create geometrically accurate
-diagrams~\citep{turkozudincer2025literacy},
-resulting in a systematic shortage of high-quality illustrated explanations
-available to K-12 students~\citep{yao2026instructional}.
+With the rapid development of large language models (LLMs), education has emerged as one of the most important and widely adopted application domains. LLMs are already used by millions of learners as on-demand educational assistants~\citep{kamalov2025agentic}, and major providers are actively building tutoring-oriented systems~\citep{wang2025genmentor,liu2025cogent}. However, prior evaluation of LLMs' educational capabilities has focused mainly on traditional question-answering and tutoring settings, leaving an important class of real educational tasks underexplored: the generation of \textit{multimedia instructional content}.
 
-Meanwhile, interleaved image-text generation has emerged as a central frontier
-in multimodal AI research, advancing along two parallel tracks.
-On the generation side, the field has progressed from early approaches such as
-MiniGPT-5~\citep{zheng2023interleaved} to autoregressive systems including
-ANOLE~\citep{chern2024anole} and Orthus~\citep{kou2025orthus},
-with steadily improving coherence in interleaved outputs.
-On the evaluation side, OpenLEAF~\citep{an2024openleaf} and MMIE~\citep{xia2025mmie}
-have established unified benchmarks for assessing interleaved generation quality.
-Together, these developments position interleaved generation as an increasingly
-dominant paradigm for multimodal content understanding and production.
+Decades of research in Cognitive Load Theory~\citep{sweller1988cognitive}, Dual Coding Theory~\citep{paivio1971imagery}, and the Multimedia Learning Principle~\citep{mayer2001multimedia} have established that coordinating visual diagrams with textual reasoning substantially reduces cognitive burden and deepens conceptual understanding. Yet producing such materials at scale remains a formidable challenge---lesson planning and material preparation rank among the most time-consuming aspects of teachers' professional work~\citep{philipp2013teachers,thompson2024teachers}, and many educators lack the specialized skills required to create geometrically accurate diagrams~\citep{turkozudincer2025literacy,yao2026instructional}. If LLMs could reliably generate illustrated explanations, the impact on K-12 education would be substantial. But we currently lack the benchmarks to measure whether they can.
 
-Despite this progress, a critical intersection remains unaddressed.
-On the education side, existing K-12 content generation systems bifurcate into
-text-only approaches~\citep{liu2025cogent,wang2025genmentor} and video-based systems
-targeting university-level theorems~\citep{ku2025theoremexplain,chen2025code2video}---neither
-produces interleaved text-diagram explanations for K-12 STEM.
-On the interleaved generation side, existing systems target general-purpose domains
-(storytelling, how-to, webpage synthesis) and generate photorealistic images,
-which cannot satisfy the geometric precision and discipline-specific conventions
-required for educational diagrams.
-The intersection of these two rapidly advancing lines remains vacant.
-Evaluation is equally underdeveloped: DiagramIR~\citep{kumar2025diagramir}
-evaluates mathematical diagrams in isolation, EduVisBench~\citep{ji2025eduvis}
-targets visual reasoning rather than generation quality, and no benchmark
-jointly assesses both textual and visual quality of K-12 multimodal educational content.
+Existing work falls short in several ways. On the education side, content generation systems bifurcate into text-only approaches~\citep{liu2025cogent,wang2025genmentor} and video-based systems targeting university-level theorems~\citep{ku2025theoremexplain,chen2025code2video}---neither produces interleaved text-diagram explanations for K-12 STEM. On the multimodal generation side, systems such as ANOLE~\citep{chern2024anole} and Orthus~\citep{kou2025orthus} target general-purpose domains and generate photorealistic images, which cannot satisfy the geometric precision required for educational diagrams. Evaluation benchmarks like OpenLEAF~\citep{an2024openleaf} and MMIE~\citep{xia2025mmie} assess interleaved generation but not in educational contexts, while DiagramIR~\citep{kumar2025diagramir} evaluates mathematical diagrams in isolation and EduVisBench~\citep{ji2025eduvis} targets visual reasoning rather than generation quality. No existing benchmark jointly assesses both textual and visual quality of K-12 multimodal educational content.
 
-We address these gaps with \textbf{EduIllustrate} (Figure~\ref{fig:framework}), a benchmark for systematically evaluating LLMs' ability to generate
-interleaved text-diagram explanations for K-12 STEM problems.
-The benchmark includes a standardized generation protocol in which
-textual reasoning steps and subject-specific diagrams alternate seamlessly,
-with diagrams programmatically rendered to ensure geometric accuracy and
-cross-diagram visual consistency.
-To enable systematic evaluation, we construct \textbf{EduIllustrateBench},
-spanning three grade levels (elementary, middle, and high school) and five subjects
-(mathematics, physics, chemistry, biology, and geography), paired with an
-\textbf{8-dimension evaluation rubric} grounded in multimedia learning theory
-that jointly covers textual and visual quality.
+To address this gap, we present \textbf{EduIllustrate} (Figure~\ref{fig:framework}), a benchmark designed to evaluate LLMs on interleaved text-diagram explanation generation for K-12 STEM problems---a setting that more closely reflects real-world educational applications. The benchmark comprises three components: (1) a curated problem set of 230 problems spanning five subjects and three grade levels; (2) a standardized generation protocol with sequential anchoring to ensure cross-diagram visual consistency; and (3) an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory that jointly covers textual and visual quality.
 
-Our main contributions are:
-\begin{itemize}
-  \item EduIllustrateBench, comprising 230 curated problems across five subjects and three grade levels, with an 8-dimension evaluation rubric addressing the gap in multi-subject, multi-grade multimodal educational content evaluation.
-  \item A standardized generation protocol with sequential anchoring to ensure cross-diagram visual consistency, serving as both the generation method and an ablation baseline.
-  \item Comparative analysis of ten LLMs spanning proprietary and open-weight models, ablation studies,
-    and human evaluation validating LLM-as-judge reliability.
-\end{itemize}
+Our main contributions are threefold: (1) \textbf{EduIllustrateBench}, comprising 230 curated problems across five subjects and three grade levels, with an 8-dimension evaluation rubric addressing the gap in multi-subject, multi-grade multimodal educational content evaluation; (2) a \textbf{standardized generation protocol} with sequential anchoring to ensure cross-diagram visual consistency, serving as both the generation method and an ablation baseline; and (3) a \textbf{comprehensive empirical study} of ten LLMs spanning proprietary and open-weight models, with ablation studies and human evaluation validating LLM-as-judge reliability.
 
 
 
@@ -294,8 +245,6 @@ We evaluate ten LLMs on the EduIllustrate benchmark, analyzing performance acros
 
 \subsection{Main Results}
 
-Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), substantially outperforming all other models. Kimi-K2.5 ranks second (80.8\%). The Qwen family forms a middle tier (65.8\%--72.0\%), while GPT-5 and Claude Sonnet 4.5 score 58.0\% and 57.8\% respectively. The Mistral family scores lowest (40.8\%--43.0\%), with Ministral-3-14B severely limited by its 82.6\% failure rate. The over 46-point gap between the best (87.8\%) and worst (41.0\%) models demonstrates that architectural choices significantly impact multimodal educational content quality.
-
 \begin{table*}[t]
 \centering
 \renewcommand\arraystretch{1.3}
@@ -333,15 +282,14 @@ Ministral-3-14B        & 37.6\% & 37.0\% & 31.0\% & 77.6\% & 23.8\% & 49.6\% & \
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.6\linewidth]{fig/fig_radar.pdf}
-  \caption{Radar chart of 8-dimension scores for all 10 models (0--100\% scale).}
+  \includegraphics[width=\linewidth]{fig/fig_radar.pdf}
+  \caption{Radar charts of all 10 models. (a) By dimension: 8 evaluation dimensions. (b) By subject: overall scores on each of the five subjects. (c) By grade level: overall scores at each grade level.}
   \label{fig:radar}
 \end{figure*}
 
+Table~\ref{tab:main-results} presents overall performance across all eight dimensions. The overall score is computed as the geometric mean of all eight dimension scores, ensuring that a single critically low score substantially penalizes the overall result. Gemini 3.0 Pro Preview achieves the highest overall score (87.8\%), substantially outperforming all other models. Kimi-K2.5 ranks second (80.8\%). The Qwen family forms a middle tier (65.8\%--72.0\%), while GPT-5 and Claude Sonnet 4.5 score 58.0\% and 57.8\% respectively. The Mistral family scores lowest (40.8\%--43.0\%), with Ministral-3-14B severely limited by its 82.6\% failure rate. The over 46-point gap between the best (87.8\%) and worst (41.0\%) models demonstrates that architectural choices significantly impact multimodal educational content quality.
+
 All models excel at Logical Coherence and Typographic Clarity, reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 68.8\%, GPT-5: 92.0\%), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Notably, Ministral-3-14B and GPT-5 achieve the two highest Visual Consistency scores (92.4\% and 92.0\% respectively) despite weak overall performance; models with high failure rates tend to produce fewer scenes per problem, making cross-scene consistency trivially easier to maintain. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 23.8\% to 87.4\%. Qwen 3.5-35B's low score of 39.6\% and the Mistral family's scores near 23.8\%--24.6\% reflect frequent semantic misalignment. Pedagogical Effectiveness is universally weakest (30.2\%--78.4\%), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (1.7\%), followed by Gemini (2.6\%), Claude (3.9\%), Qwen3.5-122B (5.2\%), Qwen3.5-397B (6.1\%), GPT-5 (10.4\%), Qwen 3.5-35B (16.1\%), Mistral-Large-3 (25.2\%), Mistral-Small-4 (29.6\%), and Ministral-3-14B (82.6\%). The Mistral family---particularly Ministral-3-14B---shows substantially higher failure rates, indicating limited robustness to complex Manim code generation. Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
-
-
-Per-subject and per-grade breakdowns with full dimension scores are provided in Appendix~\ref{sec:full-results}. Table~\ref{tab:subject-grade} summarizes the overall scores for five representative models across subjects and grade levels. Mathematics consistently achieves the highest scores across models, while geography scores lowest. Elementary school problems consistently yield higher scores than high school problems for most models (e.g., GPT-5: 68.6\% vs.\ 56.4\%; Claude: 64.2\% vs.\ 57.6\%), suggesting that increasing problem complexity and domain-specific reasoning demands degrade performance. Gemini and Kimi maintain relative consistency across grade levels, while other models show greater degradation on high school problems.
 
 \begin{table*}[t]
 \centering
@@ -361,16 +309,25 @@ Per-subject and per-grade breakdowns with full dimension scores are provided in 
 \makecell{\small\textbf{Middle}\\\small\textbf{School}} &
 \makecell{\small\textbf{High}\\\small\textbf{School}} \\
 \midrule
-Gemini 3.0 Pro Preview & \textbf{89.4\%} & \textbf{88.6\%} & \textbf{87.8\%} & \textbf{85.8\%} & \textbf{83.8\%} & \textbf{87.0\%} & \textbf{86.8\%} & \textbf{88.0\%} & \textbf{87.8\%} \\
-Kimi-K2.5              & 83.8\% & 80.6\% & 79.8\% & 78.8\% & 75.4\% & 79.6\% & 80.0\% & 80.2\% & 81.4\% \\
-Qwen 3.5-35B           & 69.2\% & 64.6\% & 65.0\% & 61.6\% & 61.8\% & 64.4\% & 73.4\% & 65.8\% & 63.6\% \\
-GPT-5                  & 60.6\% & 58.4\% & 57.4\% & 55.0\% & 50.4\% & 56.4\% & 68.6\% & 57.2\% & 56.4\% \\
-Claude Sonnet 4.5      & 62.0\% & 59.8\% & 54.6\% & 53.2\% & 49.6\% & 55.8\% & 64.2\% & 56.8\% & 57.6\% \\
+Gemini 3.0 Pro Preview & \textbf{89.4\%} & \textbf{88.6\%} & \textbf{87.9\%} & \textbf{85.7\%} & \textbf{83.8\%} & \textbf{87.1\%} & \textbf{86.9\%} & \textbf{88.0\%} & \textbf{87.8\%} \\
+Kimi-K2.5              & 83.9\% & 80.6\% & 79.8\% & 78.9\% & 75.3\% & 79.7\% & 80.0\% & 80.3\% & 81.4\% \\
+Qwen3.5-397B           & 75.0\% & 72.6\% & 70.7\% & 68.3\% & 67.3\% & 70.8\% & 76.3\% & 72.5\% & 70.5\% \\
+Qwen3.5-122B           & 73.0\% & 68.9\% & 66.8\% & 63.4\% & 63.0\% & 67.0\% & 74.2\% & 69.2\% & 67.0\% \\
+Qwen 3.5-35B           & 69.2\% & 64.6\% & 65.0\% & 61.5\% & 61.8\% & 64.4\% & 73.4\% & 65.8\% & 63.7\% \\
+GPT-5                  & 60.6\% & 58.5\% & 57.3\% & 55.1\% & 50.5\% & 56.4\% & 68.7\% & 57.2\% & 56.4\% \\
+Claude Sonnet 4.5      & 62.1\% & 59.9\% & 54.6\% & 53.2\% & 49.5\% & 55.9\% & 64.2\% & 56.7\% & 57.5\% \\
+Mistral-Large-3        & 46.4\% & 42.1\% & 42.6\% & 37.9\% & 39.1\% & 41.6\% & 47.2\% & 44.4\% & 40.7\% \\
+Mistral-Small-4        & 45.2\% & 39.4\% & 38.5\% & 37.2\% & 37.0\% & 39.5\% & 42.4\% & 41.3\% & 39.9\% \\
+Ministral-3-14B        & 44.9\% & 41.0\% & 36.2\% & 29.1\% & 35.1\% & 37.3\% & 35.3\% & 42.9\% & 40.5\% \\
 \bottomrule
 \end{tabular}
-\caption{Overall scores (geometric mean, 0--100\% scale) by subject and grade level for five representative models. Subject Average: unweighted mean across five subjects. Full results for all 10 models with per-dimension breakdowns are in Appendix~\ref{sec:full-results}. Bold indicates best per column.}
+\caption{Overall scores (geometric mean, 0--100\% scale) by subject and grade level for all 10 models. Subject Average: unweighted mean across five subjects. Bold indicates best per column.}
 \label{tab:subject-grade}
 \end{table*}
+
+Per-subject and per-grade breakdowns with full dimension scores are provided in Appendix~\ref{sec:full-results}. Table~\ref{tab:subject-grade} summarizes the overall scores for five representative models across subjects and grade levels. Mathematics consistently achieves the highest scores across models, while geography scores lowest. Elementary school problems consistently yield higher scores than high school problems for most models (e.g., GPT-5: 68.7\% vs.\ 56.4\%; Claude: 64.2\% vs.\ 57.5\%), suggesting that increasing problem complexity and domain-specific reasoning demands degrade performance. Gemini and Kimi maintain relative consistency across grade levels, while other models show greater degradation on high school problems.
+
+
 
 \subsection{Workflow Ablation Study}
 
@@ -436,8 +393,6 @@ ELQ & 0.39 & 0.32 & Weak \\
 
 \subsection{Cost Analysis}
 
-Table~\ref{tab:cost} presents cost metrics across all ten models. As shown in Figure~\ref{fig:cost-quality}, Kimi-K2.5 offers the best cost-efficiency among high-quality models at \$0.12/problem (80.8\% score), representing only 8.0\% quality degradation relative to Gemini (\$0.49, 87.8\% score) at 4.1$\times$ lower cost. Among lower-cost options, Ministral-3-14B achieves the lowest cost at \$0.01/problem, while Mistral-Large-3 and Mistral-Small-4 offer competitive quality at \$0.04 and \$0.02 respectively.
-
 \begin{table*}[t]
 \centering
 \small
@@ -475,6 +430,8 @@ Ministral-3-14B & 50,488 & 18,128 & 0.17 & 0.20 & 0.01 \\
   \caption{Per-stage cost breakdown across ten models. Each bar decomposes the average per-problem cost into three pipeline stages: Scene Outline, Implementation Plans, and Scene Rendering. Scene Rendering dominates cost for all models.}
   \label{fig:cost-breakdown}
 \end{figure*}
+
+Table~\ref{tab:cost} presents cost metrics across all ten models. As shown in Figure~\ref{fig:cost-quality}, Kimi-K2.5 offers the best cost-efficiency among high-quality models at \$0.12/problem (80.8\% score), representing only 8.0\% quality degradation relative to Gemini (\$0.49, 87.8\% score) at 4.1$\times$ lower cost. Among lower-cost options, Ministral-3-14B achieves the lowest cost at \$0.01/problem, while Mistral-Large-3 and Mistral-Small-4 offer competitive quality at \$0.04 and \$0.02 respectively.
 
 \section{Conclusion}
 
