@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{An et~al.(2024)An, Yang, Li, Wang, Lin, Liu, Wang, and Luo}]{an2024openleaf}
@@ -112,10 +112,5 @@ Jianping Yao and 1 others. 2026.
 \newblock Instructional material design in k-12 stem: A systematic review of challenges and technological interventions.
 \newblock \emph{Computers \& Education}.
 \newblock In press.
-
-\bibitem[{Zheng et~al.(2023)Zheng, He, and Wang}]{zheng2023interleaved}
-Kaizhi Zheng, Xuehai He, and Xin~Eric Wang. 2023.
-\newblock Minigpt-5: Interleaved vision-and-language generation via generative vokens.
-\newblock \emph{arXiv preprint arXiv:2310.02239}.
 
 \end{thebibliography}
