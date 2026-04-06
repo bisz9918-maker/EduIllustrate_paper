@@ -139,6 +139,13 @@
 \label{fig:teaser}
 \end{figure*}
 
+\begin{strip}
+\centering
+Website: \url{https://ecnu-innospark.github.io/EduIllustrate/}
+Data:\url{
+https://huggingface.co/datasets/keqianli/EduIllustrate}
+\end{strip}
+
 \begin{abstract}
 Large language models are increasingly used as educational assistants, yet evaluation of their educational capabilities remains concentrated on question-answering and tutoring tasks. A critical gap exists for \textit{multimedia instructional content generation}---the ability to produce coherent, diagram-rich explanations that combine geometrically accurate visuals with step-by-step reasoning. We present \textbf{EduIllustrate}, a benchmark for evaluating LLMs on interleaved text-diagram explanation generation for K-12 STEM problems. The benchmark comprises \textbf{230 problems} spanning five subjects and three grade levels, a standardized generation protocol with sequential anchoring to enforce cross-diagram visual consistency, and an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text and visual quality. Evaluation of ten LLMs reveals a wide performance spread: Gemini 3.0 Pro Preview leads at 87.8\%, while Kimi-K2.5 achieves the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms sequential anchoring improves Visual Consistency by 13\% at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho \geq 0.83$) while revealing limitations on subjective visual assessment.
 \end{abstract}
