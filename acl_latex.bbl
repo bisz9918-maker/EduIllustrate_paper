@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{23}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{An et~al.(2024)An, Yang, Li, Wang, Lin, Liu, Wang, and Luo}]{an2024openleaf}
@@ -112,5 +112,10 @@ Jianping Yao and 1 others. 2026.
 \newblock Instructional material design in k-12 stem: A systematic review of challenges and technological interventions.
 \newblock \emph{Computers \& Education}.
 \newblock In press.
+
+\bibitem[{Zheng et~al.(2023)Zheng, Chiang, Sheng, Zhuang, Wu, Zhuang, Lin, Li, Li, Xing et~al.}]{zheng2023judging}
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi~Lin, Zhuohan Li, Dacheng Li, Eric Xing, and 1 others. 2023.
+\newblock Judging llm-as-a-judge with mt-bench and chatbot arena.
+\newblock \emph{Advances in neural information processing systems}, 36:46595--46623.
 
 \end{thebibliography}
