@@ -2,7 +2,7 @@
 
 % Change "review" to "final" to generate the final (sometimes called camera-ready) version.
 % Change to "preprint" to generate a non-anonymous version with page numbers.
-\usepackage[preprint]{acl}
+\usepackage[review]{acl}
 
 % Standard package includes
 \usepackage{times}
@@ -70,64 +70,8 @@
 %         Author 2 \\ Address line \\ ... \\ Address line \And
 %         Author 3 \\ Address line \\ ... \\ Address line}
 
-\author{
-  \textbf{Shuzhen Bi\textsuperscript{1,2}},
-  \textbf{Mingzi Zhang\textsuperscript{3}},
-  \textbf{Zhuoxuan Li\textsuperscript{3}},
-  \textbf{Xiaolong Wang\textsuperscript{3}},
-  \textbf{Keqian Li\textsuperscript{3}\thanks{Corresponding author.}},
-  \textbf{Aimin Zhou\textsuperscript{1,3}}
-\\
-\\
-  \textsuperscript{1}Shanghai Innovation Institute,
-  \textsuperscript{2}University of Science and Technology of China,
-  \textsuperscript{3}East China Normal University
-\\
-  \small{
-    \texttt{sa22916003@mail.ustc.edu.cn},
-    \texttt{\{51284102005, lizhuoxuan, wmumu\}@stu.ecnu.edu.cn},
-    \texttt{kqli@mail.ecnu.edu.cn},
-    \texttt{amzhou@cs.ecnu.cn}
-  }
-}
 
-%\author{
-%  \textbf{First Author\textsuperscript{1}},
-%  \textbf{Second Author\textsuperscript{1,2}},
-%  \textbf{Third T. Author\textsuperscript{1}},
-%  \textbf{Fourth Author\textsuperscript{1}},
-%\\
-%  \textbf{Fifth Author\textsuperscript{1,2}},
-%  \textbf{Sixth Author\textsuperscript{1}},
-%  \textbf{Seventh Author\textsuperscript{1}},
-%  \textbf{Eighth Author \textsuperscript{1,2,3,4}},
-%\\
-%  \textbf{Ninth Author\textsuperscript{1}},
-%  \textbf{Tenth Author\textsuperscript{1}},
-%  \textbf{Eleventh E. Author\textsuperscript{1,2,3,4,5}},
-%  \textbf{Twelfth Author\textsuperscript{1}},
-%\\
-%  \textbf{Thirteenth Author\textsuperscript{3}},
-%  \textbf{Fourteenth F. Author\textsuperscript{2,4}},
-%  \textbf{Fifteenth Author\textsuperscript{1}},
-%  \textbf{Sixteenth Author\textsuperscript{1}},
-%\\
-%  \textbf{Seventeenth S. Author\textsuperscript{4,5}},
-%  \textbf{Eighteenth Author\textsuperscript{3,4}},
-%  \textbf{Nineteenth N. Author\textsuperscript{2,5}},
-%  \textbf{Twentieth Author\textsuperscript{1}}
-%\\
-%\\
-%  \textsuperscript{1}Affiliation 1,
-%  \textsuperscript{2}Affiliation 2,
-%  \textsuperscript{3}Affiliation 3,
-%  \textsuperscript{4}Affiliation 4,
-%  \textsuperscript{5}Affiliation 5
-%\\
-%  \small{
-%    \textbf{Correspondence:} \href{mailto:email@domain}{email@domain}
-%  }
-%}
+\author{}
 
 \begin{document}
 \maketitle
@@ -139,12 +83,6 @@
 \label{fig:teaser}
 \end{figure*}
 
-\begin{strip}
-\centering
-Website: \url{https://ecnu-innospark.github.io/EduIllustrate/}
-Data:\url{
-https://huggingface.co/datasets/keqianli/EduIllustrate}
-\end{strip}
 
 \begin{abstract}
 Large language models are increasingly used as educational assistants, yet evaluation of their educational capabilities remains concentrated on question-answering and tutoring tasks. A critical gap exists for \textit{multimedia instructional content generation}---the ability to produce coherent, diagram-rich explanations that combine geometrically accurate visuals with step-by-step reasoning. We present \textbf{EduIllustrate}, a benchmark for evaluating LLMs on interleaved text-diagram explanation generation for K-12 STEM problems. The benchmark comprises \textbf{230 problems} spanning five subjects and three grade levels, a standardized generation protocol with sequential anchoring to enforce cross-diagram visual consistency, and an \textbf{8-dimension evaluation rubric} grounded in multimedia learning theory covering both text and visual quality. Evaluation of ten LLMs reveals a wide performance spread: Gemini 3.0 Pro Preview leads at 87.8\%, while Kimi-K2.5 achieves the best cost-efficiency (80.8\% at \$0.12/problem). Workflow ablation confirms sequential anchoring improves Visual Consistency by 13\% at 94\% lower cost. Human evaluation with 20 expert raters validates LLM-as-judge reliability for objective dimensions ($\rho \geq 0.83$) while revealing limitations on subjective visual assessment.
@@ -320,41 +258,7 @@ Table~\ref{tab:main-results} presents overall performance across all eight dimen
 
 All models excel at Logical Coherence and Typographic Clarity, reflecting LLMs' strength in coherent, well-formatted text generation. Text--Diagram Coordination achieves high scores even for weaker models (Claude: 68.8\%, GPT-5: 92.0\%), indicating models produce well-integrated textual references to diagrams regardless of diagram quality. Notably, Ministral-3-14B and GPT-5 achieve the two highest Visual Consistency scores (92.4\% and 92.0\% respectively) despite weak overall performance; models with high failure rates tend to produce fewer scenes per problem, making cross-scene consistency trivially easier to maintain. Critical weaknesses appear in Diagram--Problem Alignment, where scores range from 23.8\% to 87.4\%. Qwen 3.5-35B's low score of 39.6\% and the Mistral family's scores near 23.8\%--24.6\% reflect frequent semantic misalignment. Pedagogical Effectiveness is universally weakest (30.2\%--78.4\%), indicating all models struggle with grade-appropriate language and scaffolding strategies. Failure rates on the 230-problem benchmark vary substantially: Kimi-K2.5 is most robust (1.7\%), followed by Gemini (2.6\%), Claude (3.9\%), Qwen3.5-122B (5.2\%), Qwen3.5-397B (6.1\%), GPT-5 (10.4\%), Qwen 3.5-35B (16.1\%), Mistral-Large-3 (25.2\%), Mistral-Small-4 (29.6\%), and Ministral-3-14B (82.6\%). The Mistral family---particularly Ministral-3-14B---shows substantially higher failure rates, indicating limited robustness to complex Manim code generation. Failed problems are excluded from scoring; reported scores reflect only successfully completed problems.
 
-\begin{table*}[t]
-\centering
-\fontsize{10}{12}\selectfont
-\setlength{\tabcolsep}{4pt}
-\renewcommand\arraystretch{1.3}
-\begin{tabular}{lcccccc|ccc}
-\toprule
-\textbf{Model} &
-\makecell{\small\textbf{Mathe-}\\\small\textbf{matics}} &
-\makecell{\small\textbf{Physics}} &
-\makecell{\small\textbf{Chem-}\\\small\textbf{istry}} &
-\makecell{\small\textbf{Biology}} &
-\makecell{\small\textbf{Geog-}\\\small\textbf{raphy}} &
-\makecell{\small\textbf{Subject}\\\small\textbf{Avg.}} &
-\makecell{\small\textbf{Elem.}\\\small\textbf{School}} &
-\makecell{\small\textbf{Middle}\\\small\textbf{School}} &
-\makecell{\small\textbf{High}\\\small\textbf{School}} \\
-\midrule
-Gemini 3.0 Pro Preview & \textbf{89.4\%} & \textbf{88.6\%} & \textbf{87.9\%} & \textbf{85.7\%} & \textbf{83.8\%} & \textbf{87.1\%} & \textbf{86.9\%} & \textbf{88.0\%} & \textbf{87.8\%} \\
-Kimi-K2.5              & 83.9\% & 80.6\% & 79.8\% & 78.9\% & 75.3\% & 79.7\% & 80.0\% & 80.3\% & 81.4\% \\
-Qwen3.5-397B           & 75.0\% & 72.6\% & 70.7\% & 68.3\% & 67.3\% & 70.8\% & 76.3\% & 72.5\% & 70.5\% \\
-Qwen3.5-122B           & 73.0\% & 68.9\% & 66.8\% & 63.4\% & 63.0\% & 67.0\% & 74.2\% & 69.2\% & 67.0\% \\
-Qwen 3.5-35B           & 69.2\% & 64.6\% & 65.0\% & 61.5\% & 61.8\% & 64.4\% & 73.4\% & 65.8\% & 63.7\% \\
-GPT-5                  & 60.6\% & 58.5\% & 57.3\% & 55.1\% & 50.5\% & 56.4\% & 68.7\% & 57.2\% & 56.4\% \\
-Claude Sonnet 4.5      & 62.1\% & 59.9\% & 54.6\% & 53.2\% & 49.5\% & 55.9\% & 64.2\% & 56.7\% & 57.5\% \\
-Mistral-Large-3        & 46.4\% & 42.1\% & 42.6\% & 37.9\% & 39.1\% & 41.6\% & 47.2\% & 44.4\% & 40.7\% \\
-Mistral-Small-4        & 45.2\% & 39.4\% & 38.5\% & 37.2\% & 37.0\% & 39.5\% & 42.4\% & 41.3\% & 39.9\% \\
-Ministral-3-14B        & 44.9\% & 41.0\% & 36.2\% & 29.1\% & 35.1\% & 37.3\% & 35.3\% & 42.9\% & 40.5\% \\
-\bottomrule
-\end{tabular}
-\caption{Overall scores (geometric mean, 0--100\% scale) by subject and grade level for all 10 models. Subject Average: unweighted mean across five subjects. Bold indicates best per column.}
-\label{tab:subject-grade}
-\end{table*}
-
-Per-subject and per-grade breakdowns with full dimension scores are provided in Appendix~\ref{sec:full-results}. Table~\ref{tab:subject-grade} summarizes the overall scores for five representative models across subjects and grade levels. Mathematics consistently achieves the highest scores across models, while geography scores lowest. Elementary school problems consistently yield higher scores than high school problems for most models (e.g., GPT-5: 68.7\% vs.\ 56.4\%; Claude: 64.2\% vs.\ 57.5\%), suggesting that increasing problem complexity and domain-specific reasoning demands degrade performance. Gemini and Kimi maintain relative consistency across grade levels, while other models show greater degradation on high school problems.
+Per-subject and per-grade breakdowns with full dimension scores are provided in Appendix~\ref{sec:full-results}. Mathematics consistently achieves the highest scores across models, while geography scores lowest. Elementary school problems consistently yield higher scores than high school problems for most models (e.g., GPT-5: 68.7\% vs.\ 56.4\%; Claude: 64.2\% vs.\ 57.5\%), suggesting that increasing problem complexity and domain-specific reasoning demands degrade performance. Gemini and Kimi maintain relative consistency across grade levels, while other models show greater degradation on high school problems. Full per-subject and per-grade scores are in Table~\ref{tab:subject-grade} (Appendix~\ref{sec:full-results}).
 
 
 
@@ -471,15 +375,6 @@ We presented EduIllustrate, a benchmark for evaluating LLMs on K-12 STEM illustr
 The pipeline currently generates static PNG images via Manim, limiting both output modality and framework generalizability. While the agent framework can be adapted to produce animations by adjusting rendering flags and prompts, our 8-dimension rubric does not cover temporal coherence or animation pacing. The pipeline is also tightly coupled to Manim; extending to target-agnostic intermediate representations~\citep{kumar2025diagramir} would improve flexibility to other frameworks (TikZ, matplotlib, SVG).
 
 Weak human-AI agreement on visual dimensions (Element Layout Quality: $\rho = 0.39$, Visual Consistency: $\rho = 0.47$) indicates current vision-language models struggle to assess layout quality and stylistic consistency reliably, and the low inter-rater agreement among humans ($\alpha \approx 0.30$) suggests these rubric constructs require further refinement. More broadly, Pedagogical Effectiveness is the weakest dimension across all models (50.8\%--78.4\%), as the pipeline delivers static, one-shot explanations with no adaptation to the individual learner. Future work will explore multi-turn Socratic interaction and student profile integration to personalize both explanation strategy and diagram design.
-
-\section*{Acknowledgments}
-
-We thank the 20 expert raters (15 STEM graduate students and 5 education doctoral students) for their meticulous human evaluation work. 
-
-
-
-
-
 
 \bibliography{custom}
 
@@ -806,6 +701,40 @@ Human evaluation was conducted through a dedicated annotation website (Figure~\r
 
 \section{Full Per-Subset Benchmark Results}
 \label{sec:full-results}
+
+\begin{table*}[t]
+\centering
+\fontsize{10}{12}\selectfont
+\setlength{\tabcolsep}{4pt}
+\renewcommand\arraystretch{1.3}
+\begin{tabular}{lcccccc|ccc}
+\toprule
+\textbf{Model} &
+\makecell{\small\textbf{Mathe-}\\\small\textbf{matics}} &
+\makecell{\small\textbf{Physics}} &
+\makecell{\small\textbf{Chem-}\\\small\textbf{istry}} &
+\makecell{\small\textbf{Biology}} &
+\makecell{\small\textbf{Geog-}\\\small\textbf{raphy}} &
+\makecell{\small\textbf{Subject}\\\small\textbf{Avg.}} &
+\makecell{\small\textbf{Elem.}\\\small\textbf{School}} &
+\makecell{\small\textbf{Middle}\\\small\textbf{School}} &
+\makecell{\small\textbf{High}\\\small\textbf{School}} \\
+\midrule
+Gemini 3.0 Pro Preview & \textbf{89.4\%} & \textbf{88.6\%} & \textbf{87.9\%} & \textbf{85.7\%} & \textbf{83.8\%} & \textbf{87.1\%} & \textbf{86.9\%} & \textbf{88.0\%} & \textbf{87.8\%} \\
+Kimi-K2.5              & 83.9\% & 80.6\% & 79.8\% & 78.9\% & 75.3\% & 79.7\% & 80.0\% & 80.3\% & 81.4\% \\
+Qwen3.5-397B           & 75.0\% & 72.6\% & 70.7\% & 68.3\% & 67.3\% & 70.8\% & 76.3\% & 72.5\% & 70.5\% \\
+Qwen3.5-122B           & 73.0\% & 68.9\% & 66.8\% & 63.4\% & 63.0\% & 67.0\% & 74.2\% & 69.2\% & 67.0\% \\
+Qwen 3.5-35B           & 69.2\% & 64.6\% & 65.0\% & 61.5\% & 61.8\% & 64.4\% & 73.4\% & 65.8\% & 63.7\% \\
+GPT-5                  & 60.6\% & 58.5\% & 57.3\% & 55.1\% & 50.5\% & 56.4\% & 68.7\% & 57.2\% & 56.4\% \\
+Claude Sonnet 4.5      & 62.1\% & 59.9\% & 54.6\% & 53.2\% & 49.5\% & 55.9\% & 64.2\% & 56.7\% & 57.5\% \\
+Mistral-Large-3        & 46.4\% & 42.1\% & 42.6\% & 37.9\% & 39.1\% & 41.6\% & 47.2\% & 44.4\% & 40.7\% \\
+Mistral-Small-4        & 45.2\% & 39.4\% & 38.5\% & 37.2\% & 37.0\% & 39.5\% & 42.4\% & 41.3\% & 39.9\% \\
+Ministral-3-14B        & 44.9\% & 41.0\% & 36.2\% & 29.1\% & 35.1\% & 37.3\% & 35.3\% & 42.9\% & 40.5\% \\
+\bottomrule
+\end{tabular}
+\caption{Overall scores (geometric mean, 0--100\% scale) by subject and grade level for all 10 models. Subject Average: unweighted mean across five subjects. Bold indicates best per column.}
+\label{tab:subject-grade}
+\end{table*}
 
 Tables~\ref{tab:results-math}--\ref{tab:results-highschool} report complete 8-dimension scores for each subject and grade-level subset of the EduIllustrate benchmark. Column headers and scoring follow Table~\ref{tab:main-results}. Bold indicates best per column.
 
