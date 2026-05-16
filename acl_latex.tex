@@ -273,13 +273,6 @@ EduIllustrate is built upon a modified version of the TheoremExplainAgent codeba
   \label{fig:case-study}
 \end{figure}
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.75\columnwidth]{fig/fig_workflow_cost.png}
-  \caption{Per-stage cost comparison between our sequential anchoring workflow and the all-parallel baseline (both using Gemini 3.0 Pro Preview). The all-parallel approach incurs substantially higher Implementation Plans cost due to independent per-scene planning.}
-  \label{fig:workflow-cost}
-\end{figure}
-
 \begin{table}[t]
 \centering
 \renewcommand\arraystretch{1.3}
@@ -444,6 +437,13 @@ Elementary & Mathematics (20)
 \caption{Complete topic coverage of the 230 EduIllustrate benchmark problems. Numbers in parentheses after subject names indicate problem count; (×$n$) after a topic indicates $n$ problems on that topic. Some high school mathematics problems have unlabeled topics in the original K12-Vista dataset.}
 \label{tab:benchmark-full}
 \end{table*}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{fig/fig_workflow_cost.png}
+  \caption{Per-stage cost comparison between our sequential anchoring workflow and the all-parallel baseline (both using Gemini 3.0 Pro Preview). The all-parallel approach incurs substantially higher Implementation Plans cost due to independent per-scene planning.}
+  \label{fig:workflow-cost}
+\end{figure}
 
 \section{Judge Model Self-Preference Analysis}
 \label{sec:judge-bias}
