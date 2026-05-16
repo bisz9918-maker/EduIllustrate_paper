@@ -319,6 +319,25 @@ ELQ & 0.39 & 0.32 & Weak \\
 
 \subsection{Cost Analysis}
 
+Cost varies widely across models (Table~\ref{tab:cost}, Appendix~\ref{sec:cost-analysis}): Kimi-K2.5 offers the best cost-efficiency among high-quality models at \$0.12/problem (80.8\% score), representing only 8.0\% quality degradation relative to Gemini (\$0.49, 87.8\% score) at 4.1$\times$ lower cost. Full cost breakdown and cost-quality trade-off analysis are provided in Appendix~\ref{sec:cost-analysis}.
+
+\section{Conclusion}
+
+We presented EduIllustrate, a benchmark for evaluating LLMs on K-12 STEM illustrated explanation generation, comprising a 230-problem dataset, a standardized generation protocol with sequential Scene 1 anchoring, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 13\% over fully parallel generation at 94\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
+
+\section*{Limitations}
+
+The pipeline currently generates static PNG images via Manim, limiting both output modality and framework generalizability. While the agent framework can be adapted to produce animations by adjusting rendering flags and prompts, our 8-dimension rubric does not cover temporal coherence or animation pacing. The pipeline is also tightly coupled to Manim; extending to target-agnostic intermediate representations~\citep{kumar2025diagramir} would improve flexibility to other frameworks (TikZ, matplotlib, SVG).
+
+Weak human-AI agreement on visual dimensions (Element Layout Quality: $\rho = 0.39$, Visual Consistency: $\rho = 0.47$) indicates current vision-language models struggle to assess layout quality and stylistic consistency reliably, and the low inter-rater agreement among humans ($\alpha \approx 0.30$) suggests these rubric constructs require further refinement. More broadly, Pedagogical Effectiveness is the weakest dimension across all models (50.8\%--78.4\%), as the pipeline delivers static, one-shot explanations with no adaptation to the individual learner. Future work will explore multi-turn Socratic interaction and student profile integration to personalize both explanation strategy and diagram design.
+
+\bibliography{custom}
+
+\appendix
+
+\section{Cost Analysis}
+\label{sec:cost-analysis}
+
 \begin{table*}[t]
 \centering
 \small
@@ -357,21 +376,7 @@ Ministral-3-14B & 50,488 & 18,128 & 0.17 & 0.20 & 0.01 \\
   \label{fig:cost-breakdown}
 \end{figure*}
 
-Table~\ref{tab:cost} presents cost metrics across all ten models. As shown in Figure~\ref{fig:cost-quality}, Kimi-K2.5 offers the best cost-efficiency among high-quality models at \$0.12/problem (80.8\% score), representing only 8.0\% quality degradation relative to Gemini (\$0.49, 87.8\% score) at 4.1$\times$ lower cost. Among lower-cost options, Ministral-3-14B achieves the lowest cost at \$0.01/problem, while Mistral-Large-3 and Mistral-Small-4 offer competitive quality at \$0.04 and \$0.02 respectively.
-
-\section{Conclusion}
-
-We presented EduIllustrate, a benchmark for evaluating LLMs on K-12 STEM illustrated explanation generation, comprising a 230-problem dataset, a standardized generation protocol with sequential Scene 1 anchoring, and an 8-dimension rubric grounded in multimedia learning theory. Sequential anchoring improves Visual Consistency by 13\% over fully parallel generation at 94\% lower cost. Human evaluation validates LLM-as-judge reliability on objective dimensions while revealing limitations on subjective visual assessment.
-
-\section*{Limitations}
-
-The pipeline currently generates static PNG images via Manim, limiting both output modality and framework generalizability. While the agent framework can be adapted to produce animations by adjusting rendering flags and prompts, our 8-dimension rubric does not cover temporal coherence or animation pacing. The pipeline is also tightly coupled to Manim; extending to target-agnostic intermediate representations~\citep{kumar2025diagramir} would improve flexibility to other frameworks (TikZ, matplotlib, SVG).
-
-Weak human-AI agreement on visual dimensions (Element Layout Quality: $\rho = 0.39$, Visual Consistency: $\rho = 0.47$) indicates current vision-language models struggle to assess layout quality and stylistic consistency reliably, and the low inter-rater agreement among humans ($\alpha \approx 0.30$) suggests these rubric constructs require further refinement. More broadly, Pedagogical Effectiveness is the weakest dimension across all models (50.8\%--78.4\%), as the pipeline delivers static, one-shot explanations with no adaptation to the individual learner. Future work will explore multi-turn Socratic interaction and student profile integration to personalize both explanation strategy and diagram design.
-
-\bibliography{custom}
-
-\appendix
+Among lower-cost options, Ministral-3-14B achieves the lowest cost at \$0.01/problem, while Mistral-Large-3 and Mistral-Small-4 offer competitive quality at \$0.04 and \$0.02 respectively. Figure~\ref{fig:cost-breakdown} shows the per-stage cost decomposition, revealing that Scene Rendering dominates cost for all models.
 
 \section{Benchmark Construction Details}
 \label{sec:benchmark-details}
